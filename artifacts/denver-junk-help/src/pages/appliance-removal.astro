@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import { SITE_URL } from '../config';
+---
+
+<BaseLayout
+  title="Appliance Removal in Denver | Fridge, Washer & Dryer Pickup Requests"
+  description="Request appliance removal in Denver. Connect with local haulers for refrigerator, washer, dryer, and large appliance disposal."
+  canonical={`${SITE_URL}/appliance-removal/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6z"/><path d="M5 10h14"/><path d="M10 4v6"/>
+          </svg>
+          <span>Appliance Removal</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">Appliance Removal in Denver</h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Upgrading your kitchen or laundry room? We help connect you with local providers who can haul away your heavy old appliances.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <p>
+          Appliances are incredibly heavy and notoriously difficult to dispose of. You can't just leave a refrigerator on the curb for regular trash day. We help residents and businesses in Denver request removal for large household and commercial appliances.
+        </p>
+
+        <h2>Appliances commonly removed include:</h2>
+        <ul>
+          <li>Refrigerators and freezers</li>
+          <li>Washers and dryers</li>
+          <li>Stoves, ovens, and ranges</li>
+          <li>Dishwashers</li>
+          <li>Water heaters</li>
+          <li>Window AC units</li>
+        </ul>
+
+        <h2>Special disposal requirements</h2>
+        <p>
+          Many appliances require special handling. Refrigerators, freezers, and air conditioners contain Freon and other refrigerants that must be legally and safely extracted before the unit can be recycled or scrapped. This extra processing often factors into the quote a local provider will give you for appliance removal.
+        </p>
+
+        <div class="bg-secondary/10 border-l-4 border-secondary p-6 rounded-r-lg my-8">
+          <h3 class="font-bold text-foreground m-0 mb-2">Denver City Appliance Programs</h3>
+          <p class="m-0 text-muted-foreground text-base">
+            If you are a Denver city trash collection customer, you may qualify for the city's separate appliance recycling program. This can be a cost-effective option if you don't need immediate removal.
+            <a href="/denver-large-item-pickup-vs-junk-removal/" class="text-primary font-bold hover:underline">
+              Learn more about city vs. private removal &rarr;
+            </a>
+          </p>
+        </div>
+
+        <p>
+          If you need an appliance gone urgently, or if you don't qualify for city pickup, requesting a private junk removal provider is usually the fastest and easiest solution.
+        </p>
+      </article>
+
+      <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-4">Ready to clear out that old appliance?</h3>
+        <p class="text-muted-foreground mb-6">Fill out the form below or give us a call to request your quote.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <QuoteForm />
+
+      <div class="mt-12">
+        <DisclosureBlock text="Denver Junk Help is a local quote and referral website. We help people in Denver request junk-removal service from a trusted local provider. We do not perform hauling or disposal services ourselves." />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

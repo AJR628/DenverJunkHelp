@@ -1,0 +1,102 @@
+---
+import '../styles/global.css';
+import { GA4_ID, SEARCH_CONSOLE_ID, SITE_URL } from '../config';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  noindex?: boolean;
+  schema?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogTitle,
+  ogDescription,
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const ogTitleResolved = ogTitle ?? title;
+const ogDescResolved = ogDescription ?? description;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <meta name="robots" content="index, follow" />}
+    {SEARCH_CONSOLE_ID && <meta name="google-site-verification" content={SEARCH_CONSOLE_ID} />}
+
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={ogTitleResolved} />
+    <meta property="og:description" content={ogDescResolved} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${SITE_URL}/opengraph.jpg`} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitleResolved} />
+    <meta name="twitter:description" content={ogDescResolved} />
+    <meta name="twitter:image" content={`${SITE_URL}/opengraph.jpg`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- JSON-LD Schema -->
+    {schema && <script type="application/ld+json" set:html={schema} />}
+
+    <!-- Org + WebSite schema on all pages -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "DenverJunkHelp.com",
+            "url": "https://denverjunkhelp.com",
+            "description": "A local quote and referral website that helps people in Denver request junk removal service from independent local providers.",
+            "areaServed": { "@type": "City", "name": "Denver", "addressRegion": "CO" }
+          },
+          {
+            "@type": "WebSite",
+            "name": "DenverJunkHelp.com",
+            "url": "https://denverjunkhelp.com"
+          }
+        ]
+      }
+    </script>
+
+    <!-- GA4 -->
+    {GA4_ID && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+        <script define:vars={{ GA4_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', GA4_ID);
+        </script>
+      </>
+    )}
+  </head>
+  <body class="min-h-[100dvh] flex flex-col w-full bg-background font-sans">
+    <slot />
+  </body>
+</html>

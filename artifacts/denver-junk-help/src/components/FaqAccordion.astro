@@ -1,0 +1,24 @@
+---
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+<div class="w-full bg-card rounded-lg border border-border px-4 py-2">
+  {items.map((item, index) => (
+    <details class="faq-item">
+      <summary aria-controls={`faq-answer-${index}`}>
+        {item.question}
+      </summary>
+      <div class="faq-answer" id={`faq-answer-${index}`}>
+        {item.answer}
+      </div>
+    </details>
+  ))}
+</div>

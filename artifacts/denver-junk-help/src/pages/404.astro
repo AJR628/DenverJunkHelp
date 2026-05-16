@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import { SITE_URL } from '../config';
+---
+
+<BaseLayout
+  title="Page Not Found | DenverJunkHelp.com"
+  description="The page you're looking for isn't here."
+  canonical={`${SITE_URL}/404/`}
+  noindex={true}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+    <div class="min-h-[60vh] flex items-center justify-center px-6 py-20">
+      <div class="text-center max-w-md">
+        <p class="text-6xl font-serif font-bold text-primary mb-4">404</p>
+        <h1 class="text-2xl font-bold text-foreground mb-4">Page not found</h1>
+        <p class="text-muted-foreground mb-8 leading-relaxed">
+          The page you're looking for isn't here. It may have moved, or the
+          link might be incorrect.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href="/"
+            class="inline-flex items-center justify-center bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-full hover:bg-primary/90 transition-colors"
+          >
+            Go to Home
+          </a>
+          <a
+            href="/contact/"
+            class="inline-flex items-center justify-center bg-background border border-border text-foreground font-semibold px-8 py-3 rounded-full hover:bg-muted transition-colors"
+          >
+            Request a Quote
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

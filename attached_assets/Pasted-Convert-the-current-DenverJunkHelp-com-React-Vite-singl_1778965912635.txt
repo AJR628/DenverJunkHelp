@@ -1,0 +1,91 @@
+Convert the current DenverJunkHelp.com React/Vite single-page site into a static-first Astro site. Do not redesign the site. Preserve the current visual direction, copy, page structure, disclosures, and V1 scope.
+
+Goal:
+This is a local SEO/information/lead-generation site, not a web app. It should ship as pre-rendered static HTML pages for better crawlability, speed, simplicity, and maintainability.
+
+Important:
+- Do not add a backend.
+- Do not add a database.
+- Do not add provider routing.
+- Do not expand the site with lots of new pages.
+- Preserve the current polished design and content as much as possible.
+- Keep the site transparent: DenverJunkHelp.com is a referral/information site, not a junk removal company.
+
+Required migration:
+1. Replace React/Vite SPA routing with Astro static routes.
+2. Each core page should generate real static HTML:
+   - /
+   - /furniture-removal/
+   - /appliance-removal/
+   - /cleanouts/
+   - /pricing-faq/
+   - /denver-large-item-pickup-vs-junk-removal/
+   - /contact/
+   - /privacy-policy/
+   - /terms-of-use/
+   - /not-found/ or a proper 404 page
+3. Use reusable Astro components for:
+   - Layout
+   - SEO head/meta
+   - Header
+   - Footer
+   - Disclosure bar
+   - Hero
+   - Service cards
+   - How it works
+   - FAQ
+   - Quote form
+   - Sticky mobile CTA
+4. Use a central config file for:
+   - site name
+   - visible brand name: “Junk Removal Help”
+   - location label: “Denver Metro”
+   - domain: “https://denverjunkhelp.com”
+   - phone number placeholder
+   - phone href placeholder
+   - form endpoint placeholder
+   - GA4 measurement ID placeholder
+   - Search Console verification placeholder
+5. Preserve SEO basics:
+   - unique title and meta description per page
+   - canonical tags
+   - Open Graph tags
+   - sitemap.xml
+   - robots.txt
+   - customer-facing 404
+6. Use static HTML wherever possible.
+7. Only use client-side JavaScript where necessary for:
+   - mobile menu
+   - FAQ accordion if needed
+   - quote form validation/submission
+8. Quote form safety:
+   - If FORM_ENDPOINT is empty, do not simulate a real production submission.
+   - If no endpoint exists, disable production submission or show a clear “quote requests are not active yet” message.
+   - Only show success after a real successful response.
+9. Photo upload:
+   - Remove or mark as coming soon unless it actually submits files.
+10. Keep legal/disclosure language intact:
+   - Do not claim DenverJunkHelp.com owns trucks, crews, or performs hauling.
+   - Do not use fake reviews, fake phone numbers, fake badges, or fake licensed/insured claims.
+   - Same-day/next-day wording must remain qualified.
+
+Technical requirements:
+- Astro static output
+- Clean file structure
+- Minimal dependencies
+- Fast build
+- Easy Netlify or Cloudflare Pages deployment
+- No unnecessary JavaScript bundle for normal content pages
+- Accessible semantic HTML
+- Good mobile layout
+- All routes should work as direct URLs after deployment
+
+Deliver:
+- Summary of migration
+- New file structure
+- Any files removed from the React/Vite version
+- How to run locally
+- How to build
+- How to deploy to Netlify/Cloudflare Pages
+- Launch checklist
+- Remaining items before public launch

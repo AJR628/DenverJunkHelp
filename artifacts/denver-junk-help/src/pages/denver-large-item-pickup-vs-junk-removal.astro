@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import { SITE_URL } from '../config';
+---
+
+<BaseLayout
+  title="Denver Large Item Pickup vs Private Junk Removal | What's the Difference"
+  description="Compare Denver's free city large item pickup program with private junk removal services. Find out which option is best for your situation."
+  canonical={`${SITE_URL}/denver-large-item-pickup-vs-junk-removal/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Local Denver Guide</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">Denver Large Item Pickup vs. Private Junk Removal</h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Not sure if you should wait for the city truck or hire a private hauler? Here is a plain-english breakdown of your options in Denver.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <p>
+          If you live in Denver and need to get rid of big items, you generally have two main paths: the city's solid waste management services, or hiring a private junk removal company. Both are good options, but they serve very different needs.
+        </p>
+
+        <h2>1. Denver City Large Item Pickup</h2>
+        <p>
+          The City and County of Denver provides Large Item Pickup (sometimes called Extra Trash) for qualifying residential customers.
+        </p>
+
+        <h3>When City Pickup is a Good Option:</h3>
+        <ul>
+          <li><strong>You are a qualifying customer:</strong> You must live in a single-family home or an apartment building with 7 or fewer units that receives city trash collection.</li>
+          <li><strong>You only have a few items:</strong> The city enforces limits per household (typically 5 items maximum per collection).</li>
+          <li><strong>You have time:</strong> Collections are scheduled on specific weeks throughout the year based on your neighborhood, not on-demand.</li>
+          <li><strong>You can move it yourself:</strong> You must place the items at your normal trash collection point (alley or curb) yourself. City workers will not enter your home or property.</li>
+        </ul>
+
+        <div class="bg-muted p-5 rounded-lg border border-border my-6 text-base">
+          <strong>Note on City Appliance &amp; E-Waste Programs:</strong> Denver has separate specialized programs for appliance recycling and electronics recycling, often requiring an appointment or drop-off. They are usually not picked up during standard large item days.
+        </div>
+
+        <h2>2. Private Junk Removal Services</h2>
+        <p>
+          Private junk removal providers are independent businesses. When you request a quote through Denver Junk Help, you are reaching out to one of these private, local haulers.
+        </p>
+
+        <h3>When Private Removal is the Better Option:</h3>
+        <ul>
+          <li><strong>You need it gone now:</strong> Private haulers can often provide next-day or even same-day service. You don't have to wait weeks for your neighborhood's scheduled cycle.</li>
+          <li><strong>You need inside help:</strong> If an item is too heavy to move to the curb, a private crew will come inside your house, basement, or apartment to do the heavy lifting for you.</li>
+          <li><strong>You live in a large complex:</strong> If you live in a large apartment building (8+ units) or manage a commercial property, you likely don't qualify for city collection and must use a private service.</li>
+          <li><strong>You have a massive amount of junk:</strong> Full property cleanouts, garage cleanings, or massive piles of yard debris exceed city limits and require a private truck.</li>
+          <li><strong>You have complex items:</strong> Private haulers often take items the city restricts, or have the connections to properly dispose of tricky items.</li>
+        </ul>
+
+        <h2>Summary</h2>
+        <p>
+          If you have a single couch, live in a qualifying house, can drag it to the alley, and don't mind waiting a few weeks — use the city service. It's built into the infrastructure.
+        </p>
+        <p>
+          If you have an urgent timeline, need heavy items carried out of your living room, or are dealing with a full cleanout, a private junk removal provider is the right tool for the job.
+        </p>
+      </article>
+
+      <div class="bg-card border border-border p-8 rounded-xl text-center shadow-sm">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-4">Need private hauling?</h3>
+        <p class="text-muted-foreground mb-6">We can connect you with a trusted local provider in Denver today.</p>
+        <a href="/contact/" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request a Free Quote
+        </a>
+      </div>
+
+      <div class="mt-12">
+        <DisclosureBlock text="Denver Junk Help is an independent quote and referral website. We are not affiliated with the City and County of Denver government. Information about city programs is provided for educational purposes and is subject to change by the city." />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

@@ -1,0 +1,104 @@
+---
+import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
+---
+<footer class="bg-card border-t border-border pt-12 pb-24 md:pb-12 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <!-- Brand -->
+      <div>
+        <h3 class="font-serif font-semibold text-lg mb-3 text-foreground">
+          {BRAND_LEGAL}
+        </h3>
+        <p class="text-muted-foreground text-sm mb-4 leading-relaxed">
+          A local quote and referral site for junk removal in the Denver area.
+        </p>
+        <div class="flex flex-col gap-2 text-sm">
+          {PHONE_NUMBER && PHONE_HREF && (
+            <a
+              href={PHONE_HREF}
+              class="text-foreground hover:text-primary transition-colors"
+            >
+              {PHONE_NUMBER}
+            </a>
+          )}
+          <a
+            href={`mailto:${EMAIL}`}
+            class="text-foreground hover:text-primary transition-colors"
+          >
+            {EMAIL}
+          </a>
+        </div>
+      </div>
+
+      <!-- Request Service -->
+      <div>
+        <h3 class="font-semibold text-sm mb-4 text-foreground uppercase tracking-wide">
+          Request Service
+        </h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li>
+            <a href="/furniture-removal/" class="text-muted-foreground hover:text-primary transition-colors">
+              Furniture Removal
+            </a>
+          </li>
+          <li>
+            <a href="/appliance-removal/" class="text-muted-foreground hover:text-primary transition-colors">
+              Appliance Removal
+            </a>
+          </li>
+          <li>
+            <a href="/cleanouts/" class="text-muted-foreground hover:text-primary transition-colors">
+              Garage &amp; Basement Cleanouts
+            </a>
+          </li>
+          <li>
+            <a href="/contact/" class="text-muted-foreground hover:text-primary transition-colors">
+              Request a Quote
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Information -->
+      <div>
+        <h3 class="font-semibold text-sm mb-4 text-foreground uppercase tracking-wide">
+          Information
+        </h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li>
+            <a href="/pricing-faq/" class="text-muted-foreground hover:text-primary transition-colors">
+              Pricing &amp; FAQ
+            </a>
+          </li>
+          <li>
+            <a href="/denver-large-item-pickup-vs-junk-removal/" class="text-muted-foreground hover:text-primary transition-colors">
+              Denver City Pickup Guide
+            </a>
+          </li>
+          <li>
+            <a href="/privacy-policy/" class="text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a href="/terms-of-use/" class="text-muted-foreground hover:text-primary transition-colors">
+              Terms of Use
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-border pt-8 mt-8 space-y-3">
+      <p class="text-xs text-muted-foreground leading-relaxed max-w-2xl">
+        {BRAND_LEGAL} is not a junk removal company and does not operate
+        removal trucks. Service availability, final pricing, and job
+        completion are handled by the independent provider that responds to
+        your request.
+      </p>
+      <p class="text-xs text-muted-foreground">
+        &copy; 2026 {BRAND_LEGAL}. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

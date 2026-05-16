@@ -1,0 +1,417 @@
+---
+import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
+---
+
+<div class="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm" id="quote-form-wrapper">
+  {!FORM_ENDPOINT && (
+    <div class="mb-6 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
+      <strong>Note:</strong> Quote requests are not yet active. Set <code>FORM_ENDPOINT</code> in
+      <code>src/config.ts</code> before launch.
+    </div>
+  )}
+
+  <!-- Success state (hidden by default) -->
+  <div id="form-success" class="hidden bg-primary/5 border border-primary/20 rounded-xl p-8 text-center">
+    <div class="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+      <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h3 class="text-xl font-serif font-bold text-foreground mb-3">Request received</h3>
+    <p class="text-muted-foreground text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+      Thank you. Your request details have been received. A local provider
+      in the Denver area may reach out to discuss pricing, availability, and
+      next steps.
+    </p>
+    {!FORM_ENDPOINT && (
+      <p class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-5 max-w-xs mx-auto">
+        Form endpoint not yet configured. Quote requests are not being sent.
+      </p>
+    )}
+    <button
+      id="form-reset-btn"
+      class="inline-flex items-center justify-center bg-background border border-border text-foreground text-sm font-semibold px-5 py-2 rounded-full hover:bg-muted transition-colors"
+    >
+      Submit another request
+    </button>
+  </div>
+
+  <!-- Form -->
+  <form id="quote-form" novalidate class="space-y-7">
+    <!-- Hidden attribution fields -->
+    <input type="hidden" name="utm_source" id="f-utm_source" />
+    <input type="hidden" name="utm_medium" id="f-utm_medium" />
+    <input type="hidden" name="utm_campaign" id="f-utm_campaign" />
+    <input type="hidden" name="utm_term" id="f-utm_term" />
+    <input type="hidden" name="gclid" id="f-gclid" />
+    <input type="hidden" name="msclkid" id="f-msclkid" />
+    <input type="hidden" name="fbclid" id="f-fbclid" />
+    <input type="hidden" name="referrer" id="f-referrer" />
+    <input type="hidden" name="landing_page" id="f-landing_page" />
+    <input type="hidden" name="timestamp" id="f-timestamp" />
+    <input type="hidden" name="device_type" id="f-device_type" />
+
+    <!-- Contact info -->
+    <div class="space-y-5">
+      <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+        Your contact info
+      </p>
+
+      <div>
+        <label for="f-fullName" class="form-label">
+          Name <span class="text-destructive">*</span>
+        </label>
+        <input
+          type="text"
+          id="f-fullName"
+          name="fullName"
+          placeholder="Jane Doe"
+          autocomplete="name"
+          class="form-input"
+        />
+        <p class="form-error hidden" id="err-fullName">Please enter your name.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label for="f-phone" class="form-label">
+            Phone <span class="text-destructive">*</span>
+          </label>
+          <input
+            type="tel"
+            id="f-phone"
+            name="phone"
+            placeholder="(720) 555-0123"
+            autocomplete="tel"
+            class="form-input"
+          />
+          <p class="form-error hidden" id="err-phone">Please enter a valid phone number.</p>
+        </div>
+        <div>
+          <label for="f-email" class="form-label">
+            Email <span class="text-muted-foreground font-normal text-xs">(optional)</span>
+          </label>
+          <input
+            type="email"
+            id="f-email"
+            name="email"
+            placeholder="jane@example.com"
+            autocomplete="email"
+            class="form-input"
+          />
+          <p class="form-error hidden" id="err-email">Please enter a valid email address.</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="f-zipCode" class="form-label">
+          ZIP code or service address <span class="text-destructive">*</span>
+        </label>
+        <input
+          type="text"
+          id="f-zipCode"
+          name="zipCode"
+          placeholder="80202 or 123 Main St, Denver"
+          class="form-input"
+        />
+        <p class="form-error hidden" id="err-zipCode">Please enter your ZIP code or address.</p>
+      </div>
+    </div>
+
+    <!-- Job details -->
+    <div class="space-y-5">
+      <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+        Job details
+      </p>
+
+      <div>
+        <p class="form-label">
+          What needs to go? <span class="text-destructive">*</span>
+        </p>
+        <div class="grid grid-cols-2 gap-2 mt-1">
+          {[
+            { id: 'furniture', label: 'Furniture' },
+            { id: 'appliances', label: 'Appliances' },
+            { id: 'mattress', label: 'Mattress / bed' },
+            { id: 'yard-debris', label: 'Yard debris' },
+            { id: 'boxes-bags', label: 'Boxes / bags' },
+            { id: 'mixed-junk', label: 'Mixed junk' },
+            { id: 'other', label: 'Other' },
+          ].map(item => (
+            <label class="flex flex-row items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                name="items"
+                value={item.id}
+                class="form-checkbox"
+              />
+              <span class="text-sm text-foreground leading-tight">{item.label}</span>
+            </label>
+          ))}
+        </div>
+        <p class="form-error hidden" id="err-items">Please select at least one item type.</p>
+      </div>
+
+      <div>
+        <label for="f-description" class="form-label">
+          Describe what needs to go <span class="text-destructive">*</span>
+        </label>
+        <textarea
+          id="f-description"
+          name="description"
+          placeholder="e.g. A large sectional couch, a mini fridge, and about 10 boxes of misc junk from the garage"
+          rows="3"
+          class="form-input resize-y min-h-[90px]"
+        ></textarea>
+        <p class="form-error hidden" id="err-description">Please briefly describe what needs to go.</p>
+      </div>
+
+      <div>
+        <label for="f-timeframe" class="form-label">
+          Preferred timeframe <span class="text-destructive">*</span>
+        </label>
+        <select id="f-timeframe" name="timeframe" class="form-input">
+          <option value="">Select timeframe</option>
+          <option value="asap">ASAP / same day</option>
+          <option value="1-2days">Within 1–2 days</option>
+          <option value="this-week">This week</option>
+          <option value="flexible">Flexible</option>
+        </select>
+        <p class="form-error hidden" id="err-timeframe">Please select your preferred timeframe.</p>
+      </div>
+    </div>
+
+    <!-- Optional details -->
+    <div class="space-y-5">
+      <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+        Optional details <span class="font-normal normal-case">(help the provider give a better estimate)</span>
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label for="f-propertyType" class="form-label">Property type</label>
+          <select id="f-propertyType" name="propertyType" class="form-input">
+            <option value="">Select type</option>
+            <option value="home">House / condo</option>
+            <option value="apartment">Apartment / rental</option>
+            <option value="business">Business / commercial</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-jobSize" class="form-label">Approximate job size</label>
+          <select id="f-jobSize" name="jobSize" class="form-input">
+            <option value="">Select size</option>
+            <option value="single">Single item</option>
+            <option value="small">Small load (truck bed)</option>
+            <option value="half">Half load</option>
+            <option value="full">Full load</option>
+            <option value="notsure">Not sure</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="f-location" class="form-label">Item location / access</label>
+        <select id="f-location" name="location" class="form-input">
+          <option value="">Select location</option>
+          <option value="ground">Ground floor / curbside</option>
+          <option value="upstairs">Upstairs (requires stairs)</option>
+          <option value="basement">Basement</option>
+          <option value="outside">Outside / garage / storage unit</option>
+        </select>
+      </div>
+
+      <div>
+        <p class="form-label">Preferred contact method</p>
+        <div class="flex flex-row gap-5 mt-1">
+          {[
+            { value: 'phone', label: 'Phone call' },
+            { value: 'text', label: 'Text' },
+            { value: 'email', label: 'Email' },
+          ].map(opt => (
+            <label class="flex items-center gap-2 cursor-pointer text-sm text-foreground">
+              <input
+                type="radio"
+                name="contactMethod"
+                value={opt.value}
+                checked={opt.value === 'phone'}
+                class="form-radio"
+              />
+              {opt.label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <!-- Photo upload — coming soon -->
+      <div>
+        <p class="text-sm font-medium text-foreground mb-2">
+          Photos{' '}
+          <span class="text-muted-foreground font-normal text-xs">(optional — helps estimate accurately)</span>
+        </p>
+        <div class="border-2 border-dashed border-border rounded-lg p-5 flex flex-col items-center justify-center text-center bg-muted/30">
+          <span class="text-sm text-muted-foreground">Photo upload coming soon</span>
+          <p class="text-xs text-muted-foreground mt-1">
+            Describe your items in detail above to help the provider estimate accurately.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consent -->
+    <div class="flex flex-row items-start space-x-3 bg-muted/40 p-4 rounded-lg border border-border">
+      <input
+        type="checkbox"
+        id="f-consent"
+        name="consent"
+        class="form-checkbox mt-0.5"
+      />
+      <div class="space-y-1">
+        <label for="f-consent" class="text-xs leading-snug cursor-pointer text-muted-foreground block">
+          By submitting this form, you agree that {BRAND_LEGAL} may share your
+          request details with an independent local provider who may contact you about
+          your junk removal request. <span class="text-destructive">*</span>
+        </label>
+        <p class="form-error hidden" id="err-consent">Please agree to continue.</p>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      id="submit-btn"
+      class="w-full flex items-center justify-center bg-primary text-primary-foreground text-base font-semibold h-13 py-3.5 rounded-full shadow-sm hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+    >
+      Submit Quote Request
+    </button>
+  </form>
+</div>
+
+<script define:vars={{ formEndpoint: FORM_ENDPOINT }}>
+  (function() {
+    const form = document.getElementById('quote-form');
+    const wrapper = document.getElementById('quote-form-wrapper');
+    const successEl = document.getElementById('form-success');
+    const resetBtn = document.getElementById('form-reset-btn');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function getParams() {
+      const p = new URLSearchParams(window.location.search);
+      return {
+        utm_source: p.get('utm_source') || '',
+        utm_medium: p.get('utm_medium') || '',
+        utm_campaign: p.get('utm_campaign') || '',
+        utm_term: p.get('utm_term') || '',
+        gclid: p.get('gclid') || '',
+        msclkid: p.get('msclkid') || '',
+        fbclid: p.get('fbclid') || '',
+      };
+    }
+
+    function setHidden(id, val) {
+      const el = document.getElementById('f-' + id);
+      if (el) el.value = val;
+    }
+
+    function showError(id, show) {
+      const el = document.getElementById('err-' + id);
+      const input = document.getElementById('f-' + id) || document.querySelector('[name="' + id + '"]');
+      if (el) el.classList.toggle('hidden', !show);
+      if (input) input.classList.toggle('error', show);
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.form-error').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+    }
+
+    function validate() {
+      clearErrors();
+      let valid = true;
+
+      const fullName = document.getElementById('f-fullName').value.trim();
+      if (fullName.length < 2) { showError('fullName', true); valid = false; }
+
+      const phone = document.getElementById('f-phone').value.trim();
+      if (phone.length < 7) { showError('phone', true); valid = false; }
+
+      const email = document.getElementById('f-email').value.trim();
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', true); valid = false; }
+
+      const zip = document.getElementById('f-zipCode').value.trim();
+      if (zip.length < 5) { showError('zipCode', true); valid = false; }
+
+      const items = Array.from(document.querySelectorAll('[name="items"]:checked'));
+      if (items.length === 0) { showError('items', true); valid = false; }
+
+      const desc = document.getElementById('f-description').value.trim();
+      if (desc.length < 5) { showError('description', true); valid = false; }
+
+      const timeframe = document.getElementById('f-timeframe').value;
+      if (!timeframe) { showError('timeframe', true); valid = false; }
+
+      const consent = document.getElementById('f-consent').checked;
+      if (!consent) { showError('consent', true); valid = false; }
+
+      return valid;
+    }
+
+    function showSuccess() {
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+    }
+
+    resetBtn?.addEventListener('click', () => {
+      form.reset();
+      clearErrors();
+      successEl.classList.add('hidden');
+      form.classList.remove('hidden');
+    });
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending request…';
+
+      // Populate attribution fields
+      const params = getParams();
+      Object.entries(params).forEach(([k, v]) => setHidden(k, v));
+      setHidden('referrer', document.referrer);
+      setHidden('landing_page', window.location.href);
+      setHidden('timestamp', new Date().toISOString());
+      setHidden('device_type', /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop');
+
+      if (formEndpoint) {
+        try {
+          const formData = new FormData(form);
+          const data = {};
+          for (const [key, val] of formData.entries()) {
+            if (data[key]) {
+              data[key] = [].concat(data[key], val);
+            } else {
+              data[key] = val;
+            }
+          }
+          const res = await fetch(formEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error('Server error');
+          showSuccess();
+        } catch {
+          alert('There was a problem submitting your request. Please try again or contact us directly.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Quote Request';
+        }
+      } else {
+        // No endpoint — show success without sending (clearly disclosed above)
+        await new Promise(r => setTimeout(r, 600));
+        showSuccess();
+      }
+    });
+  })();
+</script>

@@ -1,1 +1,9 @@
-/* /index.html 200
+# Redirects from old React SPA routes to new Astro static URLs
+/pricing       /pricing-faq/        301
+/pricing/      /pricing-faq/        301
+/city-guide    /denver-large-item-pickup-vs-junk-removal/  301
+/city-guide/   /denver-large-item-pickup-vs-junk-removal/  301
+/privacy       /privacy-policy/     301
+/privacy/      /privacy-policy/     301
+/terms         /terms-of-use/       301
+/terms/        /terms-of-use/       301

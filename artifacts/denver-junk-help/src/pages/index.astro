@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import Hero from '../components/Hero.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import { SITE_URL } from '../config';
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Is DenverJunkHelp.com the junk removal company?",
+      acceptedAnswer: { "@type": "Answer", text: "No. DenverJunkHelp.com is a local quote and referral website. We help people in Denver request service from an independent local provider. We do not operate trucks or perform hauling ourselves." },
+    },
+    {
+      "@type": "Question",
+      name: "How does the quote process work?",
+      acceptedAnswer: { "@type": "Answer", text: "Tell us what needs to go by filling out the quick request form. We forward your details to an independent local provider in Denver. They may contact you directly to discuss pricing, availability, and next steps." },
+    },
+    {
+      "@type": "Question",
+      name: "Is same-day junk removal available?",
+      acceptedAnswer: { "@type": "Answer", text: "Same-day or next-day options may be available depending on provider availability and your location. Submitting your request early in the day gives you the best chance of a quick response." },
+    },
+    {
+      "@type": "Question",
+      name: "What items can usually be taken?",
+      acceptedAnswer: { "@type": "Answer", text: "Most household junk, furniture, appliances, yard debris, and bulky items. Some items like hazardous materials, certain electronics, and paint may require separate handling. The provider can advise on specific items." },
+    },
+    {
+      "@type": "Question",
+      name: "Do you serve apartments and businesses?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. Homeowners, renters, landlords, property managers, and businesses can all request junk removal quotes through this site." },
+    },
+  ],
+});
+
+const services = [
+  {
+    title: "Furniture Removal",
+    desc: "Couches, dressers, tables, beds, and bulky pieces from homes and rentals.",
+    link: "/furniture-removal/",
+    icon: `<path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v2H6v-2a2 2 0 0 0-4 0z"/><path d="M4 18v2"/><path d="M20 18v2"/><path d="M12 4v9"/>`,
+  },
+  {
+    title: "Appliance Removal",
+    desc: "Fridges, washers, dryers, stoves, water heaters, and more.",
+    link: "/appliance-removal/",
+    icon: `<path d="M5 6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6z"/><path d="M5 10h14"/><path d="M10 4v6"/>`,
+  },
+  {
+    title: "Mattress Removal",
+    desc: "Mattresses, box springs, and bed frames of all sizes.",
+    link: "/furniture-removal/",
+    icon: `<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>`,
+  },
+  {
+    title: "Garage &amp; Basement Cleanouts",
+    desc: "Full or partial cleanouts for garages, basements, and storage spaces.",
+    link: "/cleanouts/",
+    icon: `<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>`,
+  },
+  {
+    title: "Yard Debris",
+    desc: "Branches, clippings, dirt, and outdoor waste and materials.",
+    link: "/contact/",
+    icon: `<path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3A1 1 0 0 1 15.2 9H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>`,
+  },
+  {
+    title: "Bulky &amp; Mixed Junk",
+    desc: "Mixed loads, boxes, heavy items, and general household junk.",
+    link: "/contact/",
+    icon: `<path d="M20.91 8.84 8.56 2.23a1 1 0 0 0-.97 0L3.09 4.65a1 1 0 0 0 0 1.71l12.35 6.61a1 1 0 0 0 .97 0l4.5-2.41a1 1 0 0 0 0-1.72z"/><path d="m3.09 8.84 12.35 6.61a1 1 0 0 0 .97 0l4.5-2.41"/><line x1="12" x2="12" y1="22" y2="11.5"/>`,
+  },
+];
+
+const trustItems = [
+  { label: "Same-day or next-day options may be available", icon: `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>` },
+  { label: "Photo details welcome — helps get an accurate quote", icon: `<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>` },
+  { label: "Homes, apartments, rentals, and businesses", icon: `<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18z"/><path d="M6 12H4a2 2 0 0 0-2 2v8h4"/><path d="M18 9h2a2 2 0 0 1 2 2v11h-4"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>` },
+  { label: "No obligation to proceed after getting a quote", icon: `<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/>` },
+];
+
+const faqItems = [
+  { question: "Is DenverJunkHelp.com the junk removal company?", answer: "No. DenverJunkHelp.com is a local quote and referral website. We help people in Denver request junk removal service from an independent local provider. We do not operate trucks or perform hauling ourselves." },
+  { question: "How does the quote process work?", answer: "Tell us what needs to go by filling out the request form. We forward your details to an independent local provider in Denver. They may contact you directly to discuss pricing, availability, and next steps." },
+  { question: "Is same-day junk removal available?", answer: "Same-day or next-day options may be available depending on provider availability and your location. Submitting your request early in the day gives you the best chance of a quick response." },
+  { question: "What items can usually be taken?", answer: "Most household junk, furniture, appliances, yard debris, and bulky items. Some items like hazardous materials, certain electronics, and paint may require separate handling. The provider can advise on specific items when they review your request." },
+  { question: "Do you serve apartments and businesses?", answer: "Yes. Homeowners, renters, landlords, property managers, and businesses can all request junk removal quotes through this site." },
+];
+---
+
+<BaseLayout
+  title="Junk Removal Help in Denver | Request a Local Quote | DenverJunkHelp.com"
+  description="Request a local junk removal quote in the Denver area. We help connect you with an independent local provider for furniture removal, appliance pickup, cleanouts, and bulky junk."
+  canonical={`${SITE_URL}/`}
+  schema={faqSchema}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <Hero
+      title="Junk removal help in Denver"
+      subhead="Request a local quote for furniture removal, appliance pickup, cleanouts, yard debris, bulky items, and more."
+      primaryCtaText="Request My Quote"
+      primaryCtaLink="/contact/"
+      showDisclosure={true}
+    />
+
+    <!-- Trust panel -->
+    <section class="border-b border-border bg-background py-5 px-6" aria-label="Why request here">
+      <ul class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {trustItems.map(item => (
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-primary mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" set:html={item.icon} />
+            <span class="text-sm text-muted-foreground leading-snug">{item.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-4 text-foreground tracking-tight">
+        What you can request help with
+      </h2>
+      <p class="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
+        Tell us what needs to go. A local provider will review your request and may contact you with next steps.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map(svc => (
+          <a href={svc.link} class="block group">
+            <div class="bg-card border border-border rounded-xl p-6 h-full hover:border-primary/50 hover:shadow-md transition-all">
+              <svg class="w-9 h-9 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true" set:html={svc.icon} />
+              <h3 class="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors" set:html={svc.title} />
+              <p class="text-muted-foreground text-sm leading-relaxed">{svc.desc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="py-20 px-6 bg-muted/30 border-y border-border">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-16 text-foreground tracking-tight">
+          How it works
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {[
+            { n: "1", title: "Tell us what needs to go", body: "Fill out the quick request form or call. Describe your items and where they are — photos are welcome and help a lot." },
+            { n: "2", title: "Your request is forwarded", body: "We forward your details to an independent local provider in the Denver area." },
+            { n: "3", title: "A local provider may contact you", body: "The provider reviews your request and may reach out to discuss pricing, availability, and scheduling." },
+          ].map((step, i) => (
+            <div class="text-center relative">
+              <div class="w-14 h-14 bg-primary text-primary-foreground text-xl font-bold rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm z-10 relative">
+                {step.n}
+              </div>
+              {i < 2 && (
+                <div class="hidden md:block absolute top-7 left-[58%] w-full h-[2px] bg-border z-0" />
+              )}
+              <h3 class="text-lg font-bold text-foreground mb-3">{step.title}</h3>
+              <p class="text-muted-foreground leading-relaxed text-sm">{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Sections -->
+    <section class="py-20 px-6 max-w-4xl mx-auto space-y-16">
+      <article class="bg-card border border-border p-8 md:p-10 rounded-2xl shadow-sm">
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
+          Denver city pickup vs. private junk removal
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          Some jobs may qualify for Denver's free bulk item pickup program. Others — particularly
+          urgent jobs, full cleanouts, or items the city won't collect — typically require a
+          private hauler. We put together a plain-English guide to help you figure out which
+          option fits your situation.
+        </p>
+        <a
+          href="/denver-large-item-pickup-vs-junk-removal/"
+          class="text-primary font-semibold hover:underline inline-flex items-center gap-1"
+        >
+          Read the comparison guide
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </article>
+
+      <div>
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
+          What affects junk removal pricing
+        </h2>
+        <p class="text-muted-foreground leading-relaxed">
+          Pricing depends on the volume of items (how much space they take in the truck), item
+          type, how accessible they are (stairs, elevators, basement), whether disassembly is
+          needed, and your timing. A clear description of your job helps providers give a more
+          accurate estimate before they arrive.{" "}
+          <a href="/pricing-faq/" class="text-primary hover:underline font-medium">
+            See how pricing generally works &rarr;
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
+          Denver and nearby areas
+        </h2>
+        <p class="text-muted-foreground leading-relaxed">
+          We help route requests in Denver and nearby areas including Aurora, Lakewood, Arvada,
+          Englewood, Westminster, Littleton, and Commerce City. Provider availability in all
+          areas is not guaranteed — the provider who responds to your request will confirm
+          whether they can serve your location.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ & Form -->
+    <section class="py-20 px-6 bg-muted/20 border-t border-border">
+      <div class="max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-center mb-10 text-foreground tracking-tight">
+          Common questions
+        </h2>
+        <FaqAccordion items={faqItems} />
+      </div>
+
+      <div class="max-w-2xl mx-auto" id="quote-form">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-3">
+            Request a local junk removal quote
+          </h2>
+          <p class="text-muted-foreground text-sm">
+            Tell us what needs to go. A local provider in the Denver area will review your
+            request and may contact you with next steps.
+          </p>
+        </div>
+        <QuoteForm />
+      </div>
+    </section>
+
+    <section class="px-6 pb-10 max-w-3xl mx-auto">
+      <DisclosureBlock />
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

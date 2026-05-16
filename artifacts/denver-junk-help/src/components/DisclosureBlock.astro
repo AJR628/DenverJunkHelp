@@ -1,0 +1,16 @@
+---
+export interface Props {
+  text?: string;
+}
+
+const DEFAULT_TEXT =
+  'DenverJunkHelp.com is a local quote and referral website. We help people in the Denver area request junk removal service from an independent local provider. We do not perform hauling or disposal services ourselves.';
+
+const { text = DEFAULT_TEXT } = Astro.props;
+---
+<aside
+  class="bg-muted/60 text-muted-foreground px-5 py-4 text-xs text-center border border-border rounded-md my-8 leading-relaxed"
+  aria-label="Service disclosure"
+>
+  {text}
+</aside>
