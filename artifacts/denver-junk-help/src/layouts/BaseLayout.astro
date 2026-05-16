@@ -27,10 +27,11 @@ const ogDescResolved = ogDescription ?? description;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="theme-color" content="#2C6E47" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
@@ -45,6 +46,8 @@ const ogDescResolved = ogDescription ?? description;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={`${SITE_URL}/opengraph.jpg`} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="DenverJunkHelp.com" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />

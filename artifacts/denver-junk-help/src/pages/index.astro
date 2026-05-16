@@ -58,7 +58,7 @@ const services = [
   {
     title: "Mattress Removal",
     desc: "Mattresses, box springs, and bed frames of all sizes.",
-    link: "/furniture-removal/",
+    link: "/mattress-removal/",
     icon: `<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>`,
   },
   {
@@ -69,14 +69,14 @@ const services = [
   },
   {
     title: "Yard Debris",
-    desc: "Branches, clippings, dirt, and outdoor waste and materials.",
-    link: "/contact/",
+    desc: "Branches, clippings, leaves, old fencing, and post-storm cleanup.",
+    link: "/yard-debris/",
     icon: `<path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3A1 1 0 0 1 15.2 9H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/><path d="M12 22v-3"/>`,
   },
   {
     title: "Bulky &amp; Mixed Junk",
     desc: "Mixed loads, boxes, heavy items, and general household junk.",
-    link: "/contact/",
+    link: "/what-we-take/",
     icon: `<path d="M20.91 8.84 8.56 2.23a1 1 0 0 0-.97 0L3.09 4.65a1 1 0 0 0 0 1.71l12.35 6.61a1 1 0 0 0 .97 0l4.5-2.41a1 1 0 0 0 0-1.72z"/><path d="m3.09 8.84 12.35 6.61a1 1 0 0 0 .97 0l4.5-2.41"/><line x1="12" x2="12" y1="22" y2="11.5"/>`,
   },
 ];
@@ -112,6 +112,8 @@ const faqItems = [
       subhead="Request a local quote for furniture removal, appliance pickup, cleanouts, yard debris, bulky items, and more."
       primaryCtaText="Request My Quote"
       primaryCtaLink="/contact/"
+      secondaryCtaText="See how pricing works"
+      secondaryCtaHref="/pricing-faq/"
       showDisclosure={true}
     />
 
@@ -145,6 +147,14 @@ const faqItems = [
             </div>
           </a>
         ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/what-we-take/" class="text-primary font-semibold hover:underline inline-flex items-center gap-1">
+          See the full list of what providers take &mdash; and don&rsquo;t
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
       </div>
     </section>
 
@@ -182,10 +192,10 @@ const faqItems = [
           Denver city pickup vs. private junk removal
         </h2>
         <p class="text-muted-foreground leading-relaxed mb-6">
-          Some jobs may qualify for Denver's free bulk item pickup program. Others — particularly
-          urgent jobs, full cleanouts, or items the city won't collect — typically require a
-          private hauler. We put together a plain-English guide to help you figure out which
-          option fits your situation.
+          Some jobs may qualify for Denver's free Large Item Pickup program. Others &mdash;
+          urgent jobs, full cleanouts, or items the city won't collect &mdash; typically require a
+          private hauler. We put together a plain-English guide that walks through the
+          city's programs and when each one is the right call.
         </p>
         <a
           href="/denver-large-item-pickup-vs-junk-removal/"
@@ -208,7 +218,7 @@ const faqItems = [
           needed, and your timing. A clear description of your job helps providers give a more
           accurate estimate before they arrive.{" "}
           <a href="/pricing-faq/" class="text-primary hover:underline font-medium">
-            See how pricing generally works &rarr;
+            See pricing ranges and how quotes work &rarr;
           </a>
         </p>
       </div>
@@ -218,10 +228,13 @@ const faqItems = [
           Denver and nearby areas
         </h2>
         <p class="text-muted-foreground leading-relaxed">
-          We help route requests in Denver and nearby areas including Aurora, Lakewood, Arvada,
-          Englewood, Westminster, Littleton, and Commerce City. Provider availability in all
-          areas is not guaranteed — the provider who responds to your request will confirm
-          whether they can serve your location.
+          We help route requests in Denver and nearby metro areas including Aurora, Lakewood, Arvada,
+          Westminster, Thornton, Englewood, Littleton, Centennial, and Commerce City. Provider availability in all
+          areas is not guaranteed &mdash; the provider who responds to your request will confirm
+          whether they can serve your location.{" "}
+          <a href="/service-area/" class="text-primary hover:underline font-medium">
+            See the full service area &rarr;
+          </a>
         </p>
       </div>
     </section>

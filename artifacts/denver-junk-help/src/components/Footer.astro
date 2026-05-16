@@ -1,9 +1,10 @@
 ---
 import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
+const currentYear = new Date().getFullYear();
 ---
 <footer class="bg-card border-t border-border pt-12 pb-24 md:pb-12 px-6">
   <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
       <!-- Brand -->
       <div>
         <h3 class="font-serif font-semibold text-lg mb-3 text-foreground">
@@ -47,8 +48,18 @@ import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
             </a>
           </li>
           <li>
+            <a href="/mattress-removal/" class="text-muted-foreground hover:text-primary transition-colors">
+              Mattress Removal
+            </a>
+          </li>
+          <li>
             <a href="/cleanouts/" class="text-muted-foreground hover:text-primary transition-colors">
               Garage &amp; Basement Cleanouts
+            </a>
+          </li>
+          <li>
+            <a href="/yard-debris/" class="text-muted-foreground hover:text-primary transition-colors">
+              Yard Debris
             </a>
           </li>
           <li>
@@ -66,6 +77,11 @@ import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
         </h3>
         <ul class="flex flex-col gap-3 text-sm">
           <li>
+            <a href="/what-we-take/" class="text-muted-foreground hover:text-primary transition-colors">
+              What We Take
+            </a>
+          </li>
+          <li>
             <a href="/pricing-faq/" class="text-muted-foreground hover:text-primary transition-colors">
               Pricing &amp; FAQ
             </a>
@@ -73,6 +89,25 @@ import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
           <li>
             <a href="/denver-large-item-pickup-vs-junk-removal/" class="text-muted-foreground hover:text-primary transition-colors">
               Denver City Pickup Guide
+            </a>
+          </li>
+          <li>
+            <a href="/service-area/" class="text-muted-foreground hover:text-primary transition-colors">
+              Service Area
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- About / Legal -->
+      <div>
+        <h3 class="font-semibold text-sm mb-4 text-foreground uppercase tracking-wide">
+          About
+        </h3>
+        <ul class="flex flex-col gap-3 text-sm">
+          <li>
+            <a href="/about/" class="text-muted-foreground hover:text-primary transition-colors">
+              About this Site
             </a>
           </li>
           <li>
@@ -97,7 +132,7 @@ import { PHONE_NUMBER, PHONE_HREF, EMAIL, BRAND_LEGAL } from '../config';
         your request.
       </p>
       <p class="text-xs text-muted-foreground">
-        &copy; 2026 {BRAND_LEGAL}. All rights reserved.
+        &copy; {currentYear} {BRAND_LEGAL}. All rights reserved.
       </p>
     </div>
   </div>

@@ -6,16 +6,28 @@ import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SITE_URL } from '../config';
 
+const ranges = [
+  { label: 'Single item (minimum charge)', range: '$95 – $175', note: 'Most providers have a floor for showing up.' },
+  { label: 'Quarter truck load', range: '$150 – $275', note: 'Roughly a small couch and a few boxes.' },
+  { label: 'Half truck load', range: '$275 – $425', note: 'A medium furniture pickup or partial garage.' },
+  { label: 'Three-quarter truck load', range: '$400 – $550', note: 'A larger room cleanout.' },
+  { label: 'Full truck load', range: '$500 – $750+', note: 'A full garage, basement, or large cleanout.' },
+  { label: 'Refrigerator or freezer', range: '+ $25 – $75', note: 'Surcharge on top of base, for refrigerant handling.' },
+  { label: 'Heavy items (concrete, dirt, sod)', range: 'priced separately', note: 'Dense loads are priced by weight, not volume.' },
+];
+
 const faqs = [
-  { question: "Is Denver Junk Help the hauling company?", answer: "No. Denver Junk Help is a local quote and referral website. We help people in Denver request service from a trusted local provider. We don't operate trucks or perform hauling ourselves." },
-  { question: "How does the quote process work?", answer: "Fill out the quote form or call us. We review your request and route it to a local junk-removal provider in Denver. The provider will contact you to discuss details, confirm pricing, and schedule service." },
+  { question: "Is Denver Junk Help the hauling company?", answer: "No. Denver Junk Help is a local quote and referral website. We help people in Denver request service from an independent local provider. We don't operate trucks or perform hauling ourselves." },
+  { question: "How does the quote process work?", answer: "Fill out the quote form or call us. We forward your request to a local junk-removal provider in Denver. The provider will contact you to discuss details, confirm pricing, and schedule service." },
   { question: "Do you offer same-day junk removal?", answer: "Same-day options may be available depending on provider availability and your location. Submit a request early in the day for the best chance of a same-day response." },
   { question: "What affects final pricing?", answer: "Final pricing typically depends on volume (how much truck space your items take), the type of items, accessibility (like flights of stairs), disassembly needs, and timing." },
-  { question: "What items can usually be taken?", answer: "Most household junk, furniture, appliances, yard debris, and bulky items. Standard residential and commercial waste is generally accepted." },
-  { question: "What items usually cannot be taken?", answer: "Hazardous waste, certain chemicals, liquid paint, some electronics, and medical waste. These may require separate specialized disposal. The provider will advise on specific items they cannot accept." },
-  { question: "Can I upload photos?", answer: "Photos help the provider give a much more accurate quote before they arrive at your property. You can describe your items in detail using the quote form." },
+  { question: "Are the prices on this page guaranteed?", answer: "No. The ranges shown on this page are general market context based on typical pricing for junk removal in the Denver area. They are not a quote, not a promise, and not set by DenverJunkHelp.com. Your actual price is determined by the independent local provider after they review your specific job." },
+  { question: "What items can usually be taken?", answer: "Most household junk, furniture, appliances, yard debris, and bulky items. Standard residential and commercial waste is generally accepted. See the What We Take page for a fuller list." },
+  { question: "What items usually cannot be taken?", answer: "Hazardous waste, full propane tanks, certain chemicals, liquid paint, some electronics, and medical waste. These may require separate specialized disposal. The provider will advise on specific items they cannot accept." },
+  { question: "Can I upload photos?", answer: "Photo upload is coming. For now, describing your items clearly on the quote form helps the provider give a much more accurate estimate before they arrive." },
   { question: "Do you serve apartments and businesses?", answer: "Yes. Homeowners, renters, landlords, property managers, and commercial customers can all request service." },
   { question: "What if I only have one item?", answer: "Single-item pickups are common. Just describe what it is (e.g., 'one standard mattress' or 'one refrigerator') and where it is on the quote form." },
 ];
@@ -32,8 +44,8 @@ const schemaData = JSON.stringify({
 ---
 
 <BaseLayout
-  title="Junk Removal Pricing in Denver | How Quotes Work | Denver Junk Help"
-  description="Learn how junk removal pricing works in Denver, cost factors, and read our frequently asked questions about the quote process."
+  title="Junk Removal Pricing in Denver | Cost Ranges & FAQ | DenverJunkHelp.com"
+  description="How junk removal pricing works in Denver: cost ranges by truck load size, what affects final price, and frequently asked questions about the quote process."
   canonical={`${SITE_URL}/pricing-faq/`}
   schema={schemaData}
 >
@@ -43,54 +55,89 @@ const schemaData = JSON.stringify({
 
     <div class="bg-card border-b border-border py-16 px-6">
       <div class="max-w-4xl mx-auto">
-        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">How Junk Removal Pricing Works in Denver</h1>
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Pricing & FAQ' },
+        ]} />
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">How junk removal pricing works in Denver</h1>
         <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-          Transparency matters. While we don't set the final prices ourselves, we want you to understand exactly how private haulers calculate their quotes.
+          Transparency matters. We don&rsquo;t set final prices, but here&rsquo;s how private haulers in Denver typically build their quotes &mdash; and a realistic range to anchor your expectations.
         </p>
       </div>
     </div>
 
     <section class="py-16 px-6 max-w-4xl mx-auto border-b border-border">
       <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground">
-        <h2>The "Load-Based" Pricing Model</h2>
+        <h2>The &ldquo;load-based&rdquo; pricing model</h2>
         <p>
-          Most private junk removal companies price their services based on <strong>volume</strong> — specifically, how much space your items take up inside their truck.
+          Most private junk removal companies in Denver price their services based on <strong>volume</strong> &mdash; specifically, how much space your items take up inside their truck.
         </p>
         <p>
           Trucks are usually measured in cubic yards. Providers will often quote you based on fractions of a truck: a minimum charge (for single items), a quarter load, a half load, a three-quarter load, or a full load.
         </p>
 
-        <h2>Key Cost Factors</h2>
+        <h2>Key cost factors</h2>
         <p>When a provider reviews your quote request, they consider several factors to determine the price:</p>
         <ul>
           <li><strong>Volume:</strong> The pure physical footprint of the items.</li>
-          <li><strong>Item Type:</strong> Dense, extremely heavy items like dirt, concrete, or roofing shingles cost more to dump at transfer stations. Appliances like refrigerators have specific recycling fees due to Freon.</li>
-          <li><strong>Labor and Access:</strong> Are the items sitting in the driveway, or do they need to be carried up from a basement or down three flights of apartment stairs? Difficult access increases the labor time.</li>
+          <li><strong>Item type:</strong> Dense, extremely heavy items like dirt, concrete, or roofing shingles cost more to dump at transfer stations. Refrigerators and AC units have specific recycling fees due to refrigerants.</li>
+          <li><strong>Labor and access:</strong> Are the items sitting in the driveway, or do they need to be carried up from a basement or down three flights of apartment stairs? Difficult access increases the labor time.</li>
           <li><strong>Disassembly:</strong> If a massive entertainment center or shed needs to be broken down before it can be moved, that adds time to the job.</li>
+          <li><strong>Timing:</strong> Same-day or weekend service can carry a small premium versus a job booked a few days out.</li>
         </ul>
-
-        <div class="bg-muted p-6 rounded-xl mt-8">
-          <h3 class="font-bold text-foreground m-0 mb-2">Why photos are important</h3>
-          <p class="m-0 text-base">
-            Because pricing is visual and volume-based, <strong>photos are the best way to get an accurate estimate</strong> without an in-person visit. When you use our quote form, describing your items clearly helps the local provider understand exactly what they're dealing with.
-          </p>
-        </div>
       </article>
     </section>
 
-    <section class="py-16 px-6 max-w-3xl mx-auto">
-      <h2 class="text-3xl font-serif font-bold text-center mb-10 text-foreground">Frequently Asked Questions</h2>
-      <FaqAccordion items={faqs} />
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-foreground mb-4">Typical Denver-area price ranges</h2>
+      <p class="text-muted-foreground leading-relaxed mb-8 max-w-3xl">
+        These ranges are general market context for the Denver metro area, not a quote and not set by us. Your actual price depends on your specific items, where they are, and which independent provider responds. Treat these as guardrails to recognize when a quote sounds reasonable.
+      </p>
 
-      <div class="mt-12 text-center">
-        <a href="/contact/" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:bg-primary/90 transition-colors shadow-sm">
-          Request Your Quote Today
+      <div class="bg-card border border-border rounded-xl overflow-hidden mb-6">
+        <table class="w-full text-sm">
+          <thead class="bg-muted">
+            <tr class="text-left">
+              <th class="px-5 py-3 font-semibold text-foreground">Job size</th>
+              <th class="px-5 py-3 font-semibold text-foreground">Typical range</th>
+              <th class="px-5 py-3 font-semibold text-foreground hidden sm:table-cell">What it usually means</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ranges.map((row, i) => (
+              <tr class={i % 2 === 1 ? 'bg-muted/30' : ''}>
+                <td class="px-5 py-4 font-medium text-foreground align-top">{row.label}</td>
+                <td class="px-5 py-4 text-foreground font-mono text-sm align-top whitespace-nowrap">{row.range}</td>
+                <td class="px-5 py-4 text-muted-foreground align-top hidden sm:table-cell">{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-5 text-sm text-amber-900 leading-relaxed">
+        <strong>How to read this table:</strong> These are typical market ranges in the Denver metro &mdash; not a quote, not a promise, and not set by DenverJunkHelp.com. Final pricing is determined by the independent provider that responds to your request. If a quote you receive is dramatically outside this range, it&rsquo;s reasonable to ask the provider what specifically is driving the price.
+      </div>
+
+      <div class="mt-12 bg-muted p-8 rounded-xl border border-border text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Want an actual quote?</h3>
+        <p class="text-muted-foreground mb-6">Describe what needs to go and where &mdash; a local provider can give you a real number.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
         </a>
       </div>
     </section>
 
+    <section class="py-16 px-6 max-w-3xl mx-auto">
+      <h2 class="text-3xl font-serif font-bold text-center mb-10 text-foreground">Frequently asked questions</h2>
+      <FaqAccordion items={faqs} />
+    </section>
+
     <section class="px-6 pb-12 max-w-4xl mx-auto">
-      <DisclosureBlock text="Denver Junk Help is a local quote and referral website. We help people in Denver request junk-removal service from a trusted local provider. We do not perform hauling or disposal services ourselves. Final pricing is determined by the independent provider." />
+      <DisclosureBlock text="DenverJunkHelp.com is a local quote and referral website. Pricing ranges shown are general market context only — they are not a quote, not a promise, and not set by us. The independent local provider that responds to your request determines your final price." />
     </section>
 
   </main>

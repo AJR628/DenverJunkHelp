@@ -2,9 +2,10 @@
 import { BRAND_DISPLAY, LOCATION_LABEL, PHONE_NUMBER, PHONE_HREF } from '../config';
 
 const links = [
-  { href: '/furniture-removal/', label: 'Furniture Removal' },
-  { href: '/appliance-removal/', label: 'Appliance Removal' },
+  { href: '/furniture-removal/', label: 'Furniture' },
+  { href: '/appliance-removal/', label: 'Appliances' },
   { href: '/cleanouts/', label: 'Cleanouts' },
+  { href: '/what-we-take/', label: 'What We Take' },
   { href: '/pricing-faq/', label: 'Pricing & FAQ' },
 ];
 
@@ -13,27 +14,42 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <div class="flex h-16 items-center justify-between px-6 max-w-7xl mx-auto">
     <!-- Logo -->
-    <a href="/" class="flex flex-col leading-none hover:opacity-80 transition-opacity">
-      <span class="font-serif font-bold text-lg md:text-xl text-foreground tracking-tight">
-        {BRAND_DISPLAY}
+    <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+      <span class="inline-flex items-center justify-center w-9 h-9 rounded-md bg-primary text-primary-foreground" aria-hidden="true">
+        <!-- Simple "JH" monogram glyph -->
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4v12a4 4 0 0 0 4 4"/>
+          <path d="M14 4v16"/>
+          <path d="M20 4v16"/>
+          <path d="M14 12h6"/>
+        </svg>
       </span>
-      <span class="text-xs text-muted-foreground font-medium tracking-wide uppercase">
-        {LOCATION_LABEL}
+      <span class="flex flex-col leading-none">
+        <span class="font-serif font-bold text-lg md:text-xl text-foreground tracking-tight">
+          {BRAND_DISPLAY}
+        </span>
+        <span class="text-[10px] md:text-xs text-muted-foreground font-medium tracking-wide uppercase mt-0.5">
+          {LOCATION_LABEL}
+        </span>
       </span>
     </a>
 
     <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          class={`text-sm font-medium transition-colors hover:text-primary ${
-            currentPath === link.href ? 'text-primary' : 'text-muted-foreground'
-          }`}
-        >
-          {link.label}
-        </a>
-      ))}
+    <nav class="hidden md:flex items-center gap-5" aria-label="Main navigation">
+      {links.map((link) => {
+        const isActive = currentPath === link.href;
+        return (
+          <a
+            href={link.href}
+            class={`text-sm font-medium transition-colors hover:text-primary ${
+              isActive ? 'text-primary' : 'text-muted-foreground'
+            }`}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        );
+      })}
       <a
         href="/contact/"
         class="ml-2 inline-flex items-center justify-center bg-primary text-primary-foreground text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:bg-primary/90 transition-colors"
@@ -73,16 +89,38 @@ const currentPath = Astro.url.pathname;
     <a href="/" class="text-base font-medium py-3 border-b border-border text-foreground block">
       Home
     </a>
-    {links.map((link) => (
-      <a
-        href={link.href}
-        class={`text-base font-medium py-3 border-b border-border block ${
-          currentPath === link.href ? 'text-primary' : 'text-foreground'
-        }`}
-      >
-        {link.label}
-      </a>
-    ))}
+    {links.map((link) => {
+      const isActive = currentPath === link.href;
+      return (
+        <a
+          href={link.href}
+          class={`text-base font-medium py-3 border-b border-border block ${
+            isActive ? 'text-primary' : 'text-foreground'
+          }`}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      );
+    })}
+    <a
+      href="/denver-large-item-pickup-vs-junk-removal/"
+      class="text-base font-medium py-3 border-b border-border text-foreground block"
+    >
+      Denver City Pickup Guide
+    </a>
+    <a
+      href="/service-area/"
+      class="text-base font-medium py-3 border-b border-border text-foreground block"
+    >
+      Service Area
+    </a>
+    <a
+      href="/about/"
+      class="text-base font-medium py-3 border-b border-border text-foreground block"
+    >
+      About
+    </a>
     <div class="pt-4 flex flex-col gap-3">
       <a
         href="/contact/"

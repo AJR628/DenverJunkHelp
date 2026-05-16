@@ -5,12 +5,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SITE_URL } from '../config';
 ---
 
 <BaseLayout
-  title="Denver Large Item Pickup vs Private Junk Removal | What's the Difference"
-  description="Compare Denver's free city large item pickup program with private junk removal services. Find out which option is best for your situation."
+  title="Denver Large Item Pickup vs Private Junk Removal | A Plain Comparison"
+  description="Should you wait for Denver's free Large Item Pickup or hire a private hauler? A plain-English comparison of city programs and private junk removal services."
   canonical={`${SITE_URL}/denver-large-item-pickup-vs-junk-removal/`}
 >
   <UtilityBar />
@@ -19,15 +20,19 @@ import { SITE_URL } from '../config';
 
     <div class="bg-card border-b border-border py-16 px-6">
       <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Denver City Pickup vs. Private' },
+        ]} />
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
           </svg>
           <span>Local Denver Guide</span>
         </div>
-        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">Denver Large Item Pickup vs. Private Junk Removal</h1>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">Denver large item pickup vs. private junk removal</h1>
         <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-          Not sure if you should wait for the city truck or hire a private hauler? Here is a plain-english breakdown of your options in Denver.
+          Not sure if you should wait for the city truck or hire a private hauler? Here&rsquo;s a plain-English breakdown of your options in Denver.
         </p>
       </div>
     </div>
@@ -35,43 +40,70 @@ import { SITE_URL } from '../config';
     <section class="py-16 px-6 max-w-4xl mx-auto">
       <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
         <p>
-          If you live in Denver and need to get rid of big items, you generally have two main paths: the city's solid waste management services, or hiring a private junk removal company. Both are good options, but they serve very different needs.
+          If you live in Denver and need to get rid of big items, you generally have two main paths: a city program run through Denver&rsquo;s Solid Waste Management division, or hiring a private junk removal company. Both are good options, but they serve very different needs.
         </p>
 
-        <h2>1. Denver City Large Item Pickup</h2>
+        <h2>1. Denver&rsquo;s city programs</h2>
         <p>
-          The City and County of Denver provides Large Item Pickup (sometimes called Extra Trash) for qualifying residential customers.
+          The City and County of Denver runs several waste programs through its Solid Waste Management (SWM) division. The most relevant for getting rid of big stuff is the Large Item Pickup program (sometimes still called Extra Trash), but Denver also offers separate programs that can fit specific situations.
         </p>
 
-        <h3>When City Pickup is a Good Option:</h3>
+        <h3>The main city programs to know</h3>
         <ul>
-          <li><strong>You are a qualifying customer:</strong> You must live in a single-family home or an apartment building with 7 or fewer units that receives city trash collection.</li>
-          <li><strong>You only have a few items:</strong> The city enforces limits per household (typically 5 items maximum per collection).</li>
-          <li><strong>You have time:</strong> Collections are scheduled on specific weeks throughout the year based on your neighborhood, not on-demand.</li>
-          <li><strong>You can move it yourself:</strong> You must place the items at your normal trash collection point (alley or curb) yourself. City workers will not enter your home or property.</li>
+          <li>
+            <strong>Large Item Pickup (Extra Trash):</strong> Scheduled bulk pickup on a route cycle that varies by neighborhood. Items must be set out at your normal trash collection point. There is a limit on items per pickup (commonly around 5 large items). Confirm the current limits and your route on the City of Denver&rsquo;s Solid Waste page.
+          </li>
+          <li>
+            <strong>Compost and seasonal leaf drop-off:</strong> Denver runs a compost program and a fall leaf drop-off at city-designated locations. This is the right path for bagged leaves, garden waste, and yard cleanup &mdash; not the trash truck.
+          </li>
+          <li>
+            <strong>Household Hazardous Waste (HHW):</strong> A separate, free program for paints, solvents, batteries, fluorescent bulbs, pesticides, and similar items. This is where propane tanks, motor oil, and pool chemicals go &mdash; not the curb.
+          </li>
+          <li>
+            <strong>eCycle Denver:</strong> Denver supports periodic electronics recycling drop-offs for residents who need to retire TVs, computers, monitors, and similar items. Standard trash pickup typically does not take these.
+          </li>
+          <li>
+            <strong>Appliance recycling:</strong> Refrigerators, freezers, and AC units contain refrigerants that must be recovered before recycling. The city has a separate appliance recycling path with a small fee in many cases.
+          </li>
         </ul>
 
-        <div class="bg-muted p-5 rounded-lg border border-border my-6 text-base">
-          <strong>Note on City Appliance &amp; E-Waste Programs:</strong> Denver has separate specialized programs for appliance recycling and electronics recycling, often requiring an appointment or drop-off. They are usually not picked up during standard large item days.
-        </div>
+        <h3>When city pickup is the right call</h3>
+        <ul>
+          <li><strong>You qualify for city trash service:</strong> Generally single-family homes and small multi-family buildings on the city collection route.</li>
+          <li><strong>You only have a few items:</strong> Item-count limits apply per collection cycle.</li>
+          <li><strong>Your timing is flexible:</strong> Routes run on a published schedule, not on-demand. Depending on the cycle, your next pickup window could be days or weeks out.</li>
+          <li><strong>You can move it yourself:</strong> City crews collect from your normal trash point at the alley or curb. They don&rsquo;t enter homes or carry items down stairs.</li>
+        </ul>
 
-        <h2>2. Private Junk Removal Services</h2>
-        <p>
-          Private junk removal providers are independent businesses. When you request a quote through Denver Junk Help, you are reaching out to one of these private, local haulers.
+        <p class="text-sm">
+          For the current rules, item limits, and your specific pickup schedule, the source of truth is the City and County of Denver&rsquo;s Solid Waste Management website. Program details can change, and they&rsquo;ll always have the most up-to-date information.
         </p>
 
-        <h3>When Private Removal is the Better Option:</h3>
+        <h2>2. Private junk removal services</h2>
+        <p>
+          Private junk removal providers are independent businesses. When you submit a quote request through Denver Junk Help, you&rsquo;re asking to be connected to one of these private, local haulers.
+        </p>
+
+        <h3>When private removal is the better option</h3>
         <ul>
-          <li><strong>You need it gone now:</strong> Private haulers can often provide next-day or even same-day service. You don't have to wait weeks for your neighborhood's scheduled cycle.</li>
-          <li><strong>You need inside help:</strong> If an item is too heavy to move to the curb, a private crew will come inside your house, basement, or apartment to do the heavy lifting for you.</li>
-          <li><strong>You live in a large complex:</strong> If you live in a large apartment building (8+ units) or manage a commercial property, you likely don't qualify for city collection and must use a private service.</li>
-          <li><strong>You have a massive amount of junk:</strong> Full property cleanouts, garage cleanings, or massive piles of yard debris exceed city limits and require a private truck.</li>
-          <li><strong>You have complex items:</strong> Private haulers often take items the city restricts, or have the connections to properly dispose of tricky items.</li>
+          <li><strong>You need it gone now:</strong> Private haulers can often provide next-day or same-day service. You don&rsquo;t have to wait for your neighborhood&rsquo;s scheduled cycle.</li>
+          <li><strong>You need inside help:</strong> If an item is too heavy to move to the curb, a private crew will come inside your house, basement, or apartment to do the heavy lifting.</li>
+          <li><strong>You live in a large complex:</strong> Larger apartment buildings (typically 8+ units) and managed commercial properties generally don&rsquo;t qualify for city collection and need a private service.</li>
+          <li><strong>You have a serious amount of stuff:</strong> Full property cleanouts, garage cleanings, or massive yard debris piles exceed city limits and require a private truck.</li>
+          <li><strong>You have items the city restricts:</strong> Private haulers will often take items that wouldn&rsquo;t fit the city Large Item program &mdash; though some items (hazardous chemicals, propane tanks) need to go through HHW regardless of who&rsquo;s hauling.</li>
+        </ul>
+
+        <h2>Quick decision guide</h2>
+        <p>Most people in Denver end up in one of three buckets:</p>
+        <ul>
+          <li><strong>Wait for the city.</strong> One or two large items, flexible timing, easy curbside access &mdash; the city Large Item Pickup is built for this and costs nothing extra beyond your trash bill.</li>
+          <li><strong>City-specific program.</strong> Hazardous chemicals or paint? Old TV or computer? Pile of leaves in November? Use the matching program (HHW, eCycle, compost / leaf drop) rather than either trash or a private hauler.</li>
+          <li><strong>Hire a private hauler.</strong> Urgent timing, items inside the house, more than a handful of large items, a full cleanout, an apartment building, or a commercial property &mdash; a private provider is the practical option.</li>
         </ul>
 
         <h2>Summary</h2>
         <p>
-          If you have a single couch, live in a qualifying house, can drag it to the alley, and don't mind waiting a few weeks — use the city service. It's built into the infrastructure.
+          If you have a single couch, live in a qualifying house, can drag it to the alley, and don&rsquo;t mind waiting a few weeks &mdash; use the city service. It&rsquo;s built into your trash bill.
         </p>
         <p>
           If you have an urgent timeline, need heavy items carried out of your living room, or are dealing with a full cleanout, a private junk removal provider is the right tool for the job.
@@ -80,14 +112,14 @@ import { SITE_URL } from '../config';
 
       <div class="bg-card border border-border p-8 rounded-xl text-center shadow-sm">
         <h3 class="font-serif text-2xl font-bold text-foreground mb-4">Need private hauling?</h3>
-        <p class="text-muted-foreground mb-6">We can connect you with a trusted local provider in Denver today.</p>
+        <p class="text-muted-foreground mb-6">Tell us what needs to go &mdash; we can forward your request to a local provider.</p>
         <a href="/contact/" class="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:bg-primary/90 transition-colors">
-          Request a Free Quote
+          Request a Quote
         </a>
       </div>
 
       <div class="mt-12">
-        <DisclosureBlock text="Denver Junk Help is an independent quote and referral website. We are not affiliated with the City and County of Denver government. Information about city programs is provided for educational purposes and is subject to change by the city." />
+        <DisclosureBlock text="DenverJunkHelp.com is an independent quote and referral website. We are not affiliated with the City and County of Denver. Information about city programs is provided for general guidance; rules, item limits, and pickup schedules are set by the city and can change. Always verify current details on Denver’s Solid Waste Management website before you rely on them." />
       </div>
     </section>
 

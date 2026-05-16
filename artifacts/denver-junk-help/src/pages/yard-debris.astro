@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL } from '../config';
+---
+
+<BaseLayout
+  title="Yard Debris Removal in Denver | Branch, Leaf & Yard Waste Pickup"
+  description="Need yard debris hauled in Denver? Request a quote for branch removal, leaf bags, shrub trimmings, old sod, and post-storm cleanup from a local provider."
+  canonical={`${SITE_URL}/yard-debris/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Yard Debris' },
+        ]} />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m17 14 3 3.3a1 1 0 0 1-.7 1.7H4.7a1 1 0 0 1-.7-1.7L7 14h-.3a1 1 0 0 1-.7-1.7L9 9h-.2A1 1 0 0 1 8 7.3L12 3l4 4.3A1 1 0 0 1 15.2 9H15l3 3.3a1 1 0 0 1-.7 1.7H17z"/>
+          </svg>
+          <span>Yard Debris</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Yard debris removal in Denver
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Branches after a spring snow, an overgrown shrub line, bags of leaves the city missed &mdash; private haulers can take loads of yard debris when the city program doesn&rsquo;t fit your timing.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <p>
+          Denver yards generate seasonal waves of debris &mdash; spring cleanup, wet snow that snaps branches, fall leaf drops, and the occasional shrub removal or tree trim. The City of Denver runs a seasonal leaf drop program in the fall, and standard trash pickup will sometimes take bagged yard waste, but neither of those covers every situation.
+        </p>
+
+        <h2>Common yard debris removal jobs</h2>
+        <ul>
+          <li><strong>Branches and brush:</strong> Trimmings from a tree or shrub, often after a snow or wind storm.</li>
+          <li><strong>Bagged leaves:</strong> Fall cleanup that exceeds what city trash will take in a single week.</li>
+          <li><strong>Old sod and dirt:</strong> Left over from a small landscaping project (note: dirt and concrete are dense and may be priced separately).</li>
+          <li><strong>Old fencing and landscaping timbers:</strong> Wooden fence panels, retaining timbers, raised-bed remains.</li>
+          <li><strong>Outdoor furniture and grills:</strong> Patio sets, broken grills, fire pits, kids&rsquo; play structures.</li>
+          <li><strong>Storm cleanup:</strong> Post-storm debris piles that need to be gone before the next mow.</li>
+        </ul>
+
+        <h2>What affects pricing</h2>
+        <p>
+          Yard debris is priced like other junk removal &mdash; mostly by the volume it takes up in the truck. A few extras to know:
+        </p>
+        <ul>
+          <li><strong>Density matters:</strong> Wet leaves, dirt, sod, and concrete are heavier per cubic yard than typical household junk, and disposal fees at transfer stations may reflect that.</li>
+          <li><strong>Loose vs. bagged:</strong> Pre-bagged debris is usually faster to load than a loose brush pile, which can translate to a slightly better quote.</li>
+          <li><strong>Where it&rsquo;s staged:</strong> Curbside is easiest. Backyard pickups, especially through narrow side gates, add labor.</li>
+        </ul>
+
+        <h2>City of Denver vs. private hauling for yard waste</h2>
+        <p>
+          The City of Denver offers seasonal leaf drop-off locations in the fall, and ordinary household waste collection includes some yard waste depending on your collection setup. Private haulers are usually the right choice when you have more debris than weekly pickup can handle, when timing is urgent (selling a home, weekend cleanup), or when the debris isn&rsquo;t something city collection accepts (large branches, fencing, sod).
+        </p>
+        <p>
+          The longer comparison guide goes deeper on what the city covers:{' '}
+          <a href="/denver-large-item-pickup-vs-junk-removal/" class="text-primary hover:underline font-medium">Denver city pickup vs. private junk removal &rarr;</a>
+        </p>
+      </article>
+
+      <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Got a yard cleanup?</h3>
+        <p class="text-muted-foreground mb-6">Describe the pile, the access, and your timing &mdash; we&rsquo;ll forward it to a local provider.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <QuoteForm />
+
+      <div class="mt-12">
+        <DisclosureBlock />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>
