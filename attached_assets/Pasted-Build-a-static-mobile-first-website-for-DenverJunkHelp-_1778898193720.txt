@@ -1,0 +1,264 @@
+Build a static, mobile-first website for DenverJunkHelp.com.
+
+Project name:
+Denver Junk Help
+
+Purpose:
+A clean, trustworthy local quote and referral site for junk removal in the Denver area.
+This site should feel like a serious local intake desk for junk-removal service.
+It should NOT claim to be the hauling company.
+It should sound close to the work and operationally helpful, but accurate about its role.
+
+Core positioning:
+“Denver Junk Help is a local quote and referral website that helps people in Denver request junk-removal service from a trusted local provider.”
+
+Voice and tone:
+- Plainspoken
+- Helpful
+- Local
+- Calm
+- Trustworthy
+- Not gimmicky
+- Not salesy
+- Not detached
+- Not corporate-franchise hype
+- No fake urgency
+- No “#1 best in Denver”
+- No fake claims about crews, trucks, licensing, or insurance
+
+Public pages for V1:
+1. Home
+2. Furniture Removal
+3. Appliance Removal
+4. Cleanouts
+5. Pricing & FAQ
+6. Denver Large Item Pickup vs Private Junk Removal
+7. Contact / Quote Request
+8. Privacy Policy
+9. Terms of Use
+
+Design direction:
+- Warm off-white / light neutral background
+- Dark charcoal text
+- Deep green or navy accent
+- One muted warm accent color
+- Modern sans-serif typography
+- Large readable headings
+- Clean spacing
+- Subtle borders/cards
+- Very little animation
+- Realistic home-service feel
+- No cartoon trucks
+- No mascot branding
+- No autoplay video
+- No popups
+- No testimonial carousel
+- No fake review badges
+- No fake address
+- No fake team photos
+
+Mobile behavior:
+- Sticky bottom CTA bar on mobile with only:
+  - Call
+  - Request Quote
+- All important copy must be present on mobile, not hidden away
+- Fast load, simple JS
+
+Homepage structure:
+- Utility bar:
+  “Local quote help for Denver junk removal”
+- Header nav:
+  Home
+  Furniture Removal
+  Appliance Removal
+  Cleanouts
+  Pricing & FAQ
+  Contact
+- Hero:
+  H1: Need junk removed in Denver?
+  Subhead: Denver Junk Help helps homeowners, renters, landlords, and businesses request service from a trusted local provider for furniture removal, appliance pickup, cleanouts, and bulky junk.
+  Primary CTA: Request My Quote
+  Secondary CTA: Call for Fast Help
+  Trust line:
+  “Photo quotes welcome • Homes, rentals, and businesses • Same-day options may be available”
+- What we help remove section:
+  Furniture
+  Appliances
+  Mattresses
+  Garage / basement / estate cleanouts
+  Yard debris
+  Bulky items
+- How it works section:
+  1. Tell us what needs to go
+  2. We review and route your request
+  3. A local provider contacts you
+- City alternatives section:
+  Short explanation that some jobs may qualify for Denver city services and some need a private hauler
+  Link to guide page: Denver Large Item Pickup vs Private Junk Removal
+- Pricing factors section:
+  Explain that final pricing usually depends on:
+  volume, item type, access, stairs, disassembly, and timing
+- Service area snapshot:
+  Denver plus nearby metro examples in one short section
+  Mention areas like Aurora, Lakewood, Arvada, Englewood, Westminster, Littleton, and Commerce City naturally
+- FAQ preview:
+  5 or 6 short FAQs
+- Quote form
+- Footer disclosure
+
+Required disclosures:
+Homepage/body disclosure:
+“Denver Junk Help is a local quote and referral website. We help people in Denver request junk-removal service from a trusted local provider. We do not perform hauling or disposal services ourselves.”
+
+Form consent text:
+“By submitting this form, you agree that Denver Junk Help may share your request details with a local junk-removal provider so they can contact you about service, pricing, and availability.”
+
+Footer disclosure:
+“Denver Junk Help is not a junk-removal company and does not operate removal trucks. Service availability, final pricing, and job completion are handled by the provider that responds to your request.”
+
+Quote form fields:
+- Full name
+- Phone
+- Email
+- ZIP code or service address
+- Property type
+- What needs to go
+- Short item description
+- Approximate job size
+- Item location / access
+- Preferred timeframe
+- Preferred contact method
+- Photo upload UI placeholder
+- Consent checkbox
+
+Include hidden field placeholders / data hooks for later backend work:
+- utm_source
+- utm_medium
+- utm_campaign
+- utm_term
+- gclid
+- referrer
+- landing_page
+- timestamp
+- device_type
+
+Copy requirements:
+- Original copy only
+- Local relevance to Denver
+- No copied competitor phrasing
+- Do not say “our trucks,” “our crews,” or “book your pickup” in a way that implies Denver Junk Help performs the hauling
+- You may say:
+  “request service”
+  “request a quote”
+  “call for fast help”
+  “a local provider may contact you”
+  “same-day options may be available”
+- Keep paragraphs fairly short
+- Use specific headings
+- Avoid keyword stuffing
+
+Page-specific content:
+Furniture Removal page:
+- couches, dressers, tables, mattresses, bulky furniture
+- homes, apartments, rentals
+- mention access and stairs as price factors
+
+Appliance Removal page:
+- refrigerators, washers, dryers, stoves, dishwashers, water heaters
+- mention that some items may have special disposal requirements
+- mention Denver city appliance collection as an option for qualifying residents
+
+Cleanouts page:
+- garage cleanouts
+- basement cleanouts
+- estate cleanouts
+- rental / move-out cleanouts
+- storage-unit style jobs
+- emphasize larger projects and coordination
+
+Pricing & FAQ page:
+- explain load-based / estimate-based pricing in plain English
+- explain typical cost factors
+- include FAQs:
+  Is Denver Junk Help the hauling company?
+  How does the quote process work?
+  Do you offer same-day junk removal?
+  What affects final pricing?
+  What items can usually be taken?
+  What items usually cannot be taken?
+  Can I upload photos?
+  Do you serve apartments and businesses?
+  What if I only have one item?
+
+Denver city guide page:
+- compare Denver Large Item Pickup with private junk removal
+- explain city schedule limitations in a general informative way
+- explain when private hauling is more useful:
+  urgent timing
+  more than city limits
+  full cleanouts
+  inside pickups
+  heavier labor
+- mention separate city options for appliances, hazardous waste, and electronics
+- stay accurate and informational
+
+Contact page:
+- simple contact/quote UI
+- no fake office if there isn’t one
+- can show brand email placeholder and phone placeholder only
+
+Technical SEO requirements:
+- unique title tag on every page
+- unique meta description on every page
+- one clear H1 per page
+- canonical tags
+- Open Graph tags
+- favicon
+- robots.txt
+- XML sitemap
+- semantic HTML
+- accessible labels on all form fields
+- visible focus states
+- strong color contrast
+- FAQ accordion only if accessible
+- Organization or WebSite schema only
+- FAQPage schema only where FAQ content is visible on-page
+- Do NOT use LocalBusiness schema representing Denver Junk Help as the hauler
+- do not add fake aggregate ratings
+
+Performance requirements:
+- static output
+- minimal JavaScript
+- optimized images
+- lazy-load below-the-fold images
+- good Lighthouse mobile performance target
+- no large external libraries unless necessary
+
+Architecture:
+- Prefer Astro or very simple static HTML/CSS/JS
+- Reusable components:
+  Header
+  Utility bar
+  Hero
+  Service cards
+  How-it-works section
+  FAQ block
+  Quote form
+  Sticky mobile CTA
+  Footer
+  Disclosure block
+- Content should be easy to edit later
+
+Integrations / placeholders:
+- placeholder phone number
+- placeholder email
+- placeholder GA4 script slot
+- placeholder Search Console verification slot
+- placeholder form endpoint
+- placeholder call tracking number slot
+
+Deliverables:
+- Working local preview
+- Clean file structure
+- Instructions for deployment to Netlify or Cloudflare Pages
+- Clear notes showing where to plug in analytics, form endpoint, and future backend logic
