@@ -1,0 +1,271 @@
+Audit and polish the DenverJunkHelp.com V1 static site. Do not rebuild from scratch.
+
+Goal:
+Make the site feel more trustworthy, local, polished, and conversion-ready while keeping the transparent lead/referral model.
+
+This is a local junk removal lead-generation site. It should feel like a clean, helpful Denver-area junk removal quote page that users trust enough to submit a request. It should not feel gimmicky, spammy, fake, overly templated, or like a detached marketplace.
+
+Important positioning:
+DenverJunkHelp.com is not claiming to be the junk removal company. The site helps users request junk removal help and may route their request to an independent local provider. However, the site should still feel connected to the actual service outcome. It should not over-explain the referral model in every section.
+
+Use language like:
+- “request a local junk removal quote”
+- “junk removal help in Denver”
+- “a local provider may contact you”
+- “same-day or next-day options may be available”
+- “tell us what needs to go”
+
+Avoid language like:
+- “our trucks”
+- “our crews”
+- “we haul”
+- “we remove your junk”
+- “book your pickup now”
+- “guaranteed same-day service”
+- “licensed and insured” unless referring to what users should ask the provider to confirm
+- fake ratings, fake badges, fake reviews, fake job counts, fake years in business
+
+Branding direction:
+The domain is DenverJunkHelp.com, but do not overuse “Denver Junk Help” as the big visible brand because it feels a little awkward.
+
+Use this visible branding instead:
+- Header/logo text: “Junk Removal Help”
+- Small location label near the logo or hero: “Denver Metro”
+- Hero H1: “Junk removal help in Denver”
+- SEO title/meta can still include “Denver Junk Help”
+- Footer can say “DenverJunkHelp.com”
+
+Suggested brand hierarchy:
+Header:
+Junk Removal Help
+Denver Metro
+
+Hero:
+Junk removal help in Denver
+
+Subhead:
+Request a local quote for furniture removal, appliance pickup, cleanouts, yard debris, bulky items, and more.
+
+Primary CTA:
+Request My Quote
+
+Secondary CTA:
+Call for Fast Help
+
+Disclosure near CTA:
+DenverJunkHelp.com is a referral website, not a junk removal company. We may share your request with an independent local provider who can contact you about pricing, availability, and service details.
+
+Key polish tasks:
+
+1. Improve above-the-fold trust and clarity
+- Make the first screen instantly clear:
+  - What the site does
+  - What area it serves
+  - What the user should do next
+  - That it is quote/request based
+- Add a compact trust/benefit panel below the hero CTA:
+  - Fast quote requests
+  - Photo details welcome
+  - Homes, apartments, rentals, and businesses
+  - Same-day or next-day options may be available
+- Do not add fake reviews, fake ratings, fake Google badges, fake “trusted by” badges, or fake guarantees.
+
+2. Reduce overuse of “referral website” language
+- Keep one clear disclosure near the hero.
+- Keep clear consent/disclosure language in the form.
+- Keep footer, privacy, and terms pages transparent.
+- But do not repeat “referral website” in every paragraph.
+- The main page should mostly speak in terms of “request a quote,” “local junk removal help,” and “a local provider may contact you.”
+
+3. Improve page style and visual polish
+- Make the site feel calm, modern, and local-service trustworthy.
+- Use strong spacing, readable typography, clear buttons, and restrained colors.
+- Avoid a loud franchise-style look.
+- Avoid mascot energy, coupon clutter, countdowns, sliders, popups, or excessive animation.
+- Use a warm/off-white or clean neutral background, charcoal text, and one strong accent color such as deep green, navy, or muted blue.
+- Buttons should be obvious but not aggressive.
+- Make mobile design a priority.
+
+4. Image direction
+Use commercial-use stock image placeholders only. Do not scrape random images from Google.
+
+Preferred image types:
+- Clean garage or basement cleanup
+- Furniture staged for pickup
+- Appliance removal context
+- Curbside bulky items
+- Tidy home cleanout scene
+- Neutral loading/removal imagery with no visible company logos
+- Denver/local context only if it feels natural and not cliché
+
+Avoid:
+- Fake branded trucks
+- Fake crews in uniforms
+- Company logos
+- Images that imply DenverJunkHelp.com owns trucks or performs hauling
+- AI-looking cleanup photos
+- Dirty extreme hoarder images as hero visuals
+- Overly staged call-center stock photos
+
+Add a simple docs/image-sources.md file with:
+- Image filename
+- Source placeholder
+- License/source notes
+- Reminder to replace placeholders with properly licensed commercial-use images before launch
+
+5. Make the quote form lower friction
+The form should feel quick and approachable.
+
+Required fields:
+- Name
+- Phone
+- ZIP code or service area
+- What needs to go
+- Preferred timeframe
+- Short description
+- Consent checkbox
+
+Optional fields:
+- Email
+- Photos
+- Property type
+- Approximate job size
+- Access details
+
+Consent language:
+“By submitting this form, you agree that DenverJunkHelp.com may share your request details with an independent local provider who may contact you about your junk removal request.”
+
+Important:
+- Do not show “request routed” or imply the lead was sent unless the form is actually wired to a backend or form service.
+- Until the backend/form endpoint exists, either:
+  - clearly mark the form as not connected in development, or
+  - wire it to a configurable placeholder endpoint that can be replaced later.
+- Preserve hidden attribution fields where practical:
+  - utm_source
+  - utm_medium
+  - utm_campaign
+  - utm_term
+  - gclid
+  - msclkid
+  - fbclid
+  - landing page URL
+  - referrer
+  - timestamp
+
+6. Fix launch placeholders and credibility issues
+- Replace fake phone number like (303) 555-0190 with a config constant.
+- If no real tracking number is configured, hide phone CTAs or make the primary CTA “Request Quote” only.
+- Add a clear place in config to set the future call tracking number.
+- Update Privacy Policy and Terms last-updated date to the current year/date.
+- Update copyright year to 2026.
+- Replace any Replit/default 404 copy with customer-facing copy.
+- Fix Open Graph image path so meta tags point to the actual image file.
+- Add this line to robots.txt:
+  Sitemap: https://denverjunkhelp.com/sitemap.xml
+- Ensure sitemap URLs match the real deployed route paths.
+- Add static-host deployment support for direct routes, such as Netlify _redirects if this remains a React SPA.
+
+7. SEO polish
+Keep the site honest and SEO-friendly.
+
+Use titles/meta around:
+- junk removal Denver
+- junk removal help in Denver
+- furniture removal Denver
+- appliance removal Denver
+- garage cleanout Denver
+- mattress removal Denver
+- same-day junk removal Denver
+- Denver bulky item pickup alternative
+- local junk removal quote Denver
+
+Do not keyword-stuff. Use natural service language.
+
+Make sure:
+- Each page has a unique title and meta description.
+- The homepage H1 is clear and keyword-aligned.
+- Service pages have one clear H1 and helpful H2s.
+- Internal links connect homepage, services, pricing/FAQ, contact/quote, and city pickup guide.
+- FAQ schema is only used where the FAQ is visible on the page.
+- Do not add LocalBusiness schema that implies DenverJunkHelp.com performs hauling.
+- If schema is used, keep it generic/website/organization style and avoid false service-provider claims.
+
+8. Suggested page structure to keep
+Do not add a huge number of pages yet. Keep V1 lean.
+
+Core pages:
+- Home
+- What We Take
+- Furniture Removal
+- Appliance Removal
+- Cleanouts
+- Pricing & FAQ
+- Denver Large Item Pickup vs Junk Removal
+- Contact / Request Quote
+- Privacy Policy
+- Terms of Use
+
+Optional if already present:
+- Service Area
+
+Do not create dozens of thin suburb pages yet.
+
+9. Copy tone
+Write like a calm, helpful local service coordinator.
+
+Prefer:
+- “Tell us what needs to go.”
+- “Request a local quote.”
+- “A local provider may contact you with next steps.”
+- “Pricing depends on item type, volume, access, and timing.”
+- “Some jobs may qualify for city pickup; others may require a private hauler.”
+
+Avoid:
+- “Reclaim your life today!”
+- “Best junk removal in Denver”
+- “#1”
+- “Guaranteed lowest price”
+- “Our professional crews”
+- “Our trucks are standing by”
+- “Stress-free” repeated everywhere
+- Excessive exclamation points
+- AI-sounding filler like “seamless end-to-end solution”
+
+10. Technical cleanup
+- Keep the code simple and maintainable.
+- Do not add a backend yet.
+- Do not add a database yet.
+- Do not add provider-routing logic yet.
+- Add clear config placeholders for:
+  - phone number
+  - form endpoint
+  - GA4 measurement ID
+  - Search Console verification
+  - call tracking number
+- Ensure all routes work after deploy.
+- Keep performance fast.
+- Avoid large JS bundles where possible.
+- Use semantic HTML, accessible labels, visible focus states, and readable contrast.
+- Ensure mobile sticky CTA does not cover form fields or footer content.
+
+11. Final deliverables
+After making changes, provide:
+- Summary of files changed
+- Notes on the branding update
+- Notes on form behavior and whether it is connected or placeholder-only
+- List of remaining launch tasks before the site should go live
+- Manual test checklist:
+  - homepage loads
+  - all nav links work
+  - all sitemap routes work
+  - mobile CTA works or is hidden if no number configured
+  - quote form validation works
+  - form does not falsely claim submission was routed
+  - privacy/terms pages load
+  - 404 page is customer-facing
+  - robots.txt and sitemap.xml are correct
+  - Open Graph image path works
+- Deployment notes for Netlify or Cloudflare Pages
+
+One final rule:
+Do not make the site bigger or more complex. This pass is about making the existing V1 feel more real, trustworthy, polished, and ready for tracking/lead capture.

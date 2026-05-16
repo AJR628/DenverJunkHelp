@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,43 +16,47 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FORM_ENDPOINT, BRAND_LEGAL } from "@/config";
+
+const itemTypes = [
+  { id: "furniture", label: "Furniture" },
+  { id: "appliances", label: "Appliances" },
+  { id: "mattress", label: "Mattress / bed" },
+  { id: "yard-debris", label: "Yard debris" },
+  { id: "boxes-bags", label: "Boxes / bags" },
+  { id: "mixed-junk", label: "Mixed junk" },
+  { id: "other", label: "Other" },
+];
 
 const formSchema = z.object({
-  fullName: z.string().min(2, "Full name is required"),
-  phone: z.string().min(10, "Valid phone number is required"),
-  email: z.string().email("Valid email is required"),
-  zipCode: z.string().min(5, "ZIP code is required"),
-  propertyType: z.string().min(1, "Please select a property type"),
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item type.",
-  }),
-  description: z.string().min(10, "Please briefly describe what needs to go"),
-  jobSize: z.string().min(1, "Please select an approximate job size"),
-  location: z.string().min(1, "Please select where the items are located"),
+  fullName: z.string().min(2, "Please enter your name"),
+  phone: z.string().min(7, "Please enter a valid phone number"),
+  email: z.string().email("Please enter a valid email").optional().or(z.literal("")),
+  zipCode: z.string().min(5, "Please enter your ZIP code or address"),
+  items: z.array(z.string()).min(1, "Please select at least one item type"),
+  description: z.string().min(5, "Please briefly describe what needs to go"),
   timeframe: z.string().min(1, "Please select your preferred timeframe"),
-  contactMethod: z.enum(["phone", "text", "email"], {
-    required_error: "You need to select a preferred contact method.",
-  }),
+  propertyType: z.string().optional(),
+  jobSize: z.string().optional(),
+  location: z.string().optional(),
+  contactMethod: z.enum(["phone", "text", "email"]).optional(),
   consent: z.boolean().refine((val) => val === true, {
-    message: "You must agree to the terms to submit a request.",
+    message: "Please agree to continue",
   }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const itemTypes = [
-  { id: "furniture", label: "Furniture" },
-  { id: "appliances", label: "Appliances" },
-  { id: "mattress", label: "Mattress" },
-  { id: "yard-debris", label: "Yard debris" },
-  { id: "boxes-bags", label: "Boxes/bags" },
-  { id: "mixed-junk", label: "Mixed junk" },
-  { id: "other", label: "Other" },
-];
-
 export function QuoteForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -63,75 +65,126 @@ export function QuoteForm() {
       phone: "",
       email: "",
       zipCode: "",
-      propertyType: "",
       items: [],
       description: "",
+      timeframe: "",
+      propertyType: "",
       jobSize: "",
       location: "",
-      timeframe: "",
       contactMethod: "phone",
       consent: false,
     },
   });
 
-  function onSubmit(data: FormValues) {
-    console.log("Form submitted (placeholder):", data);
-    // Simulate API call
-    setTimeout(() => {
+  async function onSubmit(data: FormValues) {
+    setIsSubmitting(true);
+
+    if (FORM_ENDPOINT) {
+      try {
+        await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...data,
+            utm_source: new URLSearchParams(window.location.search).get("utm_source") ?? "",
+            utm_medium: new URLSearchParams(window.location.search).get("utm_medium") ?? "",
+            utm_campaign: new URLSearchParams(window.location.search).get("utm_campaign") ?? "",
+            utm_term: new URLSearchParams(window.location.search).get("utm_term") ?? "",
+            gclid: new URLSearchParams(window.location.search).get("gclid") ?? "",
+            msclkid: new URLSearchParams(window.location.search).get("msclkid") ?? "",
+            fbclid: new URLSearchParams(window.location.search).get("fbclid") ?? "",
+            referrer: document.referrer,
+            landing_page: window.location.href,
+            timestamp: new Date().toISOString(),
+            device_type: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop",
+          }),
+        });
+        setIsSubmitted(true);
+      } catch {
+        alert("There was a problem submitting your request. Please try again or call us directly.");
+      }
+    } else {
+      // No endpoint configured — simulate submission in dev/placeholder mode
+      await new Promise((r) => setTimeout(r, 600));
       setIsSubmitted(true);
-    }, 800);
+    }
+
+    setIsSubmitting(false);
   }
 
   if (isSubmitted) {
     return (
-      <div className="bg-primary/5 border border-primary/20 rounded-xl p-8 text-center max-w-2xl mx-auto my-8">
-        <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-          <CheckCircle2 className="w-8 h-8 text-primary" />
+      <div className="bg-primary/5 border border-primary/20 rounded-xl p-8 text-center">
+        <div className="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+          <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
         </div>
-        <h3 className="text-2xl font-serif font-bold text-foreground mb-4">Request Received</h3>
-        <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-          Thank you. Your request has been routed to a trusted local Denver junk removal provider. They will review your details and contact you shortly to confirm pricing and availability.
+        <h3 className="text-xl font-serif font-bold text-foreground mb-3">Request received</h3>
+        <p className="text-muted-foreground text-sm mb-6 max-w-sm mx-auto leading-relaxed">
+          Thank you. Your request details have been received. A local provider
+          in the Denver area may reach out to discuss pricing, availability, and
+          next steps.
         </p>
-        <Button onClick={() => setIsSubmitted(false)} variant="outline" data-testid="button-form-reset">
-          Submit Another Request
+        {!FORM_ENDPOINT && (
+          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-5 max-w-xs mx-auto">
+            Form endpoint not yet configured. Set <code>FORM_ENDPOINT</code> in{" "}
+            <code>src/config.ts</code> before launch.
+          </p>
+        )}
+        <Button
+          onClick={() => {
+            setIsSubmitted(false);
+            form.reset();
+          }}
+          variant="outline"
+          size="sm"
+          data-testid="button-form-reset"
+        >
+          Submit another request
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6 md:p-8 max-w-2xl mx-auto shadow-sm">
-      <div className="mb-8 border-b border-border pb-6">
-        <h3 className="text-2xl font-serif font-semibold text-foreground mb-2">Request a Quote</h3>
-        <p className="text-muted-foreground text-sm">
-          Fill out the details below. We'll route your request to a local Denver provider who will contact you with pricing.
-        </p>
-      </div>
+    <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
+      {!FORM_ENDPOINT && import.meta.env.DEV && (
+        <div className="mb-6 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
+          <strong>Dev note:</strong> No form endpoint configured. Set{" "}
+          <code>FORM_ENDPOINT</code> in <code>src/config.ts</code> before launch.
+        </div>
+      )}
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          
-          {/* Hidden fields */}
-          <input type="hidden" name="utm_source" value="" />
-          <input type="hidden" name="utm_medium" value="" />
-          <input type="hidden" name="utm_campaign" value="" />
-          <input type="hidden" name="utm_term" value="" />
-          <input type="hidden" name="gclid" value="" />
-          <input type="hidden" name="referrer" value="" />
-          <input type="hidden" name="landing_page" value="" />
-          <input type="hidden" name="timestamp" value="" />
-          <input type="hidden" name="device_type" value="" />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7" noValidate>
+          {/* Hidden attribution fields — populated on submit via JS above */}
+          <input type="hidden" name="utm_source" />
+          <input type="hidden" name="utm_medium" />
+          <input type="hidden" name="utm_campaign" />
+          <input type="hidden" name="utm_term" />
+          <input type="hidden" name="gclid" />
+          <input type="hidden" name="msclkid" />
+          <input type="hidden" name="fbclid" />
+          <input type="hidden" name="referrer" />
+          <input type="hidden" name="landing_page" />
+          <input type="hidden" name="timestamp" />
+          <input type="hidden" name="device_type" />
 
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <h4 className="font-semibold text-lg text-foreground border-b border-border pb-2">Your Contact Info</h4>
-            
+          {/* Required fields */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+              Your contact info
+            </p>
+
             <FormField
               control={form.control}
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name *</FormLabel>
+                  <FormLabel>
+                    Name <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Jane Doe" {...field} data-testid="input-fullname" />
                   </FormControl>
@@ -140,29 +193,40 @@ export function QuoteForm() {
               )}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <FormField
                 control={form.control}
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number *</FormLabel>
+                    <FormLabel>
+                      Phone <span className="text-destructive">*</span>
+                    </FormLabel>
                     <FormControl>
-                      <Input type="tel" placeholder="(303) 555-0123" {...field} data-testid="input-phone" />
+                      <Input
+                        type="tel"
+                        placeholder="(720) 555-0123"
+                        {...field}
+                        data-testid="input-phone"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address *</FormLabel>
+                    <FormLabel>Email <span className="text-muted-foreground font-normal text-xs">(optional)</span></FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="jane@example.com" {...field} data-testid="input-email" />
+                      <Input
+                        type="email"
+                        placeholder="jane@example.com"
+                        {...field}
+                        data-testid="input-email"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -170,93 +234,63 @@ export function QuoteForm() {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="zipCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ZIP Code or Service Address *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="80202" {...field} data-testid="input-zip" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="propertyType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Property Type *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-property">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="home">Home</SelectItem>
-                        <SelectItem value="apartment">Apartment/Rental</SelectItem>
-                        <SelectItem value="business">Business/Commercial</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="zipCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    ZIP code or service address <span className="text-destructive">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="80202 or 123 Main St, Denver" {...field} data-testid="input-zip" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          {/* Job Details */}
-          <div className="space-y-6 pt-4 border-t border-border">
-            <h4 className="font-semibold text-lg text-foreground border-b border-border pb-2">Job Details</h4>
-            
+          {/* Job details */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+              Job details
+            </p>
+
             <FormField
               control={form.control}
               name="items"
               render={() => (
                 <FormItem>
-                  <div className="mb-4">
-                    <FormLabel className="text-base">What needs to go? *</FormLabel>
-                    <FormDescription>Select all that apply.</FormDescription>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <FormLabel>
+                    What needs to go? <span className="text-destructive">*</span>
+                  </FormLabel>
+                  <div className="grid grid-cols-2 gap-2 mt-1">
                     {itemTypes.map((item) => (
                       <FormField
                         key={item.id}
                         control={form.control}
                         name="items"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={item.id}
-                              className="flex flex-row items-start space-x-3 space-y-0"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(item.id)}
-                                  onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([...field.value, item.id])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id
-                                          )
-                                        );
-                                  }}
-                                  data-testid={`checkbox-item-${item.id}`}
-                                />
-                              </FormControl>
-                              <FormLabel className="font-normal cursor-pointer leading-tight">
-                                {item.label}
-                              </FormLabel>
-                            </FormItem>
-                          );
-                        }}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...field.value, item.id])
+                                    : field.onChange(
+                                        field.value?.filter((v) => v !== item.id)
+                                      );
+                                }}
+                                data-testid={`checkbox-item-${item.id}`}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal cursor-pointer text-sm leading-tight">
+                              {item.label}
+                            </FormLabel>
+                          </FormItem>
+                        )}
                       />
                     ))}
                   </div>
@@ -270,12 +304,14 @@ export function QuoteForm() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Short Description *</FormLabel>
+                  <FormLabel>
+                    Describe what needs to go <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="e.g., A large 3-piece sectional couch and a mini fridge" 
-                      className="resize-y min-h-[100px]" 
-                      {...field} 
+                    <Textarea
+                      placeholder="e.g. A large sectional couch, a mini fridge, and about 10 boxes of misc junk from the garage"
+                      className="resize-y min-h-[90px]"
+                      {...field}
                       data-testid="input-description"
                     />
                   </FormControl>
@@ -284,13 +320,68 @@ export function QuoteForm() {
               )}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="timeframe"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Preferred timeframe <span className="text-destructive">*</span>
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger data-testid="select-timeframe">
+                        <SelectValue placeholder="Select timeframe" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="asap">ASAP / same day</SelectItem>
+                      <SelectItem value="1-2days">Within 1–2 days</SelectItem>
+                      <SelectItem value="this-week">This week</SelectItem>
+                      <SelectItem value="flexible">Flexible</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Optional details */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-wide font-semibold text-muted-foreground border-b border-border pb-2">
+              Optional details <span className="font-normal normal-case">(help the provider give a better estimate)</span>
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <FormField
+                control={form.control}
+                name="propertyType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Property type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger data-testid="select-property">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="home">House / condo</SelectItem>
+                        <SelectItem value="apartment">Apartment / rental</SelectItem>
+                        <SelectItem value="business">Business / commercial</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="jobSize"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Approximate Job Size *</FormLabel>
+                    <FormLabel>Approximate job size</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger data-testid="select-size">
@@ -305,138 +396,131 @@ export function QuoteForm() {
                         <SelectItem value="notsure">Not sure</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Item Location / Access *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-location">
-                          <SelectValue placeholder="Select location" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="ground">Ground floor</SelectItem>
-                        <SelectItem value="upstairs">Upstairs (requires stairs)</SelectItem>
-                        <SelectItem value="basement">Basement</SelectItem>
-                        <SelectItem value="outside">Outside / Garage / Storage</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="timeframe"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Preferred Timeframe *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger data-testid="select-timeframe">
-                          <SelectValue placeholder="Select timeframe" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="asap">ASAP / same day</SelectItem>
-                        <SelectItem value="1-2days">Within 1-2 days</SelectItem>
-                        <SelectItem value="this-week">This week</SelectItem>
-                        <SelectItem value="flexible">Flexible</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="pt-2">
-              <p className="mb-3 text-base font-semibold text-foreground">Photo Upload (Optional)</p>
-              <div className="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center text-center bg-muted/30">
-                <input type="file" id="photos" accept="image/*" multiple className="hidden" />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Item location / access</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger data-testid="select-location">
+                        <SelectValue placeholder="Select location" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="ground">Ground floor / curbside</SelectItem>
+                      <SelectItem value="upstairs">Upstairs (requires stairs)</SelectItem>
+                      <SelectItem value="basement">Basement</SelectItem>
+                      <SelectItem value="outside">Outside / garage / storage unit</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="contactMethod"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel>Preferred contact method</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-row gap-5"
+                    >
+                      {[
+                        { value: "phone", label: "Phone call" },
+                        { value: "text", label: "Text" },
+                        { value: "email", label: "Email" },
+                      ].map((opt) => (
+                        <FormItem
+                          key={opt.value}
+                          className="flex items-center space-x-2 space-y-0"
+                        >
+                          <FormControl>
+                            <RadioGroupItem
+                              value={opt.value}
+                              data-testid={`radio-${opt.value}`}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal cursor-pointer text-sm">
+                            {opt.label}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <div>
+              <p className="text-sm font-medium text-foreground mb-2">
+                Photos{" "}
+                <span className="text-muted-foreground font-normal text-xs">(optional — helps estimate accurately)</span>
+              </p>
+              <div className="border-2 border-dashed border-border rounded-lg p-5 flex flex-col items-center justify-center text-center bg-muted/30">
+                <input
+                  type="file"
+                  id="photos"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  aria-label="Upload photos of items"
+                />
                 <label htmlFor="photos" className="cursor-pointer">
-                  <div className="text-primary font-medium hover:underline mb-1">Click to upload photos</div>
-                  <div className="text-sm text-muted-foreground">Photos help us estimate accurately (max 5)</div>
+                  <span className="text-primary font-medium hover:underline text-sm">
+                    Click to upload photos
+                  </span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    JPG, PNG — up to 5 files
+                  </p>
                 </label>
               </div>
             </div>
           </div>
 
-          {/* Preferences & Consent */}
-          <div className="space-y-6 pt-4 border-t border-border">
-            <FormField
-              control={form.control}
-              name="contactMethod"
-              render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormLabel>Preferred Contact Method *</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex flex-col sm:flex-row gap-4"
-                    >
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="phone" data-testid="radio-phone" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Phone call</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="text" data-testid="radio-text" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Text message</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="email" data-testid="radio-email" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Email</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
+          {/* Consent */}
+          <FormField
+            control={form.control}
+            name="consent"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 bg-muted/40 p-4 rounded-lg border border-border">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    data-testid="checkbox-consent"
+                  />
+                </FormControl>
+                <div className="space-y-1">
+                  <FormLabel className="font-normal text-xs leading-snug cursor-pointer text-muted-foreground">
+                    By submitting this form, you agree that {BRAND_LEGAL} may share your
+                    request details with an independent local provider who may contact you about
+                    your junk removal request. <span className="text-destructive">*</span>
+                  </FormLabel>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
+                </div>
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="consent"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 bg-muted/50 p-4 rounded-lg border border-border">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      data-testid="checkbox-consent"
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel className="font-normal text-sm leading-snug cursor-pointer text-muted-foreground">
-                      By submitting this form, you agree that Denver Junk Help may share your request details with a local junk-removal provider so they can contact you about service, pricing, and availability.
-                    </FormLabel>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <Button type="submit" size="lg" className="w-full text-lg h-14" disabled={form.formState.isSubmitting} data-testid="button-submit-quote">
-            {form.formState.isSubmitting ? "Submitting..." : "Submit Quote Request"}
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full text-base h-13 rounded-full font-semibold shadow-sm"
+            disabled={isSubmitting}
+            data-testid="button-submit-quote"
+          >
+            {isSubmitting ? "Sending request…" : "Submit Quote Request"}
           </Button>
         </form>
       </Form>

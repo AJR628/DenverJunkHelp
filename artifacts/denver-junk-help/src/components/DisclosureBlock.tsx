@@ -1,11 +1,17 @@
 interface DisclosureBlockProps {
-  text: string;
+  text?: string;
 }
 
-export function DisclosureBlock({ text }: DisclosureBlockProps) {
+const DEFAULT_TEXT =
+  "DenverJunkHelp.com is a local quote and referral website. We help people in the Denver area request junk removal service from an independent local provider. We do not perform hauling or disposal services ourselves.";
+
+export function DisclosureBlock({ text = DEFAULT_TEXT }: DisclosureBlockProps) {
   return (
-    <div className="bg-muted text-muted-foreground p-4 text-sm text-center border-y border-border my-8 rounded-md">
-      <p>{text}</p>
-    </div>
+    <aside
+      className="bg-muted/60 text-muted-foreground px-5 py-4 text-xs text-center border border-border rounded-md my-8 leading-relaxed"
+      aria-label="Service disclosure"
+    >
+      {text}
+    </aside>
   );
 }

@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { BRAND_LEGAL } from "@/config";
 
 interface HeroProps {
   title: string;
@@ -7,18 +8,18 @@ interface HeroProps {
   primaryCtaText?: string;
   primaryCtaLink?: string;
   secondaryCtaText?: string;
-  secondaryCtaLink?: string;
-  trustLine?: string;
+  secondaryCtaHref?: string;
+  showDisclosure?: boolean;
 }
 
-export function Hero({ 
-  title, 
-  subhead, 
-  primaryCtaText = "Request My Quote", 
-  primaryCtaLink = "/contact", 
-  secondaryCtaText = "Call for Fast Help",
-  secondaryCtaLink = "tel:3035550190",
-  trustLine = "Photo quotes welcome • Homes, rentals, and businesses • Same-day options may be available"
+export function Hero({
+  title,
+  subhead,
+  primaryCtaText = "Request My Quote",
+  primaryCtaLink = "/contact",
+  secondaryCtaText,
+  secondaryCtaHref,
+  showDisclosure = false,
 }: HeroProps) {
   return (
     <section className="bg-card pt-16 pb-20 px-6 border-b border-border">
@@ -30,16 +31,33 @@ export function Hero({
           {subhead}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-          <Button asChild size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all" data-testid="link-hero-primary">
+          <Button
+            asChild
+            size="lg"
+            className="w-full sm:w-auto text-lg h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all"
+            data-testid="link-hero-primary"
+          >
             <Link href={primaryCtaLink}>{primaryCtaText}</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-full bg-background hover:bg-muted" data-testid="link-hero-secondary">
-            <a href={secondaryCtaLink}>{secondaryCtaText}</a>
-          </Button>
+          {secondaryCtaText && secondaryCtaHref && (
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto text-lg h-14 px-8 rounded-full bg-background hover:bg-muted"
+              data-testid="link-hero-secondary"
+            >
+              <a href={secondaryCtaHref}>{secondaryCtaText}</a>
+            </Button>
+          )}
         </div>
-        <p className="text-sm text-muted-foreground font-medium flex items-center justify-center gap-2">
-          {trustLine}
-        </p>
+        {showDisclosure && (
+          <p className="text-xs text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {BRAND_LEGAL} is a referral website, not a junk removal company. We may
+            share your request with an independent local provider who can contact
+            you about pricing, availability, and service details.
+          </p>
+        )}
       </div>
     </section>
   );
