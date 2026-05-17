@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /privacy-policy/
-Disallow: /terms-of-use/
+
+# Legal pages are user-visible but are marked noindex via on-page meta tags
+# (see src/pages/privacy-policy.astro and terms-of-use.astro). They're NOT
+# blocked in robots.txt so crawlers can actually read the noindex directive —
+# blocking here would leave them indexable as snippet-less URL-only entries.
 
 Sitemap: https://denverjunkhelp.com/sitemap.xml

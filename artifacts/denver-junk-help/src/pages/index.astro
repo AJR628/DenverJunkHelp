@@ -208,29 +208,142 @@ const faqItems = [
     <!-- Who this helps -->
     <WhoThisHelps />
 
-    <!-- Info Sections -->
-    <section class="py-20 px-6 max-w-4xl mx-auto space-y-16">
-      <article class="bg-card border border-border p-8 md:p-10 rounded-2xl shadow-sm">
-        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
-          Denver city pickup vs. private junk removal
+    <!-- How we vet providers -->
+    <section class="py-20 px-6 max-w-5xl mx-auto" aria-labelledby="vet-heading">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 id="vet-heading" class="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4 tracking-tight">
+          How we think about providers
+        </h2>
+        <p class="text-muted-foreground leading-relaxed">
+          We&rsquo;re a small local site, not a marketplace. We&rsquo;re selective about which provider gets a quote request, and we&rsquo;re upfront about the basics we look for.
+        </p>
+      </div>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {[
+          {
+            title: 'Properly licensed where required',
+            body: 'Denver requires all solid waste haulers operating in the city to hold a current license, with insurance documentation and vehicle identification on file. We expect any partner working in Denver to be in good standing.',
+          },
+          {
+            title: 'Real insurance',
+            body: 'A current certificate of insurance is table stakes. Anyone driving a truck on residential property and carrying heavy items in and out of homes should be carrying liability coverage.',
+          },
+          {
+            title: 'Responsive and clear about what they take',
+            body: 'Slow or inconsistent communication is the most common complaint about junk removal. We expect providers to actually return calls and texts, and to be honest up front about items they cannot handle (hazardous materials, certain electronics, etc.).',
+          },
+          {
+            title: 'Honest with quotes',
+            body: 'Quotes should be based on the job described, with clear surcharges (refrigerant, heavy materials, stairs) called out before the truck shows up &mdash; not added at the end.',
+          },
+          {
+            title: 'Willing to say "use the city instead"',
+            body: 'If a job fits Denver&rsquo;s free Large Item Pickup, free appliance program, or E-cycle coupon better than a paid pickup, we expect the provider to say so. We will, too.',
+          },
+        ].map(item => (
+          <li class="bg-card border border-border rounded-xl p-6 flex gap-4">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary shrink-0 mt-0.5" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+            <div>
+              <h3 class="font-bold text-foreground mb-1">{item.title}</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed">{item.body}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="text-xs text-muted-foreground text-center mt-8 max-w-2xl mx-auto leading-relaxed">
+        We can&rsquo;t guarantee any specific outcome with any specific provider &mdash; that&rsquo;s between you and the company that responds. We&rsquo;re telling you what we expect on our end before we share your details with anyone.
+      </p>
+    </section>
+
+    <!-- Use the city option when it fits -->
+    <section class="py-20 px-6 bg-muted/30 border-y border-border" aria-labelledby="city-fit-heading">
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-start">
+          <div class="md:col-span-2">
+            <p class="text-xs uppercase tracking-wide font-semibold text-primary mb-3">
+              We&rsquo;ll say it when it&rsquo;s true
+            </p>
+            <h2 id="city-fit-heading" class="text-3xl md:text-4xl font-serif font-bold text-foreground mb-5 tracking-tight">
+              Use city pickup when it fits
+            </h2>
+            <p class="text-muted-foreground leading-relaxed mb-6">
+              The City and County of Denver runs several free or low-cost programs that genuinely cover a lot of jobs. If your job is one of those, you don&rsquo;t need to pay anyone &mdash; including us, eventually.
+            </p>
+            <a
+              href="/denver-large-item-pickup-vs-junk-removal/"
+              class="text-primary font-semibold hover:underline inline-flex items-center gap-1"
+            >
+              Read the city pickup comparison guide
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+          <div class="md:col-span-3 space-y-4">
+            {[
+              {
+                title: 'Large Item Pickup',
+                body: 'Every nine weeks, on your regular trash day. Up to 5 large items and 10 extra bags. Excellent for one couch, a rug, or a wrapped mattress.',
+                href: '/denver-large-item-pickup-vs-junk-removal/',
+              },
+              {
+                title: 'Free appliance collection',
+                body: 'Denver SWM picks up refrigerators, washers, dryers, water heaters, AC units, and more &mdash; free by appointment. Call SWM at (720) 913-1311.',
+                href: '/denver-appliance-disposal-guide/',
+              },
+              {
+                title: 'E-cycle coupon',
+                body: 'One discounted electronics drop-off per household per year at Blue Star Recyclers. Covers TVs, computers, monitors, and many small electronics.',
+                href: '/electronics-recycling-denver-metro/',
+              },
+            ].map(card => (
+              <a href={card.href} class="block bg-card border border-border rounded-xl p-5 hover:border-primary/50 hover:shadow-sm transition-all">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 class="font-bold text-foreground mb-1">{card.title}</h3>
+                    <p class="text-sm text-muted-foreground leading-relaxed">{card.body}</p>
+                  </div>
+                  <svg class="w-4 h-4 text-primary mt-1.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aurora works differently teaser -->
+    <section class="py-20 px-6 max-w-4xl mx-auto" aria-labelledby="aurora-teaser-heading">
+      <div class="bg-card border border-border rounded-2xl p-8 md:p-10 shadow-sm">
+        <p class="text-xs uppercase tracking-wide font-semibold text-primary mb-3">
+          Live in Aurora?
+        </p>
+        <h2 id="aurora-teaser-heading" class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
+          Aurora works differently from Denver
         </h2>
         <p class="text-muted-foreground leading-relaxed mb-6">
-          Some jobs may qualify for Denver's free Large Item Pickup program. Others &mdash;
-          urgent jobs, full cleanouts, or items the city won't collect &mdash; typically require a
-          private hauler. We put together a plain-English guide that walks through the
-          city's programs and when each one is the right call.
+          The City of Aurora doesn&rsquo;t run residential trash or recycling pickup &mdash; every household contracts with a permitted private hauler. There&rsquo;s no Denver-style nine-week bulky pickup, and storage pods or dumpsters aren&rsquo;t allowed on public streets. We wrote a separate guide for what that actually means when you have stuff to get rid of in Aurora.
         </p>
         <a
-          href="/denver-large-item-pickup-vs-junk-removal/"
-          class="text-primary font-semibold hover:underline inline-flex items-center gap-1"
+          href="/aurora-trash-pickup-vs-junk-removal/"
+          class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-full font-semibold hover:bg-primary/90 transition-colors text-sm"
         >
-          Read the comparison guide
+          Read the Aurora guide
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
           </svg>
         </a>
-      </article>
+      </div>
+    </section>
 
+    <!-- Info Sections -->
+    <section class="pb-20 px-6 max-w-4xl mx-auto space-y-16">
       <div>
         <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-4">
           What affects junk removal pricing
@@ -238,10 +351,10 @@ const faqItems = [
         <p class="text-muted-foreground leading-relaxed">
           Pricing depends on the volume of items (how much space they take in the truck), item
           type, how accessible they are (stairs, elevators, basement), whether disassembly is
-          needed, and your timing. A clear description of your job helps providers give a more
-          accurate estimate before they arrive.{" "}
+          needed, and your timing. A clear description of your job &mdash; plus photos when the
+          provider follows up &mdash; helps you get an accurate estimate before anyone shows up.{" "}
           <a href="/pricing-faq/" class="text-primary hover:underline font-medium">
-            See pricing ranges and how quotes work &rarr;
+            See typical Denver-area price ranges &rarr;
           </a>
         </p>
       </div>

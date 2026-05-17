@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LastUpdated from '../components/LastUpdated.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { SITE_URL } from '../config';
+
+const accepted = [
+  'Stoves and ovens',
+  'Hot water heaters',
+  'Furnaces',
+  'Dishwashers',
+  'Microwaves',
+  'Refrigerators',
+  'Freezers',
+  'Air conditioners',
+  'Washers',
+  'Dryers',
+];
+
+const faqs = [
+  {
+    question: 'Is Denver appliance pickup really free?',
+    answer: 'For Denver residents serviced by Solid Waste Management, yes — the city\'s appliance collection by appointment is free per the official Denver appliance collection page. Residents outside SWM service (some apartments, condos, and commercial properties) typically don\'t qualify and use a private hauler instead.',
+  },
+  {
+    question: 'Can I set a refrigerator out on Large Item Pickup day?',
+    answer: 'No. Appliances are explicitly excluded from Denver\'s Large Item Pickup program. Refrigerators, freezers, and AC units contain refrigerants that must be recovered before the appliance is recycled, so they go through the separate appliance collection program — or through a private hauler that handles refrigerant recovery.',
+  },
+  {
+    question: 'How do I schedule the city appliance collection?',
+    answer: 'The official Denver appliance collection page lists one scheduling channel: call Solid Waste Management at (720) 913-1311. There is no online portal for the appliance program specifically.',
+  },
+  {
+    question: 'How fast can I get an appliance gone if I need it gone now?',
+    answer: 'City appliance collection is by appointment and tied to SWM\'s schedule, so it\'s not designed for urgent removal. If you\'re replacing the appliance the same week or pulling it out of a flooded basement, a private junk hauler is usually the practical answer — often same-day or next-day depending on availability.',
+  },
+  {
+    question: 'Do private haulers charge extra for refrigerators or AC units?',
+    answer: 'Usually, yes. Refrigerators, freezers, and air conditioners typically carry a small surcharge over the base pickup rate because of refrigerant recovery and recycling fees. Expect somewhere in the $25–$75 range on top of the base load. Confirm with the provider before booking.',
+  },
+  {
+    question: 'What about a refrigerator I\'m getting rid of when I buy a new one?',
+    answer: 'Most appliance retailers offer haul-away as an add-on when they deliver the new unit. That\'s often the easiest option. Also, Xcel Energy runs a separate refrigerator recycling program for its customers with a $50 rebate when the old fridge is picked up — worth checking before you pay a hauler.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+});
+---
+
+<BaseLayout
+  title="Denver Appliance Disposal Guide | City Pickup, Private Hauling, and Refrigerant Rules"
+  description="How appliance disposal works in Denver: the city's free appliance collection program, what's accepted, when private hauling makes more sense, and what refrigerant handling means for pricing."
+  canonical={`${SITE_URL}/denver-appliance-disposal-guide/`}
+  schema={faqSchema}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Guides', href: '/service-area/' },
+          { label: 'Denver appliance disposal' },
+        ]} />
+        <LastUpdated date="2026-05-17" />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Local Denver Guide</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Denver appliance disposal guide
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          How to get rid of a refrigerator, washer, dryer, or other major appliance in Denver. The city has a free collection program many residents don&rsquo;t know about &mdash; and there are clear cases where a private hauler is still the right call.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-12 px-6 max-w-4xl mx-auto">
+      <!-- Quick answer -->
+      <div class="bg-card border border-border rounded-2xl p-6 md:p-8 mb-12 shadow-sm">
+        <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground mb-3">
+          Quick answer
+        </p>
+        <p class="text-foreground leading-relaxed text-lg">
+          <strong>Denver residents serviced by Solid Waste Management can schedule a free appliance collection by appointment</strong> &mdash; for stoves, washers, dryers, dishwashers, refrigerators, freezers, AC units, and more. Appliances are <strong>not</strong> picked up via the regular Large Item Pickup program. If you need it gone fast, the item is inside the house, or you don&rsquo;t qualify for SWM service, a private junk hauler is the practical option.
+        </p>
+      </div>
+
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <h2>Why appliances aren&rsquo;t standard bulky pickup in Denver</h2>
+        <p>
+          Big appliances aren&rsquo;t treated like other large items in Denver for two reasons. First, they contain metals that the city wants to recycle rather than landfill. Second, refrigerators, freezers, and air conditioners contain refrigerants &mdash; commonly known as Freon &mdash; that have to be recovered by a certified technician before the appliance is broken down.
+        </p>
+        <p>
+          That&rsquo;s why Denver runs a separate appliance collection program instead of letting residents set a refrigerator out for the regular trash truck. It&rsquo;s also why private haulers will typically add a small fee to refrigerator and AC pickups: someone has to recover the refrigerant.
+        </p>
+
+        <h2>The city&rsquo;s appliance collection program</h2>
+        <p>
+          Denver&rsquo;s Solid Waste Management division offers free appliance collection by appointment for residents who are serviced by SWM. The city&rsquo;s appliance page says collections exist &ldquo;to ensure that metals are recycled and Freon gases from refrigerated appliances are handled in an environmentally safe manner.&rdquo;
+        </p>
+
+        <h3>What the city collects</h3>
+        <p>The official list of accepted appliances:</p>
+        <ul>
+          {accepted.map(a => <li>{a}</li>)}
+        </ul>
+
+        <h3>How to schedule</h3>
+        <p>
+          The appliance program is phone-based. The official page lists one scheduling number: <strong>call Solid Waste Management at (720) 913-1311</strong>. There&rsquo;s no online appliance scheduling portal as of this writing.
+        </p>
+
+        <h3>Who qualifies</h3>
+        <p>
+          Eligibility is tied to SWM service. If you&rsquo;re a Denver resident in a single-family home or small multi-family building on Denver&rsquo;s regular trash collection route, you&rsquo;re typically in. Larger apartment buildings, condos, and commercial properties generally aren&rsquo;t on SWM service and won&rsquo;t qualify for the free program.
+        </p>
+
+        <h2>City appliance collection vs. private hauling</h2>
+        <p>The city&rsquo;s appliance program is excellent for the right situation. It&rsquo;s not the right tool for every job.</p>
+
+        <h3>City appliance pickup fits when:</h3>
+        <ul>
+          <li>You&rsquo;re a Denver SWM customer (single-family or qualifying small multi-family).</li>
+          <li>You can move the appliance to the regular trash-collection point yourself.</li>
+          <li>Your timing is flexible &mdash; appointments are scheduled, not urgent.</li>
+          <li>You have one or a few appliances rather than a full kitchen full.</li>
+        </ul>
+
+        <h3>Private appliance hauling fits when:</h3>
+        <ul>
+          <li>You need it gone today or this week.</li>
+          <li>The appliance is in a basement, second floor, or apartment with stairs.</li>
+          <li>You&rsquo;re replacing several appliances at once (kitchen renovation, laundry-room upgrade).</li>
+          <li>You don&rsquo;t qualify for SWM service.</li>
+          <li>You want one company to handle the appliance plus other junk &mdash; old cabinets, an old water heater, packaging, etc. &mdash; in one trip.</li>
+        </ul>
+
+        <h2>What about Xcel Energy&rsquo;s refrigerator recycling rebate?</h2>
+        <p>
+          Xcel Energy runs a separate refrigerator and freezer recycling program for its customers with a $50 rebate per appliance. If your fridge or freezer is at least 10 years old, working, and in your home, this can be a cheap or even net-positive way to retire it. Eligibility, scheduling, and current rebate amounts are managed through Xcel directly.
+        </p>
+
+        <h2>Pricing notes for private appliance pickup</h2>
+        <p>
+          Private junk haulers price appliance removal in two ways. Either:
+        </p>
+        <ul>
+          <li><strong>Single-item pricing</strong>, where you pay a flat fee for one appliance. Most providers have a minimum charge in the $95&ndash;$175 range for showing up.</li>
+          <li><strong>Volume-based pricing</strong>, where the appliance is included in a load with other items.</li>
+        </ul>
+        <p>
+          For refrigerators, freezers, and AC units, add an additional <strong>$25&ndash;$75 surcharge</strong> for refrigerant recovery. These are general Denver-area market ranges, not a quote from this site. See the <a href="/pricing-faq/">pricing &amp; FAQ page</a> for a fuller breakdown of how junk removal pricing typically works in Denver.
+        </p>
+      </article>
+
+      <!-- Decision guide -->
+      <section class="mb-16" aria-labelledby="decision-heading">
+        <h2 id="decision-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Quick decision guide
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Free city pickup</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You&rsquo;re on SWM service, your timing is flexible, and the appliance is at the curb / alley. Call 720-913-1311 and book.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Retailer haul-away</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You&rsquo;re buying a replacement and the retailer offers haul-away on delivery. Often the easiest option, sometimes free with the new unit.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Private junk hauler</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Urgent timing, item is inside, you don&rsquo;t qualify for SWM, or you have multiple items at once. One trip, no scheduling around the city.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-16" aria-labelledby="faq-heading">
+        <h2 id="faq-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Denver appliance disposal &mdash; FAQs
+        </h2>
+        <FaqAccordion items={faqs} />
+      </section>
+
+      <!-- Official sources -->
+      <section class="mb-12" aria-labelledby="official-resources-heading">
+        <h2 id="official-resources-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-3">
+          Official Denver resources
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          These are the City and County of Denver pages that own the current rules for the appliance program. If anything on this page disagrees with the city&rsquo;s site, the city&rsquo;s site is right.
+        </p>
+        <ul class="space-y-3">
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Recycle-Compost-Trash/Additional-Services/Appliance-Collection"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Denver Solid Waste Management &mdash; Appliance Collection
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">Accepted appliances and the appointment phone line.</p>
+          </li>
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Recycle-Compost-Trash/Large-Item-Pickup"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Large Item Pickup (appliances are excluded)
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">For non-appliance bulky items every nine weeks.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Cross-links -->
+      <section class="mb-12" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+          Related local guides
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="/appliance-removal/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Appliance removal service</h3>
+            <p class="text-sm text-muted-foreground">Request a private hauler for fridge, washer, dryer, and more.</p>
+          </a>
+          <a href="/denver-large-item-pickup-vs-junk-removal/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Denver city pickup vs. private</h3>
+            <p class="text-sm text-muted-foreground">A plain comparison of the city programs and private hauling.</p>
+          </a>
+          <a href="/electronics-recycling-denver-metro/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Electronics recycling</h3>
+            <p class="text-sm text-muted-foreground">Old TVs and laptops go a different way &mdash; here&rsquo;s how.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="bg-card border border-border p-8 rounded-xl text-center shadow-sm mb-8">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Need an appliance hauled?</h3>
+        <p class="text-muted-foreground mb-6">Tell us what needs to go and where it is. A local provider can quote you for refrigerators, washers, dryers, and more.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request a Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <DisclosureBlock text="DenverJunkHelp.com is an independent quote and referral website. We are not affiliated with the City and County of Denver, Xcel Energy, or any appliance retailer. City rules and rebate amounts are set by those programs and can change; always verify on the program's website before relying on them." />
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

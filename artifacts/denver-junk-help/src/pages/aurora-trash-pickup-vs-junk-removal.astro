@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LastUpdated from '../components/LastUpdated.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { SITE_URL } from '../config';
+
+const faqs = [
+  {
+    question: 'Does Aurora pick up trash and recycling like Denver does?',
+    answer: 'No. The City of Aurora\'s official trash and recycling page states that residential trash and recycling pickup is not a city-provided service. Residents, HOAs, and multifamily property managers arrange service with one of the city\'s permitted private haulers.',
+  },
+  {
+    question: 'Does Aurora have a free large-item or bulky pickup program?',
+    answer: 'Aurora does not run a Denver-style city large-item pickup program. Bulky items typically go through your private trash hauler\'s bulk pickup service (if your hauler offers one) or through a private junk removal company. Some items can also be taken to Aurora\'s recycling events or Recycling Opportunities resources.',
+  },
+  {
+    question: 'Can I just leave a couch at the curb?',
+    answer: 'Not as a rule. Aurora requires homes to use weekly trash service in approved containers. Bulky items left at the curb without a scheduled pickup from your hauler can result in code-enforcement issues. The practical paths are: call your private hauler to ask about bulky add-on service, schedule a private junk removal pickup, or use one of the city\'s Recycling Opportunities for items like mattresses, appliances, or electronics.',
+  },
+  {
+    question: 'Where do appliances, electronics, and mattresses go in Aurora?',
+    answer: 'Aurora\'s Recycling Opportunities page lists separate paths for appliances, electronics, mattresses, paint and household chemicals, batteries, light bulbs, tires, cooking oil, and yard waste. Many of these are event-based or drop-off-based rather than curbside. For example, Aurora\'s electronics recycling events are operated by Pedal Point LifeCycle Solutions in Aurora.',
+  },
+  {
+    question: 'Can I put a storage pod or dumpster on the street?',
+    answer: 'No. Aurora explicitly does not allow storage pods or dumpsters on public streets. They may be considered for placement on private property (such as a driveway) through the city\'s Temporary Use Permit program.',
+  },
+  {
+    question: 'When does a private junk removal company make more sense?',
+    answer: 'When timing matters, when items need to be carried out of a home, when there are more items than a routine bulk pickup will take, or when the items are mixed enough that a single haul is easier than four different drop-offs. Private haulers can also coordinate inside-home removal, stairs, garages, and storage units in a way curbside service cannot.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+});
+
+const haulers = [
+  'Apex Waste Solutions',
+  'Best Cleaner Disposal',
+  'Eastern Dispose All',
+  'HBS Trash Services',
+  'Mountain High Disposal',
+  'Republic Services',
+  'Waste Connections',
+  'Waste Management',
+];
+---
+
+<BaseLayout
+  title="Aurora Trash Pickup vs. Junk Removal | How Trash and Recycling Actually Work in Aurora, CO"
+  description="Aurora doesn't run city trash or recycling pickup — residents arrange service with permitted private haulers. A plain-English guide to bulky items, recycling, and when to hire a junk removal company."
+  canonical={`${SITE_URL}/aurora-trash-pickup-vs-junk-removal/`}
+  schema={faqSchema}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Guides', href: '/service-area/' },
+          { label: 'Aurora trash pickup vs. junk removal' },
+        ]} />
+        <LastUpdated date="2026-05-17" />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Local Aurora Guide</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Aurora trash pickup vs. junk removal
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Aurora works differently from Denver. The city doesn&rsquo;t run residential trash and recycling pickup &mdash; residents arrange that themselves. Here&rsquo;s how it actually works, and when a private junk removal pickup is the better answer.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-12 px-6 max-w-4xl mx-auto">
+      <!-- Quick answer -->
+      <div class="bg-card border border-border rounded-2xl p-6 md:p-8 mb-12 shadow-sm">
+        <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground mb-3">
+          Quick answer
+        </p>
+        <p class="text-foreground leading-relaxed text-lg">
+          <strong>Aurora does not run city trash or recycling pickup.</strong> Every household contracts with one of the city&rsquo;s permitted private haulers for weekly trash service. There&rsquo;s no Denver-style nine-week bulky pickup. For one-off bulky items, your options are: ask your hauler about a bulky add-on, drop the item at one of Aurora&rsquo;s recycling resources, or hire a private junk removal company.
+        </p>
+      </div>
+
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <h2>Curbside trash and recycling in Aurora</h2>
+        <p>
+          The City of Aurora&rsquo;s official trash and recycling page is unambiguous: residential trash and recycling pickup is <strong>not</strong> a city-provided service. Instead, the city says it is &ldquo;the responsibility of the individual residents, homeowners associations, or multifamily building management company to arrange for service with one of the city&rsquo;s permitted trash and recycling haulers.&rdquo;
+        </p>
+        <p>
+          The city also says all homes in Aurora are required to have weekly trash service, and that trash must be in an approved, secure container. Some haulers provide the container as part of the service or for a small fee.
+        </p>
+
+        <h2>Aurora&rsquo;s permitted trash and recycling haulers</h2>
+        <p>
+          The City of Aurora publishes a current list of permitted residential trash and recycling haulers. Inclusion on this list is, per the city&rsquo;s own wording, &ldquo;not an endorsement or recommendation of any individual company.&rdquo; As of this writing, that list includes:
+        </p>
+        <ul>
+          {haulers.map(h => <li>{h}</li>)}
+        </ul>
+        <p>
+          The city also separately lists Wompost for compost and yard waste service. Pricing, container size, recycling cadence, and bulk-item add-ons vary by hauler &mdash; ask each one directly.
+        </p>
+
+        <h2>Bulky items, appliances, electronics, mattresses</h2>
+        <p>
+          Aurora doesn&rsquo;t have a Denver-style every-nine-weeks Large Item Pickup. Your three real paths for a one-off bulky item are:
+        </p>
+        <ul>
+          <li><strong>Your private hauler&rsquo;s bulk service.</strong> Many haulers will pick up a bulky item for an extra fee, often with advance notice. Call yours and ask about size, weight, and item-type limits.</li>
+          <li><strong>Aurora&rsquo;s Recycling Opportunities.</strong> The city&rsquo;s Recycling Opportunities page lists separate resources for appliances, electronics, mattresses, paint and household chemicals, batteries, light bulbs, tires, used cooking oil, organics/yard waste, and recycling events. Many of these are drop-off or event-based.</li>
+          <li><strong>Private junk removal.</strong> If you need it gone now, if the item is inside the house, or if you have a pile rather than one item, hiring a private hauler is usually faster than the other two paths combined.</li>
+        </ul>
+
+        <h2>Storage pods, roll-offs, and on-street dumpsters</h2>
+        <p>
+          The city is also explicit on this: storage pods and dumpsters are not allowed on public streets in Aurora. They may be allowed on private property (such as a driveway) through the city&rsquo;s Temporary Use Permit program. Plan accordingly if you&rsquo;re considering a multi-day cleanout that needs a container.
+        </p>
+
+        <h2>Electronics in Aurora</h2>
+        <p>
+          Aurora does <strong>not</strong> use Denver&rsquo;s E-cycle coupon program. Instead, the city sponsors electronics recycling events for residents, operated by Pedal Point LifeCycle Solutions in Aurora. There&rsquo;s usually a small per-vehicle fee, with additional charges for CRT and flat-screen televisions. Aurora&rsquo;s electronics recycling page has current event dates and acceptance details.
+        </p>
+        <p>
+          As a Colorado-wide rule, electronics have not been allowed in the trash anywhere in the state since July 1, 2013, under the Electronic Recycling Jobs Act (SB 12-133). That applies in Aurora just as much as in Denver.
+        </p>
+      </article>
+
+      <!-- Decision guide -->
+      <section class="mb-16" aria-labelledby="decision-heading">
+        <h2 id="decision-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Quick decision guide for Aurora residents
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Use your private hauler</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You have one bulky item, your hauler offers bulky pickup, and you can wait until your next service day. Call them first &mdash; if there&rsquo;s a flat fee or it&rsquo;s included, this is usually the cheapest path.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Use a city recycling resource</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You have something Aurora has a dedicated path for &mdash; an old TV, a mattress, a paint can, a car battery &mdash; and you can transport it yourself to a drop-off or event. Lower environmental footprint, often cheap.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Hire a private junk hauler</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You need it gone soon, you have a pile rather than one item, the item is inside (basement, upstairs, garage), or you don&rsquo;t want to sort it across four destinations. A private crew handles all of it in one trip.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Get a temporary use permit</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              You have a multi-day project (move-out, full clean-up, renovation) and want a container in the driveway. Talk to the city about a Temporary Use Permit before any pod or dumpster lands on your property.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-16" aria-labelledby="faq-heading">
+        <h2 id="faq-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Aurora junk removal &mdash; FAQs
+        </h2>
+        <FaqAccordion items={faqs} />
+      </section>
+
+      <!-- Official sources -->
+      <section class="mb-12" aria-labelledby="official-resources-heading">
+        <h2 id="official-resources-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-3">
+          Official Aurora resources
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          These are the City of Aurora&rsquo;s own pages for current rules, hauler lists, and recycling resources. If anything on this page disagrees with the city&rsquo;s site, the city&rsquo;s site is right.
+        </p>
+        <ul class="space-y-3">
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.auroragov.org/residents/trash___recycling"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Aurora Trash &amp; Recycling
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">The permitted hauler list and the city&rsquo;s trash &amp; recycling rules.</p>
+          </li>
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.auroragov.org/residents/trash___recycling/recycling_opportunities"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Recycling Opportunities (appliances, electronics, mattresses, HHW, more)
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">Drop-off and event-based options for items that don&rsquo;t belong in standard trash.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Cross-links -->
+      <section class="mb-12" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+          Related local guides
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="/denver-large-item-pickup-vs-junk-removal/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Denver city pickup vs. private</h3>
+            <p class="text-sm text-muted-foreground">Denver runs a Large Item Pickup program every nine weeks. Aurora doesn&rsquo;t.</p>
+          </a>
+          <a href="/denver-appliance-disposal-guide/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Denver appliance disposal</h3>
+            <p class="text-sm text-muted-foreground">Refrigerators, washers, and dryers in Denver and the surrounding metro.</p>
+          </a>
+          <a href="/electronics-recycling-denver-metro/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Electronics in the metro</h3>
+            <p class="text-sm text-muted-foreground">Denver&rsquo;s E-cycle coupon and Aurora&rsquo;s electronics recycling events.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="bg-card border border-border p-8 rounded-xl text-center shadow-sm mb-8">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Need junk removed in Aurora?</h3>
+        <p class="text-muted-foreground mb-6">Tell us what needs to go &mdash; we can forward your request to a local provider that serves the Aurora area.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request a Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <DisclosureBlock text="DenverJunkHelp.com is an independent quote and referral website. We are not affiliated with the City of Aurora or any of the city&rsquo;s permitted haulers. Rules, hauler permits, and recycling resources are set by the city and can change; always verify on the City of Aurora&rsquo;s website before relying on them." />
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

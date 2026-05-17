@@ -9,7 +9,37 @@ const links = [
   { href: '/pricing-faq/', label: 'Pricing & FAQ' },
 ];
 
+const guideLinks = [
+  {
+    href: '/denver-large-item-pickup-vs-junk-removal/',
+    label: 'Denver city pickup vs. private',
+    note: 'When the city truck is enough, when it isn’t.',
+  },
+  {
+    href: '/aurora-trash-pickup-vs-junk-removal/',
+    label: 'Aurora trash & junk removal',
+    note: 'Aurora doesn’t run city trash pickup. Here’s how it works.',
+  },
+  {
+    href: '/denver-appliance-disposal-guide/',
+    label: 'Denver appliance disposal',
+    note: 'City appliance collection vs. private hauling.',
+  },
+  {
+    href: '/electronics-recycling-denver-metro/',
+    label: 'Electronics recycling in the metro',
+    note: 'E-cycle, Aurora events, and what private haulers take.',
+  },
+  {
+    href: '/service-area/',
+    label: 'Service area',
+    note: 'Cities and neighborhoods covered.',
+  },
+];
+
 const currentPath = Astro.url.pathname;
+const guidePaths = guideLinks.map(l => l.href);
+const guidesActive = guidePaths.includes(currentPath);
 ---
 <header class="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
   <div class="flex h-16 items-center justify-between px-6 max-w-7xl mx-auto">
@@ -50,6 +80,57 @@ const currentPath = Astro.url.pathname;
           </a>
         );
       })}
+
+      <!-- Guides dropdown -->
+      <div class="relative" id="guides-menu-wrapper">
+        <button
+          type="button"
+          id="guides-menu-button"
+          class={`inline-flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+            guidesActive ? 'text-primary' : 'text-muted-foreground'
+          }`}
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="guides-menu"
+        >
+          Guides
+          <svg class="w-3.5 h-3.5 transition-transform" id="guides-menu-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div
+          id="guides-menu"
+          class="hidden absolute right-0 mt-2 w-80 bg-background border border-border rounded-xl shadow-lg overflow-hidden"
+          role="menu"
+          aria-labelledby="guides-menu-button"
+        >
+          <ul class="py-2">
+            {guideLinks.map(g => {
+              const isActive = currentPath === g.href;
+              return (
+                <li>
+                  <a
+                    href={g.href}
+                    role="menuitem"
+                    class={`block px-4 py-3 text-sm hover:bg-muted transition-colors ${
+                      isActive ? 'bg-muted' : ''
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span class={`font-semibold block ${isActive ? 'text-primary' : 'text-foreground'}`}>
+                      {g.label}
+                    </span>
+                    <span class="text-xs text-muted-foreground leading-snug block mt-0.5">
+                      {g.note}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
       <a
         href="/contact/"
         class="ml-2 inline-flex items-center justify-center bg-primary text-primary-foreground text-sm font-semibold px-5 py-2 rounded-full shadow-sm hover:bg-primary/90 transition-colors"
@@ -83,7 +164,7 @@ const currentPath = Astro.url.pathname;
   <!-- Mobile Nav Dropdown -->
   <nav
     id="mobile-menu"
-    class="hidden md:hidden absolute top-16 left-0 w-full bg-background border-b border-border shadow-lg py-4 px-6 flex-col gap-1"
+    class="hidden md:hidden absolute top-16 left-0 w-full bg-background border-b border-border shadow-lg py-4 px-6 flex-col gap-1 max-h-[calc(100dvh-4rem)] overflow-y-auto"
     aria-label="Mobile navigation"
   >
     <a href="/" class="text-base font-medium py-3 border-b border-border text-foreground block">
@@ -103,18 +184,26 @@ const currentPath = Astro.url.pathname;
         </a>
       );
     })}
-    <a
-      href="/denver-large-item-pickup-vs-junk-removal/"
-      class="text-base font-medium py-3 border-b border-border text-foreground block"
-    >
-      Denver City Pickup Guide
-    </a>
-    <a
-      href="/service-area/"
-      class="text-base font-medium py-3 border-b border-border text-foreground block"
-    >
-      Service Area
-    </a>
+
+    <!-- Mobile guides section -->
+    <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground pt-4 pb-1">
+      Guides
+    </p>
+    {guideLinks.map(g => {
+      const isActive = currentPath === g.href;
+      return (
+        <a
+          href={g.href}
+          class={`text-base font-medium py-3 border-b border-border block ${
+            isActive ? 'text-primary' : 'text-foreground'
+          }`}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          {g.label}
+        </a>
+      );
+    })}
+
     <a
       href="/about/"
       class="text-base font-medium py-3 border-b border-border text-foreground block"
@@ -169,5 +258,48 @@ const currentPath = Astro.url.pathname;
 
   menu?.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', closeMenu);
+  });
+
+  // Guides dropdown (desktop)
+  const guidesBtn = document.getElementById('guides-menu-button');
+  const guidesMenu = document.getElementById('guides-menu');
+  const guidesCaret = document.getElementById('guides-menu-caret');
+  const guidesWrapper = document.getElementById('guides-menu-wrapper');
+
+  function openGuides() {
+    guidesMenu?.classList.remove('hidden');
+    guidesBtn?.setAttribute('aria-expanded', 'true');
+    guidesCaret?.classList.add('rotate-180');
+  }
+  function closeGuides() {
+    guidesMenu?.classList.add('hidden');
+    guidesBtn?.setAttribute('aria-expanded', 'false');
+    guidesCaret?.classList.remove('rotate-180');
+  }
+
+  guidesBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = guidesBtn.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeGuides(); else openGuides();
+  });
+
+  // Hover behavior on desktop (mouseenter/leave on wrapper)
+  let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+  guidesWrapper?.addEventListener('mouseenter', () => {
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    openGuides();
+  });
+  guidesWrapper?.addEventListener('mouseleave', () => {
+    hoverTimeout = setTimeout(() => closeGuides(), 120);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!guidesWrapper?.contains(e.target as Node)) closeGuides();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeGuides();
   });
 </script>
