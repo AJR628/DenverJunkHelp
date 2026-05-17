@@ -22,12 +22,14 @@ const currentYear = new Date().getFullYear();
               {PHONE_NUMBER}
             </a>
           )}
-          <a
-            href={`mailto:${EMAIL}`}
-            class="text-foreground hover:text-primary transition-colors"
-          >
-            {EMAIL}
-          </a>
+          {EMAIL && (
+            <a
+              href={`mailto:${EMAIL}`}
+              class="text-foreground hover:text-primary transition-colors"
+            >
+              {EMAIL}
+            </a>
+          )}
         </div>
       </div>
 

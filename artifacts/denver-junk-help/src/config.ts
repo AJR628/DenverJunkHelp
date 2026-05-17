@@ -7,8 +7,20 @@
 export const PHONE_NUMBER = ""; // TODO: Set to your call tracking number, e.g. "(303) 555-0100"
 export const PHONE_HREF = ""; // TODO: e.g. "tel:3035550100"
 
-/** Contact email shown in footer and legal pages */
-export const EMAIL = "hello@denverjunkhelp.com"; // TODO: replace with real address
+/**
+ * Contact email shown in the footer, contact page, and legal pages.
+ *
+ * Leave empty (`""`) to hide every email CTA on the site &mdash; same
+ * gating pattern as PHONE_NUMBER. The contact form on `/contact/` is the
+ * primary path when this is empty; legal pages fall back to the form
+ * link automatically.
+ *
+ * Set to a real, monitored address only. A common zero-cost approach:
+ * use Cloudflare Email Routing or ImprovMX to forward
+ * "hello@denverjunkhelp.com" to your real inbox (e.g. on Vaiform).
+ * Takes ~10 minutes to set up; no second mailbox needed.
+ */
+export const EMAIL = "";
 
 /**
  * Quote form submission configuration.
