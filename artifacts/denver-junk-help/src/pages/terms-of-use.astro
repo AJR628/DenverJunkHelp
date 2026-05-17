@@ -95,8 +95,13 @@ import { EMAIL, PHONE_NUMBER, PHONE_HREF, BRAND_LEGAL, SITE_URL } from '../confi
 
         <h2>7. Contact</h2>
         <p>
-          Questions about these Terms of Use?<br />
-          <strong>Email:</strong> <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          Questions about these Terms of Use? Please reach us through the{' '}
+          <a href="/contact/">contact form on this site</a>.
+          {EMAIL && (
+            <>
+              <br /><strong>Email:</strong> <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            </>
+          )}
           {PHONE_NUMBER && PHONE_HREF && (
             <>
               <br /><strong>Phone:</strong> <a href={PHONE_HREF}>{PHONE_NUMBER}</a>
