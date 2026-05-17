@@ -20,6 +20,40 @@ The point of this file is to keep DenverJunkHelp.com honest. The site is a local
 - **License:** Owned by DenverJunkHelp.com.
 - **Replacement plan:** Swap with a polished brand mark when one exists. The current glyph is intentionally simple so it reads at 16&times;16 in a browser tab.
 
+### `artifacts/denver-junk-help/public/images/what-we-take-items.webp`
+
+- **What it is:** Editorial flat illustration on a soft cream background. Shows the categories of items typically accepted for junk removal: blue couch, mattress, washing machine, cardboard boxes, yard-waste bags, and a wooden dresser. No people, no trucks, no branding.
+- **Source:** Provided by the project owner (AI-generated illustration).
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/what-we-take/`
+- **Dimensions:** 1600&times;900 WebP, ~30&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/service-area-map.webp`
+
+- **What it is:** Stylized isometric illustration of the Denver metro area. Location pins scattered across neighborhoods, with the Colorado State Capitol's gold dome, Red Rocks sandstone formations, a small blue truck on a road, and the Rocky Mountains in the background.
+- **Source:** Provided by the project owner (AI-generated illustration).
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/service-area/`
+- **Dimensions:** 1600&times;900 WebP, ~58&nbsp;KB.
+- **Note:** The truck depicted is small, unbranded, and decorative &mdash; it represents the *concept* of pickup somewhere in town, not DenverJunkHelp's own fleet.
+
+### `artifacts/denver-junk-help/public/images/quote-request-scene.webp`
+
+- **What it is:** Flat illustration of a homeowner photographing furniture and boxes neatly arranged at the curb in front of a residential house. A small delivery truck and mountains are visible in the distance. The framing is from the homeowner's perspective &mdash; they're the active subject (taking the photo), which reinforces the page's "describe your items with photos" guidance.
+- **Source:** Provided by the project owner (AI-generated illustration).
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/contact/`
+- **Dimensions:** 1600&times;900 WebP, ~56&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/city-vs-private.webp`
+
+- **What it is:** Side-by-side comparison illustration. Left panel depicts city Large Item Pickup (items at curb, calendar with checkmark, city skyline, no people). Right panel depicts a private hauler (crew in generic green outfits loading furniture into an unbranded blue truck inside a residential property, with Rocky Mountains in the background).
+- **Source:** Provided by the project owner (AI-generated illustration).
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/denver-large-item-pickup-vs-junk-removal/`
+- **Dimensions:** 1600&times;900 WebP, ~55&nbsp;KB.
+- **Honesty note:** The right-panel truck and crew are intentionally unbranded. The page's `<figcaption>` makes it explicit that they do not represent DenverJunkHelp.com &mdash; we are a referral site, not a hauler.
+
 ### `artifacts/denver-junk-help/public/opengraph.jpg`
 
 - **What it is:** The Open Graph share image used in `BaseLayout.astro`'s `og:image` meta tag. Rendered when the site is shared on Slack, Facebook, iMessage, Twitter, etc.
@@ -33,7 +67,7 @@ The point of this file is to keep DenverJunkHelp.com honest. The site is a local
 
 ## Where images are still needed
 
-These pages currently render without imagery beyond the homepage illustration. They look clean as-is, but adding a thoughtful image per page would strengthen the editorial feel.
+These service pages still render without dedicated imagery. Optional follow-up work; not blocking.
 
 | Page | Suggested image direction |
 |---|---|
@@ -42,7 +76,6 @@ These pages currently render without imagery beyond the homepage illustration. T
 | `/cleanouts/` | A tidy, organized garage mid-cleanout. Avoid hoarder-house imagery. |
 | `/mattress-removal/` | A wrapped mattress or simple bedroom turnover scene. |
 | `/yard-debris/` | Bagged leaves or a small brush pile, calm composition. |
-| `/what-we-take/` | Could use a grid of small icon-style illustrations (one per category) instead of one hero. |
 
 ## Recommended replacement sources
 
@@ -72,3 +105,4 @@ Regardless of where an image comes from, do not ship anything that:
 | Date | Change |
 |---|---|
 | 2026-05-17 | Initial ledger created. `hero-curbside.svg` added as the homepage illustration. `opengraph.jpg` flagged as unaudited; replacement direction noted. |
+| 2026-05-17 | Added four illustrations provided by the project owner: `what-we-take-items.webp`, `service-area-map.webp`, `quote-request-scene.webp`, `city-vs-private.webp`. All optimized to 1600&times;900 WebP at ~80% quality; total payload across four pages ~200&nbsp;KB. Embedded on `/what-we-take/`, `/service-area/`, `/contact/`, and `/denver-large-item-pickup-vs-junk-removal/` respectively. |
