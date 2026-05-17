@@ -1,0 +1,30 @@
+# Netlify build configuration for DenverJunkHelp.com
+#
+# This pins the build environment so the Astro static site builds reproducibly
+# on Netlify's CI. The repo is a pnpm monorepo using `catalog:` references in
+# pnpm-workspace.yaml, which require pnpm >= 9.5. Without explicit pinning,
+# Netlify's default pnpm version (8.x on older build images) will fail to
+# install dependencies.
+
+[build]
+  # Install all workspace deps and build the Astro site at artifacts/denver-junk-help
+  command = "pnpm install --frozen-lockfile && pnpm --filter @workspace/denver-junk-help run build"
+  # Astro outputs the static site to this directory
+  publish = "artifacts/denver-junk-help/dist"
+
+[build.environment]
+  # Astro 5 requires Node 18+. Node 22 is current LTS.
+  NODE_VERSION = "22"
+  # Need pnpm 10 for `catalog:` references in pnpm-workspace.yaml
+  PNPM_VERSION = "10"
+  # Avoid prompts for unbuilt dependency scripts (sharp etc.) — they're not
+  # needed at build time for our static output.
+  NPM_CONFIG_IGNORE_SCRIPTS = "false"
+
+# Apply the same build to deploy previews opened from PRs.
+[context.deploy-preview]
+  command = "pnpm install --frozen-lockfile && pnpm --filter @workspace/denver-junk-help run build"
+
+# And to branch deploys.
+[context.branch-deploy]
+  command = "pnpm install --frozen-lockfile && pnpm --filter @workspace/denver-junk-help run build"
