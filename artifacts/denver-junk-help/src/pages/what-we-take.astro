@@ -8,6 +8,8 @@ import QuoteForm from '../components/QuoteForm.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LastUpdated from '../components/LastUpdated.astro';
+import WhatHappensNext from '../components/WhatHappensNext.astro';
 import { SITE_URL } from '../config';
 
 const accepted = [
@@ -74,6 +76,7 @@ const faqSchema = JSON.stringify({
           { label: 'Home', href: '/' },
           { label: 'What We Take' },
         ]} />
+        <LastUpdated date="2026-05-17" />
         <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
           What junk removal takes &mdash; and what it doesn&rsquo;t
         </h1>
@@ -161,6 +164,7 @@ const faqSchema = JSON.stringify({
         </a>
       </div>
 
+      <WhatHappensNext />
       <QuoteForm />
 
       <div class="mt-12">
