@@ -31,17 +31,56 @@ The point of this file is to keep DenverJunkHelp.com honest. The site is a local
   - A real Denver-area landscape silhouette with brand colors
   - Avoid: fake branded trucks, fake crews in uniforms, AI-looking cleanup photos, hoarder-house imagery
 
+## Service-page illustrations
+
+A consistent set of five editorial flat-vector illustrations, generated to match the style language of the homepage hero and the other site illustrations. Same warm cream background, muted forest-green foliage shapes, navy / wood-brown / white / terracotta accent palette. No people, no trucks, no logos. All optimized to ~1600&times;900 WebP at quality 82 (~40-75&nbsp;KB each).
+
+### `artifacts/denver-junk-help/public/images/furniture-removal-items.webp`
+
+- **What it is:** Furniture-page illustration. A navy blue mid-century three-cushion couch, a tall wooden dresser, a single light-wood dining chair, and a brass floor lamp grouped together on a soft cream surface.
+- **Source:** AI-generated illustration (Gemini 3.1 Flash Image) commissioned for this project.
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/furniture-removal/`
+- **Dimensions:** 1600&times;893 WebP, ~39&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/appliance-removal-items.webp`
+
+- **What it is:** Appliance-page illustration. White refrigerator, washer/dryer pair with circular doors, a small countertop microwave on a wheeled wooden cart, and a beige window AC unit.
+- **Source:** AI-generated illustration (Gemini 3.1 Flash Image) commissioned for this project.
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/appliance-removal/`
+- **Dimensions:** 1600&times;893 WebP, ~44&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/cleanouts-items.webp`
+
+- **What it is:** Cleanouts-page illustration. Stacked brown cardboard boxes, a rolled-up gray exercise mat, an old red children's bicycle, a low wooden workbench, and a folded navy blue tarp. Intentionally tidy &mdash; not a hoarder-style scene.
+- **Source:** AI-generated illustration (Gemini 3.1 Flash Image) commissioned for this project.
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/cleanouts/`
+- **Dimensions:** 1600&times;893 WebP, ~58&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/mattress-removal-items.webp`
+
+- **What it is:** Mattress-page illustration. A quilted white mattress standing on its long edge, a matching box spring leaning behind, a disassembled wooden bed frame, and a folded set of off-white bed linens on a small wooden side table.
+- **Source:** AI-generated illustration (Gemini 3.1 Flash Image) commissioned for this project. Generated with a forest-green frame around the edge; frame was cropped during optimization to match the other illustrations' edge-to-edge cream background.
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/mattress-removal/`
+- **Dimensions:** 1600&times;837 WebP, ~50&nbsp;KB.
+
+### `artifacts/denver-junk-help/public/images/yard-debris-items.webp`
+
+- **What it is:** Yard-debris-page illustration. A bundle of pruned tree branches tied with twine, three filled brown paper yard-waste bags with leaves spilling out, a coiled green garden hose, a weathered wooden fence panel leaning behind, and a small terracotta plant pot.
+- **Source:** AI-generated illustration (Gemini 3.1 Flash Image) commissioned for this project.
+- **License:** Owned by DenverJunkHelp.com.
+- **Used on:** `/yard-debris/`
+- **Dimensions:** 1600&times;893 WebP, ~74&nbsp;KB.
+
 ## Where images are still needed
 
-These pages currently render without imagery beyond the homepage illustration. They look clean as-is, but adding a thoughtful image per page would strengthen the editorial feel.
+Most pages now have dedicated illustrations. Remaining gaps:
 
 | Page | Suggested image direction |
 |---|---|
-| `/furniture-removal/` | A neatly staged couch or dresser at the curb in soft daylight. Stylized illustration or real photo. |
-| `/appliance-removal/` | A clean refrigerator or washer waiting to be removed. Avoid kitchen interiors that imply DJH does the haul. |
-| `/cleanouts/` | A tidy, organized garage mid-cleanout. Avoid hoarder-house imagery. |
-| `/mattress-removal/` | A wrapped mattress or simple bedroom turnover scene. |
-| `/yard-debris/` | Bagged leaves or a small brush pile, calm composition. |
 | `/what-we-take/` | Could use a grid of small icon-style illustrations (one per category) instead of one hero. |
 
 ## Recommended replacement sources
@@ -72,3 +111,4 @@ Regardless of where an image comes from, do not ship anything that:
 | Date | Change |
 |---|---|
 | 2026-05-17 | Initial ledger created. `hero-curbside.svg` added as the homepage illustration. `opengraph.jpg` flagged as unaudited; replacement direction noted. |
+| 2026-05-17 | Added five service-page illustrations: `furniture-removal-items.webp`, `appliance-removal-items.webp`, `cleanouts-items.webp`, `mattress-removal-items.webp`, `yard-debris-items.webp`. AI-generated, project-owned, matching the existing editorial style. Total payload added across five pages: ~264&nbsp;KB. |
