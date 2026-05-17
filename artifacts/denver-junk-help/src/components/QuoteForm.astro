@@ -1,7 +1,17 @@
 ---
-import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
+import { FORM_ACTIVE, FORM_PROVIDER, FORM_ENDPOINT, BRAND_LEGAL } from '../config';
 
-const formActive = Boolean(FORM_ENDPOINT);
+// The form is "active" (accepts submissions) only when:
+//   1. FORM_ACTIVE is true, AND
+//   2. The selected provider is correctly configured.
+//
+// When inactive, every input and the submit button render with `disabled`,
+// the Netlify attributes are NOT emitted (so Netlify won't accept anything),
+// and a clear notice replaces the form's call-to-action.
+const isNetlify = FORM_PROVIDER === "netlify";
+const isCustom = FORM_PROVIDER === "custom" && Boolean(FORM_ENDPOINT);
+const formActive = Boolean(FORM_ACTIVE) && (isNetlify || isCustom);
+const netlifyActive = formActive && isNetlify;
 ---
 
 <div class="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm" id="quote-form-wrapper">
@@ -15,8 +25,8 @@ const formActive = Boolean(FORM_ENDPOINT);
       We&rsquo;re still finalizing setup with our local provider. Please check back soon &mdash;
       we&rsquo;re not collecting requests at the moment.
       <span class="block mt-1 text-xs text-amber-800/80">
-        (Developer note: set <code class="font-mono">FORM_ENDPOINT</code> in
-        <code class="font-mono">src/config.ts</code> to enable submissions.)
+        (Developer note: set <code class="font-mono">FORM_ACTIVE = true</code> and a working
+        <code class="font-mono">FORM_PROVIDER</code> in <code class="font-mono">src/config.ts</code> to enable submissions.)
       </span>
     </div>
   )}
@@ -30,9 +40,9 @@ const formActive = Boolean(FORM_ENDPOINT);
     </div>
     <h3 class="text-xl font-serif font-bold text-foreground mb-3">Request received</h3>
     <p class="text-muted-foreground text-sm mb-6 max-w-sm mx-auto leading-relaxed">
-      Thank you. Your request details have been received. A local provider
-      in the Denver area may reach out to discuss pricing, availability, and
-      next steps.
+      Thanks &mdash; your request was received. We&rsquo;ll review the details and may share
+      them with a local provider who can contact you about pricing, availability, and next
+      steps.
     </p>
     <button
       id="form-reset-btn"
@@ -42,9 +52,36 @@ const formActive = Boolean(FORM_ENDPOINT);
     </button>
   </div>
 
-  <!-- Form -->
-  <form id="quote-form" novalidate class="space-y-7" data-form-active={String(formActive)}>
-    <!-- Hidden attribution fields -->
+  <!-- Form. Netlify-Forms attributes are emitted only when netlifyActive is true so
+       Netlify's build-time detector only sees the form on deploys that should accept
+       submissions. -->
+  <form
+    id="quote-form"
+    name={netlifyActive ? "quote-request" : undefined}
+    method="POST"
+    novalidate
+    class="space-y-7"
+    data-netlify={netlifyActive ? "true" : undefined}
+    netlify-honeypot={netlifyActive ? "bot-field" : undefined}
+  >
+    {netlifyActive && (
+      <Fragment>
+        {/* Required by Netlify Forms for AJAX submissions so the POST routes to the
+            right form bucket. */}
+        <input type="hidden" name="form-name" value="quote-request" />
+
+        {/* Honeypot field — hidden from humans, visible to bots. Bots that fill this
+            in get silently discarded by Netlify. */}
+        <p class="hidden" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;overflow:hidden;">
+          <label>
+            Don&rsquo;t fill this out if you&rsquo;re human:
+            <input name="bot-field" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+      </Fragment>
+    )}
+
+    <!-- Hidden attribution fields (submitted alongside lead data) -->
     <input type="hidden" name="utm_source" id="f-utm_source" />
     <input type="hidden" name="utm_medium" id="f-utm_medium" />
     <input type="hidden" name="utm_campaign" id="f-utm_campaign" />
@@ -304,18 +341,16 @@ const formActive = Boolean(FORM_ENDPOINT);
   </form>
 </div>
 
-<script define:vars={{ formEndpoint: FORM_ENDPOINT }}>
+<script define:vars={{
+  formActive,
+  netlifyActive,
+  formEndpoint: FORM_ENDPOINT,
+}}>
   (function() {
     const form = document.getElementById('quote-form');
     const successEl = document.getElementById('form-success');
     const resetBtn = document.getElementById('form-reset-btn');
     const submitBtn = document.getElementById('submit-btn');
-
-    // Defensive: if the form is not active, the submit button is disabled and inputs are disabled.
-    // We still attach a guarded submit handler so an accidental submission (Enter key, browser
-    // autofill quirks) is fully no-op — and we NEVER show the success state without a real,
-    // successful network response.
-    const isFormActive = Boolean(formEndpoint);
 
     function getParams() {
       const p = new URLSearchParams(window.location.search);
@@ -383,6 +418,21 @@ const formActive = Boolean(FORM_ENDPOINT);
       successEl.classList.remove('hidden');
     }
 
+    function trackLead() {
+      // Optional GA4 event. Only fires if gtag is loaded (i.e. GA4_ID was configured
+      // at build time). Analytics is not required for form success.
+      try {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', {
+            form_name: 'quote-request',
+            method: netlifyActive ? 'netlify_form' : 'custom_endpoint',
+          });
+        }
+      } catch (_) {
+        // Never let analytics block UX.
+      }
+    }
+
     resetBtn?.addEventListener('click', () => {
       form.reset();
       clearErrors();
@@ -393,8 +443,8 @@ const formActive = Boolean(FORM_ENDPOINT);
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Hard guard: do not allow any submission path when the form is not wired.
-      if (!isFormActive) return;
+      // Hard guard: never attempt submission when the form is not wired.
+      if (!formActive) return;
 
       if (!validate()) return;
 
@@ -411,22 +461,42 @@ const formActive = Boolean(FORM_ENDPOINT);
 
       try {
         const formData = new FormData(form);
-        const data = {};
-        for (const [key, val] of formData.entries()) {
-          if (data[key]) {
-            data[key] = [].concat(data[key], val);
-          } else {
-            data[key] = val;
+
+        let res;
+        if (netlifyActive) {
+          // Netlify Forms AJAX submission: POST to "/" as application/x-www-form-urlencoded.
+          // The form-name hidden input routes the submission to the right Netlify bucket.
+          // Multi-value fields (like `items` checkboxes) are serialized correctly by
+          // URLSearchParams from a FormData instance.
+          res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString(),
+          });
+        } else if (formEndpoint) {
+          // Custom backend path (Formspree, Basin, etc.) — JSON body.
+          const data = {};
+          for (const [key, val] of formData.entries()) {
+            if (data[key]) {
+              data[key] = [].concat(data[key], val);
+            } else {
+              data[key] = val;
+            }
           }
+          res = await fetch(formEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+        } else {
+          // Should never happen — formActive gates this above.
+          throw new Error('No form backend configured.');
         }
-        const res = await fetch(formEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
+
         // Only show success on a real, successful response.
         if (!res.ok) throw new Error('Server error (' + res.status + ')');
         showSuccess();
+        trackLead();
       } catch (err) {
         alert('There was a problem submitting your request. Please try again or contact us directly.');
         submitBtn.disabled = false;

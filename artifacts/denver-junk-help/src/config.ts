@@ -10,11 +10,27 @@ export const PHONE_HREF = ""; // TODO: e.g. "tel:3035550100"
 /** Contact email shown in footer and legal pages */
 export const EMAIL = "hello@denverjunkhelp.com"; // TODO: replace with real address
 
-/** Form submission endpoint. Leave empty while backend is not yet configured.
- *  When ready, set to a Formspree, Netlify Forms, or custom API endpoint URL.
- *  Example: "https://formspree.io/f/xxxxxaaa"
+/**
+ * Quote form submission configuration.
+ *
+ * FORM_ACTIVE — master switch. When false, every input and the submit button render
+ *   as disabled, no Netlify form attributes are emitted (so Netlify won't accept
+ *   submissions), and a clear "not active yet" notice is shown.
+ *
+ * FORM_PROVIDER — which backend the form submits to when active.
+ *   - "netlify": Netlify Forms. The form is built with `data-netlify="true"` plus a
+ *                hidden `form-name="quote-request"` and a honeypot. Submissions are
+ *                POSTed to "/" as application/x-www-form-urlencoded, which is the
+ *                shape Netlify Forms expects for AJAX submissions. No FORM_ENDPOINT
+ *                value is needed in this mode.
+ *   - "custom":  Submit JSON to the URL set in FORM_ENDPOINT. Use for Formspree,
+ *                Basin, Web3Forms, or a self-hosted endpoint.
  */
-export const FORM_ENDPOINT = ""; // TODO: set before launch
+export const FORM_ACTIVE = true;
+export const FORM_PROVIDER: "netlify" | "custom" = "netlify";
+
+/** Used only when FORM_PROVIDER === "custom". Leave empty otherwise. */
+export const FORM_ENDPOINT = "";
 
 /** Google Analytics 4 Measurement ID */
 export const GA4_ID = ""; // TODO: e.g. "G-XXXXXXXXXX"
