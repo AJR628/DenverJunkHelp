@@ -6,7 +6,13 @@ import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
-import { SITE_URL } from '../config';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL, PHONE_NUMBER, PHONE_HREF } from '../config';
+
+const hasPhone = Boolean(PHONE_NUMBER && PHONE_HREF);
+const ctaCopy = hasPhone
+  ? 'Fill out the form below or give us a call to request your quote.'
+  : 'Fill out the form below to request your quote.';
 ---
 
 <BaseLayout
@@ -20,6 +26,10 @@ import { SITE_URL } from '../config';
 
     <div class="bg-card border-b border-border py-16 px-6">
       <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Appliance Removal' },
+        ]} />
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M5 6a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6z"/><path d="M5 10h14"/><path d="M10 4v6"/>
@@ -36,7 +46,7 @@ import { SITE_URL } from '../config';
     <section class="py-16 px-6 max-w-4xl mx-auto">
       <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
         <p>
-          Appliances are incredibly heavy and notoriously difficult to dispose of. You can't just leave a refrigerator on the curb for regular trash day. We help residents and businesses in Denver request removal for large household and commercial appliances.
+          Appliances are incredibly heavy and notoriously difficult to dispose of. You can&rsquo;t just leave a refrigerator on the curb for regular trash day. We help residents and businesses in Denver request removal for large household and commercial appliances.
         </p>
 
         <h2>Appliances commonly removed include:</h2>
@@ -51,13 +61,13 @@ import { SITE_URL } from '../config';
 
         <h2>Special disposal requirements</h2>
         <p>
-          Many appliances require special handling. Refrigerators, freezers, and air conditioners contain Freon and other refrigerants that must be legally and safely extracted before the unit can be recycled or scrapped. This extra processing often factors into the quote a local provider will give you for appliance removal.
+          Many appliances require special handling. Refrigerators, freezers, and air conditioners contain refrigerants that must be legally and safely extracted before the unit can be recycled or scrapped. This extra processing often shows up as a small surcharge on the quote a local provider gives you for appliance removal.
         </p>
 
         <div class="bg-secondary/10 border-l-4 border-secondary p-6 rounded-r-lg my-8">
           <h3 class="font-bold text-foreground m-0 mb-2">Denver City Appliance Programs</h3>
           <p class="m-0 text-muted-foreground text-base">
-            If you are a Denver city trash collection customer, you may qualify for the city's separate appliance recycling program. This can be a cost-effective option if you don't need immediate removal.
+            If you are a Denver city trash collection customer, you may qualify for the city&rsquo;s separate appliance recycling program. This can be a cost-effective option if you don&rsquo;t need immediate removal.
             <a href="/denver-large-item-pickup-vs-junk-removal/" class="text-primary font-bold hover:underline">
               Learn more about city vs. private removal &rarr;
             </a>
@@ -65,13 +75,13 @@ import { SITE_URL } from '../config';
         </div>
 
         <p>
-          If you need an appliance gone urgently, or if you don't qualify for city pickup, requesting a private junk removal provider is usually the fastest and easiest solution.
+          If you need an appliance gone urgently, or if you don&rsquo;t qualify for city pickup, requesting a private junk removal provider is usually the fastest and easiest solution.
         </p>
       </article>
 
       <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
         <h3 class="font-serif text-2xl font-bold text-foreground mb-4">Ready to clear out that old appliance?</h3>
-        <p class="text-muted-foreground mb-6">Fill out the form below or give us a call to request your quote.</p>
+        <p class="text-muted-foreground mb-6">{ctaCopy}</p>
         <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
           Request Quote
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">

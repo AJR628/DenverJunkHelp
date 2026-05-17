@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL, BRAND_LEGAL } from '../config';
+---
+
+<BaseLayout
+  title="About DenverJunkHelp.com | How This Site Works"
+  description="DenverJunkHelp.com is a local quote and referral website for junk removal in the Denver area. Learn how the site works, what we do, and what we don't."
+  canonical={`${SITE_URL}/about/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'About' },
+        ]} />
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          About DenverJunkHelp.com
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          A practical, local resource for figuring out junk removal in the Denver metro area &mdash; and for getting connected with a local provider when you need one.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-3xl mx-auto">
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground">
+        <h2>What this site is</h2>
+        <p>
+          DenverJunkHelp.com is a small, locally-focused information and quote-request site. We
+          publish straightforward guides about junk removal in Denver and the surrounding
+          metro area &mdash; what the city's free pickup program covers, when you actually
+          need a private hauler, what affects pricing, and what to ask before booking.
+        </p>
+        <p>
+          We also run a simple quote-request form. If you fill it out, we can forward your
+          details to an independent local junk removal provider who serves Denver and may
+          contact you about pricing, availability, and next steps.
+        </p>
+
+        <h2>What this site is not</h2>
+        <p>
+          We want to be upfront: {BRAND_LEGAL} is not a junk removal company. We do not own
+          trucks, employ crews, hold a hauling license, or carry hauling insurance. We do
+          not perform pickups, disposal, or recycling ourselves.
+        </p>
+        <p>
+          The independent local provider who responds to your request is the one who
+          actually does the work &mdash; and they are the one you should ask about
+          licensing, insurance, pricing, scheduling, and anything else specific to the
+          job.
+        </p>
+
+        <h2>Why we built it</h2>
+        <p>
+          Most "junk removal Denver" search results push you straight to a phone number or
+          a one-line booking widget. That works for people who already know what they need.
+          It doesn't help the person who's trying to figure out whether to wait for the
+          city truck, whether they can put a refrigerator on the curb, or whether their
+          job is closer to a single-item pickup or a full cleanout.
+        </p>
+        <p>
+          We wanted a calmer, more useful place to start: clear guides, honest pricing
+          context, and a no-pressure way to request a quote when a private hauler is
+          actually the right call.
+        </p>
+
+        <h2>How we make money</h2>
+        <p>
+          When this site eventually has steady traffic, it may earn revenue from a
+          referral relationship with one or more local junk removal providers, or from
+          advertising. None of that affects the editorial content. Our goal is to help
+          you make a good decision &mdash; including telling you when the right answer is
+          to wait for the city truck and pay nothing.
+        </p>
+
+        <h2>How to reach us</h2>
+        <p>
+          The fastest way to get a quote is the{' '}
+          <a href="/contact/" class="text-primary hover:underline font-medium">quote request form</a>.
+          For questions about the site itself, see the email address in the footer.
+        </p>
+      </article>
+
+      <div class="mt-12">
+        <DisclosureBlock />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

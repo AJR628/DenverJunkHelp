@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL } from '../config';
+---
+
+<BaseLayout
+  title="Mattress Removal in Denver | Old Mattress & Box Spring Pickup"
+  description="Need an old mattress hauled in Denver? Request a quote for mattress, box spring, and bed frame removal from a local junk removal provider."
+  canonical={`${SITE_URL}/mattress-removal/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Mattress Removal' },
+        ]} />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/>
+          </svg>
+          <span>Mattress Removal</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Mattress removal in Denver
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Mattresses and box springs are awkward, heavy, and not allowed in most regular trash pickups. We can connect you with a local provider who handles single-item mattress pickup and bedroom cleanouts.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <p>
+          A new mattress arriving usually means an old mattress that has to go somewhere. The catch is that most curbside trash services in Denver won&rsquo;t take a mattress without a special arrangement, and getting one to a transfer station yourself means a truck, straps, and a fee. A private junk hauler can take it from inside your home or apartment with no setup on your end.
+        </p>
+
+        <h2>Items commonly picked up</h2>
+        <ul>
+          <li>Mattresses of all sizes &mdash; twin through king and California king</li>
+          <li>Box springs and foundations</li>
+          <li>Memory foam, hybrid, and innerspring mattresses</li>
+          <li>Bed frames, headboards, and footboards</li>
+          <li>Old futons and sofa beds</li>
+          <li>Crib and toddler mattresses</li>
+        </ul>
+
+        <h2>Pricing notes for mattresses</h2>
+        <p>
+          Pricing is volume-based like other junk removal, with a couple of mattress-specific factors:
+        </p>
+        <ul>
+          <li><strong>Single-item minimums:</strong> Most providers have a minimum charge for a single mattress pickup. A second mattress (or a box spring) added to the same job is usually only a small step up.</li>
+          <li><strong>Access:</strong> Carrying a king mattress down three flights of apartment stairs is meaningfully different from rolling one out of a ground-floor garage. Mention the access on your quote request.</li>
+          <li><strong>Bedroom cleanouts:</strong> If you&rsquo;re replacing furniture for a whole bedroom &mdash; mattress, frame, dresser, nightstand &mdash; one combined pickup is almost always cheaper than two separate trips.</li>
+        </ul>
+
+        <h2>Donate or recycle first?</h2>
+        <p>
+          Lightly used mattresses in good shape are sometimes accepted by Denver-area donation centers, but rules vary widely and many won&rsquo;t take used mattresses at all due to bedbug and sanitation concerns. Mattress recyclers exist for materials recovery, though drop-off may have a fee. If the mattress is stained, torn, or older than about eight to ten years, hauling is usually the practical option.
+        </p>
+      </article>
+
+      <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Need a mattress gone?</h3>
+        <p class="text-muted-foreground mb-6">One mattress, a full bedroom, or a guest-room turnover &mdash; tell us the situation.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <QuoteForm />
+
+      <div class="mt-12">
+        <DisclosureBlock />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

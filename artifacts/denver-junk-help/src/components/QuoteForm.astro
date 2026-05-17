@@ -1,16 +1,27 @@
 ---
 import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
+
+const formActive = Boolean(FORM_ENDPOINT);
 ---
 
 <div class="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm" id="quote-form-wrapper">
-  {!FORM_ENDPOINT && (
-    <div class="mb-6 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
-      <strong>Note:</strong> Quote requests are not yet active. Set <code>FORM_ENDPOINT</code> in
-      <code>src/config.ts</code> before launch.
+  {!formActive && (
+    <div
+      class="mb-6 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-sm text-amber-900 leading-relaxed"
+      role="status"
+      aria-live="polite"
+    >
+      <strong class="font-semibold">Quote requests are not active yet.</strong>{' '}
+      We&rsquo;re still finalizing setup with our local provider. Please check back soon &mdash;
+      we&rsquo;re not collecting requests at the moment.
+      <span class="block mt-1 text-xs text-amber-800/80">
+        (Developer note: set <code class="font-mono">FORM_ENDPOINT</code> in
+        <code class="font-mono">src/config.ts</code> to enable submissions.)
+      </span>
     </div>
   )}
 
-  <!-- Success state (hidden by default) -->
+  <!-- Success state (hidden by default; only shown after a real, successful submission) -->
   <div id="form-success" class="hidden bg-primary/5 border border-primary/20 rounded-xl p-8 text-center">
     <div class="mx-auto w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-5">
       <svg class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -23,11 +34,6 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
       in the Denver area may reach out to discuss pricing, availability, and
       next steps.
     </p>
-    {!FORM_ENDPOINT && (
-      <p class="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 mb-5 max-w-xs mx-auto">
-        Form endpoint not yet configured. Quote requests are not being sent.
-      </p>
-    )}
     <button
       id="form-reset-btn"
       class="inline-flex items-center justify-center bg-background border border-border text-foreground text-sm font-semibold px-5 py-2 rounded-full hover:bg-muted transition-colors"
@@ -37,7 +43,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
   </div>
 
   <!-- Form -->
-  <form id="quote-form" novalidate class="space-y-7">
+  <form id="quote-form" novalidate class="space-y-7" data-form-active={String(formActive)}>
     <!-- Hidden attribution fields -->
     <input type="hidden" name="utm_source" id="f-utm_source" />
     <input type="hidden" name="utm_medium" id="f-utm_medium" />
@@ -68,6 +74,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
           placeholder="Jane Doe"
           autocomplete="name"
           class="form-input"
+          disabled={!formActive}
         />
         <p class="form-error hidden" id="err-fullName">Please enter your name.</p>
       </div>
@@ -84,6 +91,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
             placeholder="(720) 555-0123"
             autocomplete="tel"
             class="form-input"
+            disabled={!formActive}
           />
           <p class="form-error hidden" id="err-phone">Please enter a valid phone number.</p>
         </div>
@@ -98,6 +106,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
             placeholder="jane@example.com"
             autocomplete="email"
             class="form-input"
+            disabled={!formActive}
           />
           <p class="form-error hidden" id="err-email">Please enter a valid email address.</p>
         </div>
@@ -113,6 +122,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
           name="zipCode"
           placeholder="80202 or 123 Main St, Denver"
           class="form-input"
+          disabled={!formActive}
         />
         <p class="form-error hidden" id="err-zipCode">Please enter your ZIP code or address.</p>
       </div>
@@ -144,6 +154,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
                 name="items"
                 value={item.id}
                 class="form-checkbox"
+                disabled={!formActive}
               />
               <span class="text-sm text-foreground leading-tight">{item.label}</span>
             </label>
@@ -162,6 +173,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
           placeholder="e.g. A large sectional couch, a mini fridge, and about 10 boxes of misc junk from the garage"
           rows="3"
           class="form-input resize-y min-h-[90px]"
+          disabled={!formActive}
         ></textarea>
         <p class="form-error hidden" id="err-description">Please briefly describe what needs to go.</p>
       </div>
@@ -170,7 +182,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
         <label for="f-timeframe" class="form-label">
           Preferred timeframe <span class="text-destructive">*</span>
         </label>
-        <select id="f-timeframe" name="timeframe" class="form-input">
+        <select id="f-timeframe" name="timeframe" class="form-input" disabled={!formActive}>
           <option value="">Select timeframe</option>
           <option value="asap">ASAP / same day</option>
           <option value="1-2days">Within 1–2 days</option>
@@ -190,7 +202,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label for="f-propertyType" class="form-label">Property type</label>
-          <select id="f-propertyType" name="propertyType" class="form-input">
+          <select id="f-propertyType" name="propertyType" class="form-input" disabled={!formActive}>
             <option value="">Select type</option>
             <option value="home">House / condo</option>
             <option value="apartment">Apartment / rental</option>
@@ -200,7 +212,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
         </div>
         <div>
           <label for="f-jobSize" class="form-label">Approximate job size</label>
-          <select id="f-jobSize" name="jobSize" class="form-input">
+          <select id="f-jobSize" name="jobSize" class="form-input" disabled={!formActive}>
             <option value="">Select size</option>
             <option value="single">Single item</option>
             <option value="small">Small load (truck bed)</option>
@@ -213,7 +225,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
 
       <div>
         <label for="f-location" class="form-label">Item location / access</label>
-        <select id="f-location" name="location" class="form-input">
+        <select id="f-location" name="location" class="form-input" disabled={!formActive}>
           <option value="">Select location</option>
           <option value="ground">Ground floor / curbside</option>
           <option value="upstairs">Upstairs (requires stairs)</option>
@@ -237,6 +249,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
                 value={opt.value}
                 checked={opt.value === 'phone'}
                 class="form-radio"
+                disabled={!formActive}
               />
               {opt.label}
             </label>
@@ -266,6 +279,7 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
         id="f-consent"
         name="consent"
         class="form-checkbox mt-0.5"
+        disabled={!formActive}
       />
       <div class="space-y-1">
         <label for="f-consent" class="text-xs leading-snug cursor-pointer text-muted-foreground block">
@@ -281,9 +295,11 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
     <button
       type="submit"
       id="submit-btn"
+      disabled={!formActive}
+      aria-disabled={!formActive ? 'true' : undefined}
       class="w-full flex items-center justify-center bg-primary text-primary-foreground text-base font-semibold h-13 py-3.5 rounded-full shadow-sm hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
     >
-      Submit Quote Request
+      {formActive ? 'Submit Quote Request' : 'Quote requests not active yet'}
     </button>
   </form>
 </div>
@@ -291,10 +307,15 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
 <script define:vars={{ formEndpoint: FORM_ENDPOINT }}>
   (function() {
     const form = document.getElementById('quote-form');
-    const wrapper = document.getElementById('quote-form-wrapper');
     const successEl = document.getElementById('form-success');
     const resetBtn = document.getElementById('form-reset-btn');
     const submitBtn = document.getElementById('submit-btn');
+
+    // Defensive: if the form is not active, the submit button is disabled and inputs are disabled.
+    // We still attach a guarded submit handler so an accidental submission (Enter key, browser
+    // autofill quirks) is fully no-op — and we NEVER show the success state without a real,
+    // successful network response.
+    const isFormActive = Boolean(formEndpoint);
 
     function getParams() {
       const p = new URLSearchParams(window.location.search);
@@ -371,6 +392,10 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Hard guard: do not allow any submission path when the form is not wired.
+      if (!isFormActive) return;
+
       if (!validate()) return;
 
       submitBtn.disabled = true;
@@ -384,33 +409,28 @@ import { FORM_ENDPOINT, BRAND_LEGAL } from '../config';
       setHidden('timestamp', new Date().toISOString());
       setHidden('device_type', /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop');
 
-      if (formEndpoint) {
-        try {
-          const formData = new FormData(form);
-          const data = {};
-          for (const [key, val] of formData.entries()) {
-            if (data[key]) {
-              data[key] = [].concat(data[key], val);
-            } else {
-              data[key] = val;
-            }
+      try {
+        const formData = new FormData(form);
+        const data = {};
+        for (const [key, val] of formData.entries()) {
+          if (data[key]) {
+            data[key] = [].concat(data[key], val);
+          } else {
+            data[key] = val;
           }
-          const res = await fetch(formEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          if (!res.ok) throw new Error('Server error');
-          showSuccess();
-        } catch {
-          alert('There was a problem submitting your request. Please try again or contact us directly.');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit Quote Request';
         }
-      } else {
-        // No endpoint — show success without sending (clearly disclosed above)
-        await new Promise(r => setTimeout(r, 600));
+        const res = await fetch(formEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        // Only show success on a real, successful response.
+        if (!res.ok) throw new Error('Server error (' + res.status + ')');
         showSuccess();
+      } catch (err) {
+        alert('There was a problem submitting your request. Please try again or contact us directly.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Quote Request';
       }
     });
   })();

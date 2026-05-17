@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL } from '../config';
+
+const areas = [
+  {
+    name: 'Denver',
+    note: 'Central Denver, including neighborhoods like Capitol Hill, Highland, Park Hill, Washington Park, Five Points, Cherry Creek, and the surrounding core.',
+  },
+  {
+    name: 'Aurora',
+    note: 'East metro coverage across Aurora, with quicker response times closer to the I-225 corridor.',
+  },
+  {
+    name: 'Lakewood',
+    note: 'West-side coverage including Belmar, Green Mountain, and Bear Creek areas.',
+  },
+  {
+    name: 'Arvada',
+    note: 'Northwest metro, including Olde Town Arvada and the Ralston Creek area.',
+  },
+  {
+    name: 'Westminster',
+    note: 'North metro along the US-36 corridor, including the Westminster Center and Standley Lake areas.',
+  },
+  {
+    name: 'Thornton',
+    note: 'North metro coverage, including Thornton, the I-25 corridor, and adjacent residential neighborhoods.',
+  },
+  {
+    name: 'Englewood',
+    note: 'South metro coverage including the Englewood / Sheridan area.',
+  },
+  {
+    name: 'Littleton',
+    note: 'Southwest metro, including downtown Littleton and the South Suburban area.',
+  },
+  {
+    name: 'Centennial',
+    note: 'Southeast metro coverage, including the Greenwood Village / DTC area.',
+  },
+  {
+    name: 'Commerce City',
+    note: 'Northeast metro coverage near I-270 and the Reunion area.',
+  },
+  {
+    name: 'Wheat Ridge',
+    note: 'West metro between Denver and Arvada.',
+  },
+  {
+    name: 'Edgewater',
+    note: 'Close-in west metro near Sloan’s Lake.',
+  },
+];
+---
+
+<BaseLayout
+  title="Service Area | Junk Removal Quotes Across the Denver Metro"
+  description="DenverJunkHelp.com helps route junk removal quote requests across Denver, Aurora, Lakewood, Arvada, Westminster, Thornton, Englewood, Littleton, and nearby metro areas."
+  canonical={`${SITE_URL}/service-area/`}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Service Area' },
+        ]} />
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Service area
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          We help route junk removal quote requests across the Denver metro area. Coverage availability and pricing vary by location and are confirmed by the local provider that responds to your request.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+        {areas.map(area => (
+          <div class="bg-card border border-border rounded-xl p-6">
+            <div class="flex items-start gap-3">
+              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary shrink-0">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-bold text-foreground mb-1">{area.name}</h3>
+                <p class="text-sm text-muted-foreground leading-relaxed">{area.note}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-12">
+        <h2>Not on the list?</h2>
+        <p>
+          If your location is somewhere else in the Denver metro &mdash; or further out into the foothills or front range &mdash; you&rsquo;re still welcome to submit a request. Provider availability outside core metro neighborhoods isn&rsquo;t guaranteed, and pricing may reflect drive time. The local provider who responds will tell you whether they can serve your address.
+        </p>
+
+        <h2>A note on mountain and rural addresses</h2>
+        <p>
+          Addresses west of I-70 in the foothills, or further out toward Conifer, Evergreen, Bailey, and the rest of the front range, are often serviceable but typically command higher quotes because of distance, drive time, and disposal logistics. If you&rsquo;re in this category, include the full address on your request so the provider can give you a realistic estimate up front.
+        </p>
+
+        <h2>Apartment buildings, HOAs, and rental properties</h2>
+        <p>
+          Larger apartment buildings (typically 8 or more units), condo associations, and managed properties may have rules about pickup time, where items can be staged, and dumpster or alley access. Mention this on the request &mdash; it helps the provider plan and avoids a same-day surprise.
+        </p>
+      </article>
+
+      <div class="bg-muted p-8 rounded-xl border border-border mb-12 text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Request a quote for your address</h3>
+        <p class="text-muted-foreground mb-6">Include your ZIP or full address &mdash; the provider can confirm coverage.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <DisclosureBlock />
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

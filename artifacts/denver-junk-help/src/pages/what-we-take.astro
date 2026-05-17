@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE_URL } from '../config';
+
+const accepted = [
+  { category: 'Furniture', items: ['Couches and sectionals', 'Loveseats and armchairs', 'Mattresses and box springs', 'Bed frames and headboards', 'Dressers, armoires, and wardrobes', 'Dining tables and chairs', 'Desks, bookcases, and shelving', 'Patio furniture'] },
+  { category: 'Appliances', items: ['Refrigerators and freezers', 'Washers and dryers', 'Stoves, ovens, and ranges', 'Dishwashers', 'Microwaves', 'Water heaters', 'Window AC units', 'Small appliances'] },
+  { category: 'Household junk', items: ['Boxes and bags of misc. items', 'Books, kitchenware, decor', 'Children’s toys and gear', 'Exercise equipment', 'Carpets and rugs', 'Lamps and small fixtures'] },
+  { category: 'Yard and outdoor', items: ['Branches and clippings (bagged or bundled)', 'Bagged leaves and grass', 'Old fencing, sheds, playsets (often)', 'Patio sets and grills', 'Planters and pots'] },
+  { category: 'Construction debris (light)', items: ['Drywall scraps', 'Old cabinetry', 'Light demo from a small project', 'Doors and trim'] },
+  { category: 'Office and commercial', items: ['Desks and office chairs', 'Filing cabinets', 'Retail fixtures', 'Restaurant equipment (case by case)'] },
+];
+
+const notAccepted = [
+  { category: 'Hazardous materials', items: ['Wet paint, solvents, and cleaning chemicals (dried latex paint is sometimes OK)', 'Motor oil, gasoline, and antifreeze', 'Pool chemicals', 'Asbestos-containing materials', 'Lead-based paint or shingles'] },
+  { category: 'Pressurized or flammable', items: ['Full propane tanks', 'Pressurized fire extinguishers', 'Compressed gas cylinders', 'Fireworks or ammunition'] },
+  { category: 'Medical and biohazard', items: ['Sharps and needles', 'Prescription medications', 'Biohazard or medical waste'] },
+  { category: 'Electronics (often separate program)', items: ['CRT TVs and monitors (special e-waste handling)', 'Some flat-panel TVs (varies by provider)', 'Computer batteries and UPS units'] },
+  { category: 'Other restricted items', items: ['Live animals or animal waste', 'Human waste or septic content', 'Tires (sometimes — ask the provider)'] },
+];
+
+// FAQ items used both for visible FAQ accordion and FAQPage JSON-LD (single source of truth)
+const faqItems = [
+  {
+    question: 'Can a junk removal provider in Denver take a full refrigerator?',
+    answer: 'Yes. Most private haulers in Denver will pick up refrigerators, freezers, and window AC units. Because these contain refrigerants that must be recovered before recycling, the provider may charge an additional handling fee compared to other appliances.',
+  },
+  {
+    question: 'Can I leave a propane tank with my junk pickup?',
+    answer: 'Generally no. Full or partially full propane tanks are pressurized and most haulers will not take them. Empty, valve-removed tanks may be accepted in some cases. Propane exchange locations and household hazardous waste drop-off events are the safer option.',
+  },
+  {
+    question: 'Will junk removal take old paint cans?',
+    answer: 'Fully dried latex paint with no liquid remaining is often acceptable. Wet paint and oil-based paints are considered household hazardous waste and need to be handled through a dedicated drop-off, not a junk pickup.',
+  },
+  {
+    question: 'Do junk haulers take old TVs and computers in Denver?',
+    answer: "Some do, some don't. Older CRT TVs and monitors usually require specialized e-waste handling and may not be included in standard pickups. Newer flat-panel TVs are more commonly accepted. Ask the provider when you get a quote.",
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(f => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+});
+---
+
+<BaseLayout
+  title="What Junk Removal Takes in Denver | What's Accepted and What Isn't"
+  description="A plain list of what junk removal providers in Denver typically take and what they don't. Includes hazardous waste, propane tanks, paint, electronics, and more."
+  canonical={`${SITE_URL}/what-we-take/`}
+  schema={faqSchema}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'What We Take' },
+        ]} />
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          What junk removal takes &mdash; and what it doesn&rsquo;t
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Most household items are fair game. A handful of things &mdash; hazardous chemicals, full propane tanks, certain electronics &mdash; need a different program. Here&rsquo;s a straightforward breakdown.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </span>
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground m-0">
+            Items typically accepted
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {accepted.map(group => (
+            <div class="bg-card border border-border rounded-xl p-6">
+              <h3 class="font-bold text-foreground mb-3">{group.category}</h3>
+              <ul class="space-y-1.5 text-sm text-muted-foreground">
+                {group.items.map(item => <li>&middot; {item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-destructive/10 text-destructive">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/>
+            </svg>
+          </span>
+          <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground m-0">
+            Items typically not accepted
+          </h2>
+        </div>
+        <p class="text-muted-foreground mb-6 leading-relaxed">
+          These items usually require a specialized disposal route rather than a standard junk pickup. Denver-area residents can often handle them through the city&rsquo;s household hazardous waste program, e-cycle events, or dedicated drop-off locations.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {notAccepted.map(group => (
+            <div class="bg-card border border-border rounded-xl p-6">
+              <h3 class="font-bold text-foreground mb-3">{group.category}</h3>
+              <ul class="space-y-1.5 text-sm text-muted-foreground">
+                {group.items.map(item => <li>&middot; {item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-12">
+        <h2>Not sure about an item?</h2>
+        <p>
+          When in doubt, describe it on the quote form &mdash; the local provider can confirm whether they&rsquo;ll take it before they show up. That&rsquo;s usually faster than guessing, and it avoids the awkward situation of paying for a trip the hauler can&rsquo;t complete.
+        </p>
+        <p>
+          For genuinely hazardous items, the City and County of Denver runs a Household Hazardous Waste program for residents. Information about hazardous waste, e-cycle drop-offs, and large item programs is generally available on the city&rsquo;s Solid Waste Management website.
+        </p>
+      </article>
+
+      <div class="mb-16">
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
+          Common questions about what providers take
+        </h2>
+        <FaqAccordion items={faqItems} />
+      </div>
+
+      <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Have a list? Request a quote.</h3>
+        <p class="text-muted-foreground mb-6">Tell us what needs to go and where it is &mdash; a local provider can confirm what they&rsquo;ll take.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <QuoteForm />
+
+      <div class="mt-12">
+        <DisclosureBlock text="DenverJunkHelp.com is a local quote and referral website. We don’t perform hauling ourselves. Lists above are general guidance; the independent local provider that responds to your request will confirm what they can and can’t take." />
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>
