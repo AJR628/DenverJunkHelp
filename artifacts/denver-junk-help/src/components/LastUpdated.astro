@@ -1,0 +1,32 @@
+---
+export interface Props {
+  /** ISO date string, e.g. "2026-05-17". */
+  date: string;
+}
+const { date } = Astro.props;
+
+// Format date for display in en-US locale. The machine-readable ISO date stays
+// in the <time datetime=""> attribute for SEO and accessibility.
+const formatted = new Date(date + 'T00:00:00Z').toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+<p class="inline-flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
+  <svg
+    class="w-3.5 h-3.5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="12 6 12 12 16 14"/>
+  </svg>
+  <span>Last updated <time datetime={date}>{formatted}</time></span>
+</p>

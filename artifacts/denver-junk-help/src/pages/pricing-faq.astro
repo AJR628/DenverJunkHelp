@@ -7,6 +7,7 @@ import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LastUpdated from '../components/LastUpdated.astro';
 import { SITE_URL, PHONE_NUMBER, PHONE_HREF } from '../config';
 
 const hasPhone = Boolean(PHONE_NUMBER && PHONE_HREF);
@@ -64,6 +65,7 @@ const schemaData = JSON.stringify({
           { label: 'Home', href: '/' },
           { label: 'Pricing & FAQ' },
         ]} />
+        <LastUpdated date="2026-05-17" />
         <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">How junk removal pricing works in Denver</h1>
         <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
           Transparency matters. We don&rsquo;t set final prices, but here&rsquo;s how private haulers in Denver typically build their quotes &mdash; and a realistic range to anchor your expectations.
