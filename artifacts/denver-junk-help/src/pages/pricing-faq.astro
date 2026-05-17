@@ -7,7 +7,12 @@ import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { SITE_URL } from '../config';
+import { SITE_URL, PHONE_NUMBER, PHONE_HREF } from '../config';
+
+const hasPhone = Boolean(PHONE_NUMBER && PHONE_HREF);
+const quoteProcessAnswer = hasPhone
+  ? "Fill out the quote form or call us. We forward your request to a local junk-removal provider in Denver. The provider will contact you to discuss details, confirm pricing, and schedule service."
+  : "Fill out the quote form. We forward your request to a local junk-removal provider in Denver. The provider will contact you to discuss details, confirm pricing, and schedule service.";
 
 const ranges = [
   { label: 'Single item (minimum charge)', range: '$95 – $175', note: 'Most providers have a floor for showing up.' },
@@ -21,7 +26,7 @@ const ranges = [
 
 const faqs = [
   { question: "Is Denver Junk Help the hauling company?", answer: "No. Denver Junk Help is a local quote and referral website. We help people in Denver request service from an independent local provider. We don't operate trucks or perform hauling ourselves." },
-  { question: "How does the quote process work?", answer: "Fill out the quote form or call us. We forward your request to a local junk-removal provider in Denver. The provider will contact you to discuss details, confirm pricing, and schedule service." },
+  { question: "How does the quote process work?", answer: quoteProcessAnswer },
   { question: "Do you offer same-day junk removal?", answer: "Same-day options may be available depending on provider availability and your location. Submit a request early in the day for the best chance of a same-day response." },
   { question: "What affects final pricing?", answer: "Final pricing typically depends on volume (how much truck space your items take), the type of items, accessibility (like flights of stairs), disassembly needs, and timing." },
   { question: "Are the prices on this page guaranteed?", answer: "No. The ranges shown on this page are general market context based on typical pricing for junk removal in the Denver area. They are not a quote, not a promise, and not set by DenverJunkHelp.com. Your actual price is determined by the independent local provider after they review your specific job." },

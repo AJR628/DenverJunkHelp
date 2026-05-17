@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SITE_URL } from '../config';
@@ -26,31 +27,34 @@ const notAccepted = [
   { category: 'Other restricted items', items: ['Live animals or animal waste', 'Human waste or septic content', 'Tires (sometimes — ask the provider)'] },
 ];
 
+// FAQ items used both for visible FAQ accordion and FAQPage JSON-LD (single source of truth)
+const faqItems = [
+  {
+    question: 'Can a junk removal provider in Denver take a full refrigerator?',
+    answer: 'Yes. Most private haulers in Denver will pick up refrigerators, freezers, and window AC units. Because these contain refrigerants that must be recovered before recycling, the provider may charge an additional handling fee compared to other appliances.',
+  },
+  {
+    question: 'Can I leave a propane tank with my junk pickup?',
+    answer: 'Generally no. Full or partially full propane tanks are pressurized and most haulers will not take them. Empty, valve-removed tanks may be accepted in some cases. Propane exchange locations and household hazardous waste drop-off events are the safer option.',
+  },
+  {
+    question: 'Will junk removal take old paint cans?',
+    answer: 'Fully dried latex paint with no liquid remaining is often acceptable. Wet paint and oil-based paints are considered household hazardous waste and need to be handled through a dedicated drop-off, not a junk pickup.',
+  },
+  {
+    question: 'Do junk haulers take old TVs and computers in Denver?',
+    answer: "Some do, some don't. Older CRT TVs and monitors usually require specialized e-waste handling and may not be included in standard pickups. Newer flat-panel TVs are more commonly accepted. Ask the provider when you get a quote.",
+  },
+];
+
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Can a junk removal provider in Denver take a full refrigerator?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Yes. Most private haulers in Denver will pick up refrigerators, freezers, and window AC units. Because these contain refrigerants that must be recovered before recycling, the provider may charge an additional handling fee compared to other appliances.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Can I leave a propane tank with my junk pickup?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Generally no. Full or partially full propane tanks are pressurized and most haulers will not take them. Empty, valve-removed tanks may be accepted in some cases. Propane exchange locations and household hazardous waste drop-off events are the safer option.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Will junk removal take old paint cans?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Fully dried latex paint with no liquid remaining is often acceptable. Wet paint and oil-based paints are considered household hazardous waste and need to be handled through a dedicated drop-off, not a junk pickup.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Do junk haulers take old TVs and computers in Denver?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Some do, some don’t. Older CRT TVs and monitors usually require specialized e-waste handling and may not be included in standard pickups. Newer flat-panel TVs are more commonly accepted. Ask the provider when you get a quote.' },
-    },
-  ],
+  mainEntity: faqItems.map(f => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
 });
 ---
 
@@ -138,6 +142,13 @@ const faqSchema = JSON.stringify({
           For genuinely hazardous items, the City and County of Denver runs a Household Hazardous Waste program for residents. Information about hazardous waste, e-cycle drop-offs, and large item programs is generally available on the city&rsquo;s Solid Waste Management website.
         </p>
       </article>
+
+      <div class="mb-16">
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
+          Common questions about what providers take
+        </h2>
+        <FaqAccordion items={faqItems} />
+      </div>
 
       <div class="bg-muted p-8 rounded-xl border border-border mb-16 text-center">
         <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Have a list? Request a quote.</h3>

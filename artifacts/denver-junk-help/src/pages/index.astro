@@ -8,7 +8,12 @@ import Hero from '../components/Hero.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import DisclosureBlock from '../components/DisclosureBlock.astro';
-import { SITE_URL } from '../config';
+import { SITE_URL, PHONE_NUMBER, PHONE_HREF } from '../config';
+
+const hasPhone = Boolean(PHONE_NUMBER && PHONE_HREF);
+const step1Body = hasPhone
+  ? "Fill out the quick request form or call. Describe your items and where they are — photos are welcome and help a lot."
+  : "Fill out the quick request form. Describe your items and where they are — photos are welcome and help a lot.";
 
 const faqSchema = JSON.stringify({
   "@context": "https://schema.org",
@@ -166,7 +171,7 @@ const faqItems = [
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
           {[
-            { n: "1", title: "Tell us what needs to go", body: "Fill out the quick request form or call. Describe your items and where they are — photos are welcome and help a lot." },
+            { n: "1", title: "Tell us what needs to go", body: step1Body },
             { n: "2", title: "Your request is forwarded", body: "We forward your details to an independent local provider in the Denver area." },
             { n: "3", title: "A local provider may contact you", body: "The provider reviews your request and may reach out to discuss pricing, availability, and scheduling." },
           ].map((step, i) => (
