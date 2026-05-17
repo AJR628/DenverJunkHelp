@@ -33,10 +33,10 @@ export const FORM_PROVIDER: "netlify" | "custom" = "netlify";
 export const FORM_ENDPOINT = "";
 
 /** Google Analytics 4 Measurement ID */
-export const GA4_ID = ""; // TODO: e.g. "G-XXXXXXXXXX"
+export const GA4_ID = "G-VN7E79M9VF";
 
 /** Google Search Console verification meta tag content value */
-export const SEARCH_CONSOLE_ID = ""; // TODO: paste value from Search Console
+export const SEARCH_CONSOLE_ID = "8G-1iJMck7PIca-18rLE4RbUi8RsWNSNUSQz03CNM-4";
 
 /** Canonical site URL — no trailing slash */
 export const SITE_URL = "https://denverjunkhelp.com";
