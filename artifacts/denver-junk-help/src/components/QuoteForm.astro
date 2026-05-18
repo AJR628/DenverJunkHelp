@@ -294,18 +294,16 @@ const netlifyActive = formActive && isNetlify;
         </div>
       </div>
 
-      <!-- Photo upload — coming soon -->
-      <div>
-        <p class="text-sm font-medium text-foreground mb-2">
-          Photos{' '}
-          <span class="text-muted-foreground font-normal text-xs">(optional — helps estimate accurately)</span>
+      <!-- Photo follow-up note (no in-form upload yet — see docs) -->
+      <div class="bg-muted/40 border border-border rounded-lg px-4 py-3">
+        <p class="text-sm text-foreground font-medium">
+          Photos make a big difference
         </p>
-        <div class="border-2 border-dashed border-border rounded-lg p-5 flex flex-col items-center justify-center text-center bg-muted/30">
-          <span class="text-sm text-muted-foreground">Photo upload coming soon</span>
-          <p class="text-xs text-muted-foreground mt-1">
-            Describe your items in detail above to help the provider estimate accurately.
-          </p>
-        </div>
+        <p class="text-xs text-muted-foreground mt-1 leading-relaxed">
+          After you submit, the provider may reply by phone, text, or email and ask for photos
+          of your items. A short clip or a couple of pictures is the single biggest thing you
+          can do to get an accurate quote up front.
+        </p>
       </div>
     </div>
 
@@ -418,19 +416,39 @@ const netlifyActive = formActive && isNetlify;
       successEl.classList.remove('hidden');
     }
 
-    function trackLead() {
+    function trackEvent(name, params) {
       // Optional GA4 event. Only fires if gtag is loaded (i.e. GA4_ID was configured
-      // at build time). Analytics is not required for form success.
+      // at build time). Analytics is never allowed to block UX.
       try {
         if (typeof window.gtag === 'function') {
-          window.gtag('event', 'generate_lead', {
-            form_name: 'quote-request',
-            method: netlifyActive ? 'netlify_form' : 'custom_endpoint',
-          });
+          window.gtag('event', name, params || {});
         }
       } catch (_) {
-        // Never let analytics block UX.
+        // Swallow analytics errors.
       }
+    }
+
+    function trackLead() {
+      trackEvent('generate_lead', {
+        form_name: 'quote-request',
+        method: netlifyActive ? 'netlify_form' : 'custom_endpoint',
+      });
+    }
+
+    // form_start fires once per page load on the first real interaction with the form.
+    // We listen for the earliest input on any field — typing, checking, selecting.
+    let formStartFired = false;
+    function onFirstInteraction() {
+      if (formStartFired) return;
+      formStartFired = true;
+      trackEvent('form_start', {
+        form_name: 'quote-request',
+      });
+    }
+    if (formActive && form) {
+      ['input', 'change'].forEach(evt => {
+        form.addEventListener(evt, onFirstInteraction, { once: false });
+      });
     }
 
     resetBtn?.addEventListener('click', () => {
@@ -496,6 +514,13 @@ const netlifyActive = formActive && isNetlify;
         // Only show success on a real, successful response.
         if (!res.ok) throw new Error('Server error (' + res.status + ')');
         showSuccess();
+        // Fire both the standard form_submit event and the generate_lead conversion.
+        // form_submit is what GA4 reports use for funnel completion; generate_lead
+        // is the recommended "lead conversion" event for ads tooling.
+        trackEvent('form_submit', {
+          form_name: 'quote-request',
+          method: netlifyActive ? 'netlify_form' : 'custom_endpoint',
+        });
         trackLead();
       } catch (err) {
         alert('There was a problem submitting your request. Please try again or contact us directly.');

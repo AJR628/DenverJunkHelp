@@ -1,0 +1,326 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UtilityBar from '../components/UtilityBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import DisclosureBlock from '../components/DisclosureBlock.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import LastUpdated from '../components/LastUpdated.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { SITE_URL } from '../config';
+
+const accepted = [
+  'Televisions',
+  'Monitors',
+  'CPUs / desktop computers',
+  'Laptops',
+  'Printers, scanners, fax machines',
+  'Keyboards and mice',
+  'Stereos and audio equipment',
+  'External hard drives and storage',
+  'Cell phones and telephones',
+  'DVRs, VCRs, DVD players',
+  'Digital cameras and video recorders',
+  'MP3 players',
+  'Video game consoles',
+  'Rechargeable batteries',
+  'Sprinkler control boxes',
+  'Wires and cables',
+  'Some small appliances (e.g. microwaves, coffee makers, vacuums, blenders, toasters)',
+];
+
+const notAccepted = [
+  'Air conditioners',
+  'Refrigerators',
+  'Large appliances',
+  'Garbage disposals',
+  'Humidifiers',
+  'Smoke and carbon monoxide detectors',
+  'Pressurized canisters',
+  'Oil or gas devices',
+  'Fluorescent bulbs and neon signs',
+  'Car batteries',
+  'Single-use alkaline household batteries (rechargeable batteries are accepted)',
+];
+
+const faqs = [
+  {
+    question: 'Can I put electronics in the regular trash?',
+    answer: 'No. Disposing of electronic equipment in the trash has been illegal in Colorado since July 1, 2013 under the Electronic Recycling Jobs Act (SB 12-133). Banned items include TVs, CPUs, monitors, peripherals, printers, fax machines, laptops, tablets, DVD players, VCRs, radios, stereos, game consoles, and video displays greater than four inches diagonal. The Denver E-cycle coupon program is one of the resident-friendly paths to handle this correctly.',
+  },
+  {
+    question: 'Who can use the Denver E-cycle coupon?',
+    answer: 'Per the official Denver Electronic Recycling page, the coupon is only for residents of the City and County of Denver. Businesses, non-residents, and PO boxes are not eligible. Residents must bring proof of address and their coupon code; Blue Star Recyclers verifies both at drop-off. The limit is one coupon per household per calendar year.',
+  },
+  {
+    question: 'Are laptops and printers covered by the coupon?',
+    answer: 'Yes. The official accepted list includes laptops, printers, scanners, and fax machines, plus televisions, monitors, CPUs, stereos, gaming consoles, MP3 players, cameras, and many cables and small electronics. Some small appliances (microwaves, coffee makers, vacuums) are also accepted.',
+  },
+  {
+    question: 'What about my old refrigerator?',
+    answer: 'Refrigerators, freezers, and air conditioners are not accepted under the Denver E-cycle program. They go through Denver\'s separate appliance collection program (free by appointment for SWM residents) — see the Denver appliance disposal guide for details. Refrigerant has to be recovered before the appliance is recycled, which is why it\'s handled separately from other electronics.',
+  },
+  {
+    question: 'Does Aurora use the same program?',
+    answer: 'No. Aurora does not participate in Denver\'s E-cycle coupon program. Aurora sponsors its own electronics recycling events, operated by Pedal Point LifeCycle Solutions in Aurora, with a small per-vehicle fee and additional fees for CRT or flat-screen televisions. Check Aurora\'s electronics recycling page for current event dates.',
+  },
+  {
+    question: 'Can a private junk removal company take electronics?',
+    answer: 'Some private junk haulers will accept certain electronics and route them to recyclers themselves. Many will not accept televisions, especially older CRT TVs, because of the disposal fees. Always ask the provider what they accept before booking — and confirm whether a separate e-waste fee applies.',
+  },
+  {
+    question: 'What should I do with a computer or phone before recycling it?',
+    answer: 'Wipe your data first. Sign out of accounts, back up anything you need, then do a factory reset (and on Windows or Mac, run a secure-erase or full-disk reset). For older hard drives, physical destruction is the most reliable option. Blue Star Recyclers and Pedal Point both physically destroy data storage, but doing your own wipe first is the safe baseline.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+});
+---
+
+<BaseLayout
+  title="Electronics Recycling in the Denver Metro | E-Cycle Coupon, Aurora Events, and Junk Removal"
+  description="How to recycle TVs, computers, phones, and other electronics in the Denver metro. Denver's E-cycle coupon program, Aurora's recycling events, and what private junk haulers will and won't accept."
+  canonical={`${SITE_URL}/electronics-recycling-denver-metro/`}
+  schema={faqSchema}
+>
+  <UtilityBar />
+  <Header />
+  <main class="flex-1 w-full" aria-label="Main content">
+
+    <div class="bg-card border-b border-border py-16 px-6">
+      <div class="max-w-4xl mx-auto">
+        <Breadcrumbs items={[
+          { label: 'Home', href: '/' },
+          { label: 'Guides', href: '/service-area/' },
+          { label: 'Electronics recycling in the Denver metro' },
+        ]} />
+        <LastUpdated date="2026-05-17" />
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Local Metro Guide</span>
+        </div>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
+          Electronics recycling in the Denver metro
+        </h1>
+        <p class="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+          Old TVs, computers, monitors, and phones aren&rsquo;t allowed in the trash anywhere in Colorado. Here&rsquo;s how Denver, Aurora, and private haulers handle them &mdash; and what to wipe before you hand them over.
+        </p>
+      </div>
+    </div>
+
+    <section class="py-12 px-6 max-w-4xl mx-auto">
+      <!-- Quick answer -->
+      <div class="bg-card border border-border rounded-2xl p-6 md:p-8 mb-12 shadow-sm">
+        <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground mb-3">
+          Quick answer
+        </p>
+        <p class="text-foreground leading-relaxed text-lg">
+          <strong>You cannot put electronics in the regular trash in Colorado.</strong> Denver residents get one discounted E-cycle coupon per household per year, redeemed at Blue Star Recyclers. Aurora runs separate paid recycling events. Private junk haulers may take some electronics &mdash; but not all of them &mdash; and almost always charge extra for TVs. Wipe your data before you let anything go.
+        </p>
+      </div>
+
+      <!-- Colorado law callout -->
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-12 text-sm text-amber-900 leading-relaxed">
+        <p>
+          <strong>Colorado law:</strong> Per the Electronic Recycling Jobs Act (SB 12-133), it has been illegal to dispose of electronic equipment in the trash anywhere in Colorado since July 1, 2013. Banned items include TVs, CPUs, monitors, printers, fax machines, laptops, tablets, DVD players, VCRs, radios, stereos, game consoles, and video display devices with screens greater than four inches diagonal.
+        </p>
+      </div>
+
+      <article class="prose prose-lg prose-headings:font-serif max-w-none text-muted-foreground mb-16">
+        <h2>Denver: the E-cycle coupon program</h2>
+        <p>
+          The City and County of Denver partners with Blue Star Recyclers, a Denver-based 501(c)(3) electronics recycler, for the E-cycle coupon program. Denver residents can request one discounted coupon per household per calendar year on the official Denver Electronic Recycling page.
+        </p>
+        <p>
+          Drop-off is at <strong>Blue Star Recyclers, 953 Decatur Street, Denver, CO 80204</strong>. You bring your electronics and your coupon code; Blue Star verifies both your residential address and your coupon at the drop. Businesses, non-residents, and PO-box addresses are not eligible.
+        </p>
+
+        <h3>What the program accepts</h3>
+        <ul>
+          {accepted.map(a => <li>{a}</li>)}
+        </ul>
+
+        <h3>What it does <em>not</em> accept</h3>
+        <ul>
+          {notAccepted.map(n => <li>{n}</li>)}
+        </ul>
+        <p>
+          If your item is on the second list &mdash; for example, a refrigerator or an air conditioner &mdash; the right path is Denver&rsquo;s separate appliance collection program, not E-cycle. See the <a href="/denver-appliance-disposal-guide/">Denver appliance disposal guide</a> for that.
+        </p>
+
+        <h2>Aurora: city-sponsored recycling events</h2>
+        <p>
+          Aurora does <strong>not</strong> participate in Denver&rsquo;s E-cycle coupon. Instead, the City of Aurora sponsors periodic electronics recycling events for residents, operated by Pedal Point LifeCycle Solutions (formerly Techno Rescue) at 3251 Lewiston Street, Suite 10, Aurora. There&rsquo;s a small per-vehicle fee, with additional charges for CRT and flat-screen televisions.
+        </p>
+        <p>
+          Most corded and battery-powered devices are accepted at these events. Aurora&rsquo;s electronics recycling page (linked under Recycling Opportunities on the city site) lists current event dates, fees, and accepted items.
+        </p>
+
+        <h2>Other metro options</h2>
+        <p>
+          Across the Denver metro, electronics often have a few paths beyond city programs:
+        </p>
+        <ul>
+          <li><strong>Retail take-back:</strong> Best Buy, Staples, and some Apple programs accept specific electronics for free or in exchange for store credit. Acceptance varies by item.</li>
+          <li><strong>Manufacturer take-back:</strong> Some manufacturers run mail-back programs for their products. Apple, Dell, HP, and others have programs you can check.</li>
+          <li><strong>Drop-off recyclers:</strong> Pay-per-pound or pay-per-item drop-offs at Blue Star, Pedal Point, and others, used by residents who don&rsquo;t qualify for the coupon or who missed an event.</li>
+        </ul>
+
+        <h2>When private junk removal makes sense for electronics</h2>
+        <p>
+          Private junk haulers handle electronics differently. Some accept most items and route them to a recycler; others decline TVs entirely because of disposal fees. A few notes:
+        </p>
+        <ul>
+          <li><strong>TVs almost always carry a fee.</strong> CRTs especially &mdash; they&rsquo;re heavy and expensive to recycle correctly. Expect a separate per-item charge if the hauler takes them at all.</li>
+          <li><strong>Mixed loads make sense.</strong> If you have a TV plus a couch plus a pile of garage stuff, a private hauler will take all of it in one trip, which is often easier than three separate drop-offs.</li>
+          <li><strong>Apartment and condo residents.</strong> If you can&rsquo;t easily drive to Blue Star or wait for an Aurora event, paying for pickup is the practical answer.</li>
+          <li><strong>Ask first.</strong> Mention electronics specifically when you request a quote. A reputable provider will tell you what they take, what they don&rsquo;t, and any e-waste surcharge before the truck shows up.</li>
+        </ul>
+
+        <h2>Wipe your data first</h2>
+        <p>
+          Before you hand over any device that stores personal data &mdash; phones, laptops, desktops, external drives, tablets, even some printers &mdash; do the basics:
+        </p>
+        <ul>
+          <li><strong>Sign out</strong> of your accounts (iCloud, Google, Microsoft, email, etc.).</li>
+          <li><strong>Back up</strong> anything you actually need.</li>
+          <li><strong>Factory reset</strong> the device. On phones and tablets, a factory reset plus account sign-out is the standard. On computers, run a full reset that wipes the disk &mdash; not just a user account.</li>
+          <li><strong>Old hard drives:</strong> If the drive is spinning rust and old enough that you don&rsquo;t trust software wipe, physical destruction (drill, hammer, or a paid shredding service) is the most reliable option.</li>
+        </ul>
+        <p>
+          Both Blue Star and Pedal Point physically destroy data storage during processing. That&rsquo;s a real backstop &mdash; but the safer move is to wipe your own data before the device leaves your hands.
+        </p>
+      </article>
+
+      <!-- Decision guide -->
+      <section class="mb-16" aria-labelledby="decision-heading">
+        <h2 id="decision-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Quick decision guide
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Denver resident, one or two items</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Request the city&rsquo;s annual E-cycle coupon, then drop off at Blue Star Recyclers on Decatur. Cheapest option for most households.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">Aurora resident</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Check Aurora&rsquo;s electronics recycling events for current dates. Small per-vehicle fee, additional charges for TVs.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">A pile of electronics + other junk</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              A private junk hauler is often more efficient than a drop-off. Confirm what they take &mdash; especially TVs &mdash; and ask about e-waste surcharges.
+            </p>
+          </div>
+          <div class="bg-card border border-border rounded-xl p-6">
+            <h3 class="font-bold text-foreground mb-2">An old refrigerator or AC unit</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              That&rsquo;s appliance disposal, not electronics. See the <a href="/denver-appliance-disposal-guide/" class="text-primary hover:underline">Denver appliance disposal guide</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-16" aria-labelledby="faq-heading">
+        <h2 id="faq-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Electronics recycling &mdash; FAQs
+        </h2>
+        <FaqAccordion items={faqs} />
+      </section>
+
+      <!-- Official sources -->
+      <section class="mb-12" aria-labelledby="official-resources-heading">
+        <h2 id="official-resources-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-3">
+          Official resources
+        </h2>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          These are the official program pages. If anything on this page disagrees with them, the official pages are right.
+        </p>
+        <ul class="space-y-3">
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Recycle-Compost-Trash/Recycle/Electronic-Recycling"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Denver Electronic Recycling (E-cycle coupon)
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">Accepted items, eligibility, and how to request the coupon.</p>
+          </li>
+          <li class="bg-card border border-border rounded-lg p-4">
+            <a
+              href="https://www.auroragov.org/residents/trash___recycling/recycling_opportunities"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold text-primary hover:underline inline-flex items-center gap-1.5"
+            >
+              Aurora Recycling Opportunities
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+              </svg>
+            </a>
+            <p class="text-sm text-muted-foreground mt-1">Aurora&rsquo;s electronics events, mattress, paint, and other resources.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Cross-links -->
+      <section class="mb-12" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+          Related local guides
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="/denver-appliance-disposal-guide/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Denver appliance disposal</h3>
+            <p class="text-sm text-muted-foreground">Refrigerators and AC units have a separate program.</p>
+          </a>
+          <a href="/denver-large-item-pickup-vs-junk-removal/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Denver city pickup vs. private</h3>
+            <p class="text-sm text-muted-foreground">Large Item Pickup, HHW, and when private hauling fits.</p>
+          </a>
+          <a href="/aurora-trash-pickup-vs-junk-removal/" class="bg-card border border-border rounded-lg p-5 hover:border-primary/50 transition-colors block">
+            <h3 class="font-bold text-foreground mb-1">Aurora trash &amp; junk removal</h3>
+            <p class="text-sm text-muted-foreground">Aurora works differently from Denver. Here&rsquo;s how.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="bg-card border border-border p-8 rounded-xl text-center shadow-sm mb-8">
+        <h3 class="font-serif text-2xl font-bold text-foreground mb-3">Pile of electronics plus other junk?</h3>
+        <p class="text-muted-foreground mb-6">Tell us what needs to go &mdash; a local provider can quote you for mixed loads, and tell you up front whether they accept TVs and what the e-waste fee looks like.</p>
+        <a href="/contact/" class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold hover:bg-primary/90 transition-colors">
+          Request a Quote
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <DisclosureBlock text="DenverJunkHelp.com is an independent quote and referral website. We are not affiliated with the City and County of Denver, the City of Aurora, Blue Star Recyclers, or Pedal Point LifeCycle Solutions. Program rules, fees, and acceptance lists are set by those organizations and can change; always verify on the official pages before relying on them." />
+    </section>
+
+  </main>
+  <Footer />
+  <StickyMobileCTA />
+</BaseLayout>

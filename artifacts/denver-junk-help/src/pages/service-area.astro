@@ -9,14 +9,25 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LastUpdated from '../components/LastUpdated.astro';
 import { SITE_URL } from '../config';
 
-const areas = [
+interface Area {
+  name: string;
+  note: string;
+  guideHref?: string;
+  guideLabel?: string;
+}
+
+const areas: Area[] = [
   {
     name: 'Denver',
     note: 'Central Denver, including neighborhoods like Capitol Hill, Highland, Park Hill, Washington Park, Five Points, Cherry Creek, and the surrounding core.',
+    guideHref: '/denver-large-item-pickup-vs-junk-removal/',
+    guideLabel: 'Denver city pickup vs. private guide',
   },
   {
     name: 'Aurora',
     note: 'East metro coverage across Aurora, with quicker response times closer to the I-225 corridor.',
+    guideHref: '/aurora-trash-pickup-vs-junk-removal/',
+    guideLabel: 'Aurora trash &amp; junk removal guide',
   },
   {
     name: 'Lakewood',
@@ -99,6 +110,13 @@ const areas = [
     </section>
 
     <section class="py-16 px-6 max-w-4xl mx-auto">
+      <div class="bg-primary/5 border border-primary/20 rounded-lg px-5 py-4 mb-8 text-sm text-foreground leading-relaxed">
+        <p>
+          <strong>Coverage is confirmed by the responding provider.</strong>{' '}
+          The cities below are where we&rsquo;ve seen the most demand. Whether a specific address is on a provider&rsquo;s route &mdash; and how fast they can get there &mdash; is something the provider tells you after they review your request.
+        </p>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
         {areas.map(area => (
           <div class="bg-card border border-border rounded-xl p-6">
@@ -108,9 +126,20 @@ const areas = [
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
                 </svg>
               </span>
-              <div>
+              <div class="flex-1">
                 <h3 class="font-bold text-foreground mb-1">{area.name}</h3>
                 <p class="text-sm text-muted-foreground leading-relaxed">{area.note}</p>
+                {area.guideHref && (
+                  <a
+                    href={area.guideHref}
+                    class="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline mt-2"
+                  >
+                    <span set:html={area.guideLabel} />
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           </div>
